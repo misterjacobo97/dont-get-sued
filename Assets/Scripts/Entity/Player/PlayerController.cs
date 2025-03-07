@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour {
     [Header("Refs")]
     [SerializeField] private Rigidbody2D _rb;
+    [SerializeField] private Transform _playerInteract;
 
     [Header("Params")]
     [SerializeField] private float _movementAccel = 100f;
@@ -13,13 +15,17 @@ public class PlayerController : MonoBehaviour {
     [Header("Logging")]
     [SerializeField] private Logger _logger;
 
+    // movement related
+    private Vector2 Movement;
+
     private void FixedUpdate() {
         MovePlayer();
+
     }
 
     #region Movement
     private void MovePlayer() {
-        Vector2 Movement = InputManager.Instance.GetPlayerMovement();
+        Movement = InputManager.Instance.GetPlayerMovement();
 
         if (Movement != Vector2.zero) {
             // check dif between current and requested velocity direction
@@ -32,11 +38,12 @@ public class PlayerController : MonoBehaviour {
             Log(newForce);
 
             // change clamping
-            _rb.linearDamping = 0f;
+            _rb.linearDamping = 0.2f;
 
             _rb.AddForce(newForce);
+
         }
-        else { 
+        else {
             // if no movement input
             _rb.linearDamping = _linearDamping;
 
@@ -51,7 +58,7 @@ public class PlayerController : MonoBehaviour {
 
     #endregion
 
-    private void Log(object message) { 
+    private void Log(object message) {
         if (_logger) {
             _logger.Log(message, this);
         }

@@ -8,6 +8,10 @@ public class Logger : MonoBehaviour {
     [SerializeField] bool _showLog;
 
     public void Log(object message, Object sender) {
-        Debug.Log(message, sender);
+        if (_showLog) {
+
+            Debug.Log(message, sender);
+
+        }
     }
 }
