@@ -1,18 +1,40 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Composites;
 
 public class InputManager : PersistentSignleton<InputManager> {
 
-    [SerializeField] InputActionAsset _actionAsset;
-    private InputActionMap _playerActions;
-    private InputActionMap _UIActions;
+    [NonSerialized] public UnityEvent PlayerInteractPressedEvent = new();
+
+    public InputSystem_Actions _playerActions;
+
+    [NonSerialized] public bool PlayerIntereactWasPressed = false;
+    [NonSerialized] public bool PlayerIntereactWasReleased = false;
+    [NonSerialized] public bool PlayerIntereactIsHeld = false;
+
+    // internal
+    private InputAction _interactAction;
+    private InputAction _moveAction;
+
 
     private void Start() {
         // separating into its smaller chunks first
-        _playerActions = _actionAsset.FindActionMap("Player");
-        _UIActions = _actionAsset.FindActionMap("UI");
+        _playerActions = new();
+        _playerActions.Enable();
+
+        _interactAction = _playerActions.Player.Interact;
+        _moveAction = _playerActions.Player.Move;
+    }
+
+    private void Update() {
+        PlayerIntereactWasPressed = _interactAction.WasPressedThisFrame();
+        PlayerIntereactWasReleased = _interactAction.WasReleasedThisFrame();
+        PlayerIntereactIsHeld = _interactAction.IsPressed();
+
+        if (PlayerIntereactWasPressed == true) {
+            PlayerInteractPressedEvent.Invoke();
+        }
     }
 
     /// <summary>
@@ -23,13 +45,9 @@ public class InputManager : PersistentSignleton<InputManager> {
         Vector2 input;
 
         // get initial value
-        input = _playerActions["Move"].ReadValue<Vector2>();
+        input = _moveAction.ReadValue<Vector2>();
 
         return input;
     }
-
-
-
-
 
 }

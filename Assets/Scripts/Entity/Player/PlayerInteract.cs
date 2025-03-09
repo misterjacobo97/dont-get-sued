@@ -1,25 +1,50 @@
+using System;
 using UnityEngine;
 
-interface Interactable {
+
+public interface I_Interactable {
     public void SetSelected();
     public void SetUnselected();
-    public void Interact();
-
+    public void Interact(object caller);
 }
 
-public class PlayerInteract : MonoBehaviour {
+
+
+public class PlayerInteract : TaskHolder {
+    public static PlayerInteract Instance { get; private set; }
+
+    public event EventHandler<OnSelectedInteractableChangedEventArgs> OnSelectedInteractableChanged;
+    public class OnSelectedInteractableChangedEventArgs : EventArgs {
+        public I_Interactable selectedInteractable;
+    }
 
     [Header("params")]
     [SerializeField] private LayerMask _interactMask;
 
-    private Interactable _selectedInteractable;
-    Vector2 _lastMovement = Vector2.zero;
+    [Header("Interact Refs")]
+    [SerializeField] private Transform _itemHolderRef;
+    private I_Interactable _selectedInteractable;
 
-    // Update is called once per frame
+    private  Vector2 _lastMovement = Vector2.zero;
+
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        }
+        else {
+            Destroy(this.gameObject);
+        }
+    }
+
+    protected override void Start() {
+        base.Start();
+        InputManager.Instance.PlayerInteractPressedEvent.AddListener(OnInteractInput);
+    }
+
     void Update() {
         Vector2 _movement = InputManager.Instance.GetPlayerMovement();
 
-        if (_movement != Vector2.zero) {
+        if (_movement != Vector2.zero && InputManager.Instance.PlayerIntereactIsHeld == false) {
             _lastMovement = _movement;
         }
 
@@ -29,21 +54,43 @@ public class PlayerInteract : MonoBehaviour {
         Debug.DrawLine(transform.position, RayPos, Color.white);
 
         if (hit.collider != null) {
-            Debug.Log("here");
 
-            Interactable _currentInteractable = hit.transform.GetComponent<Interactable>();
+            I_Interactable _currentInteractable = hit.transform.GetComponent<I_Interactable>();
 
-            if (_selectedInteractable != null && _currentInteractable != _selectedInteractable) {
-                _selectedInteractable.SetUnselected();
-            }
-
-            _selectedInteractable = _currentInteractable;
-            hit.transform.GetComponent<Interactable>().SetSelected();
+            SetSelectedInteractable(_currentInteractable);
         }
         else if (hit.collider == null && _selectedInteractable != null) {
-            _selectedInteractable.SetUnselected();
-            _selectedInteractable = null;
+            SetSelectedInteractable(null);
+        }
+    }
+
+    private void OnInteractInput() {
+        if (_selectedInteractable != null) {
+            _selectedInteractable.Interact(this);
+        }
+    }
+
+    private void SetSelectedInteractable (I_Interactable newInteractable) {
+        if (newInteractable == _selectedInteractable) {
+            return;
         }
 
+        this._selectedInteractable = newInteractable;
+
+        Debug.Log("new interactable selected: " + newInteractable);
+
+        OnSelectedInteractableChanged?.Invoke(this, new OnSelectedInteractableChangedEventArgs {
+            selectedInteractable = _selectedInteractable
+        });
+    }
+
+    public bool HasItemHolder() {
+        return _itemHolderRef != null;
+    }
+
+    public I_ItemHolder GetItemHolder() {
+        if (_itemHolderRef == null) return null;
+
+        return _itemHolderRef.GetComponent<I_ItemHolder>();
     }
 }

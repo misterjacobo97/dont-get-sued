@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour {
     [Header("Refs")]
@@ -27,7 +26,7 @@ public class PlayerController : MonoBehaviour {
     private void MovePlayer() {
         Movement = InputManager.Instance.GetPlayerMovement();
 
-        if (Movement != Vector2.zero) {
+        if (Movement != Vector2.zero && InputManager.Instance.PlayerIntereactIsHeld == false) {
             // check dif between current and requested velocity direction
             double dirDiff = Math.Round(Vector2.Distance(_rb.linearVelocity.normalized, Movement), 2);
             // then create a dynamic float to add to the movementAccel if current vel is not in the requested direction
@@ -42,6 +41,9 @@ public class PlayerController : MonoBehaviour {
 
             _rb.AddForce(newForce);
 
+        }
+        else if (InputManager.Instance.PlayerIntereactIsHeld) {
+            _rb.linearVelocity = Vector2.zero;
         }
         else {
             // if no movement input
