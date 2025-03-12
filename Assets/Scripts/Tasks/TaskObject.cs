@@ -2,37 +2,20 @@ using Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TaskObject : MonoBehaviour {
+public class TaskObject : HoldableItem {
     [Header("Refs")]
     [SerializeField] protected TaskObject_SO taskObject_SO;
-    [SerializeField] protected Image _taskIcon;
+    //[SerializeField] protected SpriteRenderer _taskIcon;
 
-    protected TaskHolder _taskHolder;
+
+    protected I_ItemHolder _taskHolder;
     protected bool _taskActive;
 
     public TaskObject_SO GetTaskObject_SO() {
         return taskObject_SO;
     }
 
-    public void SetTaskHolder (TaskHolder newTaskHolder) { 
-        if (_taskHolder != null) {
-            _taskHolder.ClearTaskObject();
-        }
-
-        if (newTaskHolder.HasTaskObject()) {
-            Debug.Log("task holder already has task!");
-        }
-
-        _taskHolder = newTaskHolder;
-
-        if (_taskHolder.GetTaskObject != this) {
-            _taskHolder.SetTaskObject(this);
-        }
-
-        _taskActive = true;
-    }
-
-    public TaskHolder GetTaskHolder() {
+    public I_ItemHolder GetItemHolder() {
         return _taskHolder;
     }
 
@@ -52,17 +35,20 @@ public class TaskObject : MonoBehaviour {
         TaskManager.Instance.AddToFailedTasks(this);
     }
 
-    protected virtual void DeactivateTask() {
+    protected void DeactivateTask() {
         _taskActive = false;
 
         if (_taskHolder != null) {
-            _taskHolder.ClearTaskObject();
+            _taskHolder.RemoveItem();
         }
 
         _taskHolder = null;
 
-        _taskIcon.enabled = false;
+        _sprite.enabled = false;
+        _collider.enabled = false;
     }
+
+
 }
 
 

@@ -1,9 +1,9 @@
 using UnityEngine;
 
 public interface I_ItemHolder {
-    public void SetItem(Transform newItem);
+    public void SetItem(HoldableItem newItem);
     public bool HasItem();
-    public Transform GetHeldItem();
-
+    public HoldableItem GetHeldItem();
     public Transform GetItemTargetTransform();
+    public void RemoveItem();
 }

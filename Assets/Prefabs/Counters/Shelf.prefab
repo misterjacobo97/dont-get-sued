@@ -239,7 +239,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8183ef920534024498f79611207f4e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  marker: {fileID: 0}
-  _taskObject: {fileID: 0}
-  _taskObjectPos: {fileID: 7482761991464861190}
   _sprite: {fileID: 3883297330824621821}
+  _itemTarget: {fileID: 7482761991464861190}
+  _shelfType: 0

@@ -14,7 +14,7 @@ namespace Tasks {
 
         private List<TaskObject> _completedTasks = new();
         private List<TaskObject> _failedTasks = new();
-        private List<TaskHolder> _taskReceivers = new();
+        private List<I_ItemHolder> _taskReceivers = new();
 
         private void Start() {
             AssignTaskTimer();
@@ -35,7 +35,7 @@ namespace Tasks {
 
 
 
-        public void AddTaskReceiver(TaskHolder newReceiver) {
+        public void AddTaskReceiver(I_ItemHolder newReceiver) {
             if (_taskReceivers.Contains(newReceiver)) {
                 return;
             }
@@ -46,8 +46,7 @@ namespace Tasks {
         private void AssignNewTask() {
 
             if (_unassignedTasks.Count > 0) {
-                List<TaskHolder> availableReceivers = GetAvailableReceivers();
-               
+                List<I_ItemHolder> availableReceivers = GetAvailableReceivers();
 
                 if (availableReceivers.Count <= 0) {
                     return;
@@ -58,20 +57,19 @@ namespace Tasks {
 
                 _activeTasks.Add(newTask);
 
-                TaskHolder selectedHolder = availableReceivers[Random.Range(0, availableReceivers.Count - 1)];
+                I_ItemHolder selectedHolder = availableReceivers[Random.Range(0, availableReceivers.Count - 1)];
 
                 Debug.Log("assigning new task to: " + selectedHolder);
-                
 
-                selectedHolder.SetTaskObject(newTask);
+                selectedHolder.SetItem(newTask);
 
                 // update tasks left text
                 UpdateUI();
             }
         }
 
-        private List<TaskHolder> GetAvailableReceivers() {
-            return _taskReceivers.FindAll((tr) => tr.HasTaskObject() == false);
+        private List<I_ItemHolder> GetAvailableReceivers() {
+            return _taskReceivers.FindAll((tr) => tr.HasItem() == false);
         }
 
         public void AddCompletedTask(TaskObject newCompletedTask) {

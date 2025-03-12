@@ -1,12 +1,13 @@
-using Tasks;
 using UnityEngine;
 
-public class Bin : TaskHolder, I_Interactable {
+public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
     [Header("Refs")]
     [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] private Transform _itemTarget;
 
-    protected override void Start() {
-        base.Start();
+    private HoldableItem _heldItem = null;
+
+    protected void Start() {
         PlayerInteract.Instance.OnSelectedInteractableChanged += OnSelectedInteractableChanged;
     }
 
@@ -28,17 +29,65 @@ public class Bin : TaskHolder, I_Interactable {
     }
 
     public void Interact(object caller) {
-        if (caller is TaskHolder) {
-            if ((caller as TaskHolder).HasTaskObject() && HasTaskObject() == false) {
+        if (caller is PlayerInteract) {
+            if ((caller as PlayerInteract).GetItemHolder().HasItem() && HasItem() == false) {
                 Debug.Log("receiving task from: " + caller.ToString());
-                SetTaskObject((caller as TaskHolder).GetTaskObject);
-                (caller as TaskHolder).ClearTaskObject();
 
-                CompleteTask();
-
+                // set holdable parent to this
+                (caller as PlayerInteract).GetItemHolder().GetHeldItem().ChangeParent(this);
             }
         }
+    }
+
+    public void SetItem(HoldableItem newItem) {
+        _heldItem = newItem;
+
+        // complete if the item is a task
+        CompleteTaskItem();
+
+        // then remove and destroy the item
+        HoldableItem item = _heldItem;
+
+        RemoveItem();
+
+        Destroy(item.gameObject);
 
     }
 
+    public bool HasItem() {
+        if (_heldItem == null) {
+            return false;
+        }
+        else return true;
+    }
+
+    public HoldableItem GetHeldItem() {
+        if (_heldItem == null) {
+            Debug.Log("no held item");
+            return null;
+        }
+
+        HoldableItem item = _heldItem;
+        _heldItem = null;
+        return item;
+    }
+
+    public Transform GetItemTargetTransform() {
+        if (_itemTarget == null) {
+            Debug.Log("no item taget ref at: " + this);
+            return null;
+        }
+        return _itemTarget;
+    }
+
+    public void RemoveItem() {
+        _heldItem = null;
+    }
+
+    private void CompleteTaskItem() {
+
+        if (_heldItem is TaskObject) {
+            (_heldItem as TaskObject).CompleteTask();
+        }
+    }
 }

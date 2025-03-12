@@ -1,19 +1,19 @@
-using Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TimedTask : TaskObject {
     [Header("TimedTask Refs")]
     [SerializeField] private Image _timerRadial;
+    [SerializeField] protected Canvas _timerIcon;
 
     [Header("Params")]
     [SerializeField] private float _timeToFail;
 
     private float _timeLeft;
-
-
-    private void Start() {
+    protected new void Start() {
+        base.Start();
         _timeLeft = _timeToFail;
+        _taskActive = true;
     }
 
     private void Update() {
@@ -28,12 +28,11 @@ public class TimedTask : TaskObject {
                 FailTask();
             }
         }
-
     }
 
-    protected override void DeactivateTask() {
+    protected new void DeactivateTask() {
 
-        _timerRadial.enabled = false;
+        _timerIcon.enabled = false;
         base.DeactivateTask();
 
         

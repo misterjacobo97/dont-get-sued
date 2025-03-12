@@ -1,16 +1,14 @@
 using System;
 using UnityEngine;
 
-
 public interface I_Interactable {
     public void SetSelected();
     public void SetUnselected();
     public void Interact(object caller);
 }
 
+public class PlayerInteract : MonoBehaviour {
 
-
-public class PlayerInteract : TaskHolder {
     public static PlayerInteract Instance { get; private set; }
 
     public event EventHandler<OnSelectedInteractableChangedEventArgs> OnSelectedInteractableChanged;
@@ -36,8 +34,7 @@ public class PlayerInteract : TaskHolder {
         }
     }
 
-    protected override void Start() {
-        base.Start();
+    protected void Start() {
         InputManager.Instance.PlayerInteractPressedEvent.AddListener(OnInteractInput);
     }
 
@@ -67,6 +64,10 @@ public class PlayerInteract : TaskHolder {
     private void OnInteractInput() {
         if (_selectedInteractable != null) {
             _selectedInteractable.Interact(this);
+        }
+        else if (GetItemHolder() != null && GetItemHolder().HasItem()) {
+            // drop item
+            GetItemHolder().GetHeldItem().DropItem();
         }
     }
 

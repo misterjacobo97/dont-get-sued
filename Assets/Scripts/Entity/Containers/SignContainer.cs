@@ -10,7 +10,7 @@ public class SignContainer : MonoBehaviour, I_Interactable {
 
 
     [Header("Params")]
-    [SerializeField] private Transform _signPrefab;
+    [SerializeField] private HoldableItem _signPrefab;
     [SerializeField] private int _maxSignCount = 3;
 
     private int _currentSignsCount = 3;
@@ -26,6 +26,7 @@ public class SignContainer : MonoBehaviour, I_Interactable {
 
     protected void Start() {
         PlayerInteract.Instance.OnSelectedInteractableChanged += OnSelectedInteractableChanged;
+        UpdateUI();
     }
 
     private void OnSelectedInteractableChanged(object sender, PlayerInteract.OnSelectedInteractableChangedEventArgs e) {
@@ -70,10 +71,8 @@ public class SignContainer : MonoBehaviour, I_Interactable {
 
             CurrentSignCount = -1;
             UpdateUI();
-            
-            holder.SetItem(
-                GameObject.Instantiate(_signPrefab)
-            );
+
+            GameObject.Instantiate(_signPrefab.transform).GetComponent<HoldableItem>().ChangeParent(holder);
         }
 
     }

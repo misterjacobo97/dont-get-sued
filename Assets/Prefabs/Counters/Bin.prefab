@@ -181,9 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791cb54aa35a1ac429d70316bb27f48c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _taskObject: {fileID: 0}
-  _taskObjectPos: {fileID: 8167197196139465693}
   _sprite: {fileID: 6727757752920989114}
+  _itemTarget: {fileID: 8167197196139465693}
 --- !u!50 &5129921604395869628
 Rigidbody2D:
   serializedVersion: 5
