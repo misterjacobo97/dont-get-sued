@@ -183,6 +183,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 6727757752920989114}
   _itemTarget: {fileID: 8167197196139465693}
+  _acceptedItems:
+  - {fileID: 11400000, guid: 8c6ca1165eaf62041b7f55682e126067, type: 2}
 --- !u!50 &5129921604395869628
 Rigidbody2D:
   serializedVersion: 5

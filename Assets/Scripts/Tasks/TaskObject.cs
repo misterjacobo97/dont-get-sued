@@ -1,26 +1,12 @@
 using Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TaskObject : HoldableItem {
-    [Header("Refs")]
-    [SerializeField] protected TaskObject_SO taskObject_SO;
-    //[SerializeField] protected SpriteRenderer _taskIcon;
-
-
     protected I_ItemHolder _taskHolder;
     protected bool _taskActive;
 
-    public TaskObject_SO GetTaskObject_SO() {
-        return taskObject_SO;
-    }
-
-    public I_ItemHolder GetItemHolder() {
-        return _taskHolder;
-    }
-
     public void CompleteTask() {
-        Debug.Log("Completing task: " + this);
+        //Debug.Log("Completing task: " + this);
 
         DeactivateTask();
 
@@ -28,7 +14,7 @@ public class TaskObject : HoldableItem {
     }
 
     public void FailTask() {
-        Debug.Log("failing task: " + this);
+        //Debug.Log("failing task: " + this);
 
         DeactivateTask();
 
@@ -47,8 +33,6 @@ public class TaskObject : HoldableItem {
         _sprite.enabled = false;
         _collider.enabled = false;
     }
-
-
 }
 
 

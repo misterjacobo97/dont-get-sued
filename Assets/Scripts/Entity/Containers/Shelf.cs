@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Tasks;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
     [Header("Refs")]
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Transform _itemTarget;
+    [SerializeField] private List<HoldableItem_SO> _acceptedItems = new();
 
     [Header("Params")]
     [SerializeField] private ShelfType _shelfType = ShelfType.SINGLE_TASK;
@@ -33,16 +35,14 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
     }
 
     public void SetSelected() {
-        _sprite.color = Color.white;
+        _sprite.color = Color.yellow;
     }
 
     public void SetUnselected() { 
-        _sprite.color = Color.red;
+        _sprite.color = Color.white;
     }
 
     public void Interact(object caller) {
-        Debug.Log("Interacted with");
-
         if (caller is PlayerInteract) {
             if (_heldItem != null) {
                 _heldItem.ChangeParent((caller as PlayerInteract).GetItemHolder());
@@ -51,14 +51,7 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
     }
 
     public void SetItem(HoldableItem newItem) {
-        Debug.Log("holding new item");
-
         _heldItem = newItem;
-        _heldItem.transform.position = _itemTarget.position;
-
-        if (_heldItem is TimedTask) {
-            //(_heldItem as TimedTask).
-        }
     }
 
     public bool HasItem() {
@@ -82,7 +75,6 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
 
     public Transform GetItemTargetTransform() {
         if (_itemTarget == null) {
-            Debug.Log("no item taget ref at: " + this);
             return null;
         }
 
@@ -91,6 +83,11 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
 
     public void RemoveItem() {
         _heldItem = null;
+    }
+
+
+    public bool IsItemAccepted(HoldableItem_SO item) {
+        return _acceptedItems.Contains(item);
     }
 
 }

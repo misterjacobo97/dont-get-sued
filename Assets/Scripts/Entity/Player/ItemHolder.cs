@@ -1,9 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class PlayerItemHolder : MonoBehaviour, I_ItemHolder {
+public class ItemHolder : MonoBehaviour, I_ItemHolder {
 
     [Header("Refs")]
     [SerializeField] private Transform _itemTarget;
+    [SerializeField] private List<HoldableItem_SO> _acceptedItems = new();
 
     private HoldableItem _heldItem = null;
 
@@ -19,8 +22,6 @@ public class PlayerItemHolder : MonoBehaviour, I_ItemHolder {
         Debug.Log("holding new item");
 
         _heldItem = newItem;
-
-        _heldItem.transform.position = _itemTarget.position;
     }
 
     public bool HasItem() {
@@ -36,9 +37,7 @@ public class PlayerItemHolder : MonoBehaviour, I_ItemHolder {
             return null;
         }
 
-        HoldableItem item = _heldItem;
-        _heldItem = null;
-        return item;
+        return _heldItem;
     }
 
 
@@ -54,4 +53,9 @@ public class PlayerItemHolder : MonoBehaviour, I_ItemHolder {
     public void RemoveItem() {
         _heldItem = null;
     }
+
+    public bool IsItemAccepted(HoldableItem_SO item) {
+        return _acceptedItems.Contains(item);
+    }
+
 }

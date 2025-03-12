@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
     [Header("Refs")]
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Transform _itemTarget;
+    [SerializeField] private List<ScriptableObject> _acceptedItems = new();
 
     private HoldableItem _heldItem = null;
 
@@ -30,6 +32,8 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
 
     public void Interact(object caller) {
         if (caller is PlayerInteract) {
+
+
             if ((caller as PlayerInteract).GetItemHolder().HasItem() && HasItem() == false) {
                 Debug.Log("receiving task from: " + caller.ToString());
 
@@ -51,7 +55,6 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
         RemoveItem();
 
         Destroy(item.gameObject);
-
     }
 
     public bool HasItem() {
@@ -85,9 +88,14 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
     }
 
     private void CompleteTaskItem() {
+        if (_heldItem is not TaskObject) return;
 
-        if (_heldItem is TaskObject) {
-            (_heldItem as TaskObject).CompleteTask();
-        }
+        (_heldItem as TaskObject).CompleteTask();
     }
+
+
+    public bool IsItemAccepted(HoldableItem_SO item) {
+        return _acceptedItems.Contains(item);
+    }
+
 }

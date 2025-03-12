@@ -1,8 +1,13 @@
 using UnityEngine;
 
+/// <summary>
+/// the base holdable item class. This allows classes with the I_ItemHolder Interface to interact with these. 
+/// HoldableItems are responsible for changing their own parent.
+/// </summary>
 public class HoldableItem : MonoBehaviour, I_Interactable {
     [Header("holdable refs")]
     private Rigidbody2D _rb;
+    [SerializeField] public HoldableItem_SO holdableItem_SO;
     [SerializeField] protected Collider2D _collider;
     [SerializeField] protected SpriteRenderer _sprite;
 
@@ -27,7 +32,7 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
     protected void SetHeldState(bool newState) {
         _heldState = newState;
 
-        if (_heldState == false) {
+        if (GetHeldState() == false) {
             _collider.gameObject.SetActive(true);
         }
         else _collider.gameObject.SetActive(false);
@@ -35,7 +40,16 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
 
     public bool GetHeldState() => _heldState;
 
+    /// <summary>
+    /// This should be used for whenever you want to try to change the parent of a holdable item. 
+    /// It will check if the new parent allows items of the same kind and will automatically set its position to it.
+    /// </summary>
+    /// <param name="newParent"></param>
     public void ChangeParent(I_ItemHolder newParent) {
+
+        if (newParent.IsItemAccepted(holdableItem_SO) == false) {
+            return;
+        }
 
         newParent.SetItem(this);
 
@@ -57,9 +71,13 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
     public void SetSelected() { }
     public void SetUnselected() { }
     public void Interact(object caller) {
+        if (holdableItem_SO.pickableItem == false) {
+            return;
+        }
+        
         if (caller is PlayerInteract) {
 
-            if (_heldState == false) {
+            if (GetHeldState() == false) {
                 ChangeParent((caller as PlayerInteract).GetItemHolder());
             }
         }

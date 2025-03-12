@@ -33,8 +33,6 @@ namespace Tasks {
             AssignTaskTimer();
         }
 
-
-
         public void AddTaskReceiver(I_ItemHolder newReceiver) {
             if (_taskReceivers.Contains(newReceiver)) {
                 return;
@@ -44,14 +42,15 @@ namespace Tasks {
         }
 
         private void AssignNewTask() {
-
             if (_unassignedTasks.Count > 0) {
-                List<I_ItemHolder> availableReceivers = GetAvailableReceivers();
+                // check for recievers that accept the task
+                List<I_ItemHolder> availableReceivers = GetAvailableReceiversForTask(_unassignedTasks[0].holdableItem_SO);
 
                 if (availableReceivers.Count <= 0) {
                     return;
                 }
-                
+
+                // instantiate and then delete from list
                 TaskObject newTask = GameObject.Instantiate(_unassignedTasks[0]);
                 _unassignedTasks.Remove(_unassignedTasks[0]);
 
@@ -61,15 +60,16 @@ namespace Tasks {
 
                 Debug.Log("assigning new task to: " + selectedHolder);
 
-                selectedHolder.SetItem(newTask);
+                // set the new parent of the task to be the selected holder
+                newTask.ChangeParent(selectedHolder);
 
                 // update tasks left text
                 UpdateUI();
             }
         }
 
-        private List<I_ItemHolder> GetAvailableReceivers() {
-            return _taskReceivers.FindAll((tr) => tr.HasItem() == false);
+        private List<I_ItemHolder> GetAvailableReceiversForTask(HoldableItem_SO currentTask) {
+            return _taskReceivers.FindAll((tr) => tr.HasItem() == false && tr.IsItemAccepted(currentTask));
         }
 
         public void AddCompletedTask(TaskObject newCompletedTask) {
@@ -87,6 +87,8 @@ namespace Tasks {
             _failedTasks.Add(newTask);
             newTask.transform.parent = _tasksParent;
             newTask.transform.position = _tasksParent.position;
+
+            UpdateUI();
         }
 
         private void UpdateUI() {

@@ -6,4 +6,5 @@ public interface I_ItemHolder {
     public HoldableItem GetHeldItem();
     public Transform GetItemTargetTransform();
     public void RemoveItem();
+    public bool IsItemAccepted(HoldableItem_SO item);
 }

@@ -170,6 +170,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemTarget: {fileID: 405166196997670916}
+  _acceptedItems:
+  - {fileID: 11400000, guid: 8c6ca1165eaf62041b7f55682e126067, type: 2}
+  - {fileID: 11400000, guid: 20742cdef89b8fb45b65f4d4ec744424, type: 2}
 --- !u!1 &2658414562049947398
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,6 +258,8 @@ MonoBehaviour:
   _movementAccel: 500
   _maxMovementSpeed: 5
   _linearDamping: 20
+  _dashMaxSpeed: 200
+  _dashDuration: 0.3
   _logger: {fileID: 0}
 --- !u!50 &7241204999789311181
 Rigidbody2D:
@@ -358,8 +363,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd382849035dc5e45960298fc118cbd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _taskObject: {fileID: 0}
-  _taskObjectPos: {fileID: 4047646906179653771}
   _interactMask:
     serializedVersion: 2
     m_Bits: 64

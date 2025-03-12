@@ -7,9 +7,17 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Transform _playerInteract;
 
     [Header("Params")]
+    // movement
     [SerializeField] private float _movementAccel = 100f;
     [SerializeField] private float _maxMovementSpeed = 20f;
     [SerializeField] private float _linearDamping = 1f;
+    private Vector2 _lastMovementDir = Vector2.zero;
+    // dashing
+    [SerializeField] private float _dashMaxSpeed = 200f;
+    [SerializeField] private float _dashDuration = 0.3f;
+    private bool _currentlyDashing = false;
+    private float _timeOfLastDash = 0f;
+
 
     [Header("Logging")]
     [SerializeField] private Logger _logger;
@@ -26,7 +34,15 @@ public class PlayerController : MonoBehaviour {
     private void MovePlayer() {
         Movement = InputManager.Instance.GetPlayerMovement();
 
-        if (Movement != Vector2.zero && InputManager.Instance.PlayerIntereactIsHeld == false) {
+        //if (InputManager.Instance.PlayerDashWasPressed && Time.time >= _timeOfLastDash + _dashDuration) {
+        //    _timeOfLastDash = Time.time;
+        //    _currentlyDashing = true;
+        //}
+        //if (_currentlyDashing == true) {
+        //    PerformDashAction();
+        //}
+
+        if (Movement != Vector2.zero && InputManager.Instance.PlayerInteractIsHeld == false) {
             // check dif between current and requested velocity direction
             double dirDiff = Math.Round(Vector2.Distance(_rb.linearVelocity.normalized, Movement), 2);
             // then create a dynamic float to add to the movementAccel if current vel is not in the requested direction
@@ -41,8 +57,9 @@ public class PlayerController : MonoBehaviour {
 
             _rb.AddForce(newForce);
 
+            _lastMovementDir = Movement;
         }
-        else if (InputManager.Instance.PlayerIntereactIsHeld) {
+        else if (InputManager.Instance.PlayerInteractIsHeld) {
             _rb.linearVelocity = Vector2.zero;
         }
         else {
@@ -52,10 +69,23 @@ public class PlayerController : MonoBehaviour {
         }
 
         LimitPlayerVelocity();
+
     }
 
     private void LimitPlayerVelocity() {
         _rb.linearVelocity = Vector2.ClampMagnitude(_rb.linearVelocity, _maxMovementSpeed);
+    }
+
+    private void PerformDashAction() {
+       if (Time.time >= _timeOfLastDash + _dashDuration) {
+            _currentlyDashing = false;
+            return;
+        }
+
+        Debug.Log("dashed");
+        _rb.linearDamping = 0.2f;
+ 
+        _rb.linearVelocity = _lastMovementDir * _dashMaxSpeed * Time.fixedDeltaTime;
     }
 
     #endregion

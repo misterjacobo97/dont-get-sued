@@ -41,7 +41,7 @@ public class PlayerInteract : MonoBehaviour {
     void Update() {
         Vector2 _movement = InputManager.Instance.GetPlayerMovement();
 
-        if (_movement != Vector2.zero && InputManager.Instance.PlayerIntereactIsHeld == false) {
+        if (_movement != Vector2.zero && InputManager.Instance.PlayerInteractIsHeld == false) {
             _lastMovement = _movement;
         }
 

@@ -8,14 +8,22 @@ public class InputManager : PersistentSignleton<InputManager> {
     [NonSerialized] public UnityEvent PlayerInteractPressedEvent = new();
 
     public InputSystem_Actions _playerActions;
+    
+    // Interact
+    [NonSerialized] public bool PlayerInteractWasPressed = false;
+    [NonSerialized] public bool PlayerInteractWasReleased = false;
+    [NonSerialized] public bool PlayerInteractIsHeld = false;
+    // Dash
+    [NonSerialized] public bool PlayerDashWasPressed = false;
+    [NonSerialized] public bool PlayerDashtWasReleased = false;
+    [NonSerialized] public bool PlayerDashIsHeld = false;
 
-    [NonSerialized] public bool PlayerIntereactWasPressed = false;
-    [NonSerialized] public bool PlayerIntereactWasReleased = false;
-    [NonSerialized] public bool PlayerIntereactIsHeld = false;
 
     // internal
     private InputAction _interactAction;
     private InputAction _moveAction;
+    private InputAction _dashAction;
+
 
 
     private void Start() {
@@ -25,14 +33,20 @@ public class InputManager : PersistentSignleton<InputManager> {
 
         _interactAction = _playerActions.Player.Interact;
         _moveAction = _playerActions.Player.Move;
+        _dashAction = _playerActions.Player.Dash;
     }
 
     private void Update() {
-        PlayerIntereactWasPressed = _interactAction.WasPressedThisFrame();
-        PlayerIntereactWasReleased = _interactAction.WasReleasedThisFrame();
-        PlayerIntereactIsHeld = _interactAction.IsPressed();
+        PlayerInteractWasPressed = _interactAction.WasPressedThisFrame();
+        PlayerInteractWasReleased = _interactAction.WasReleasedThisFrame();
+        PlayerInteractIsHeld = _interactAction.IsPressed();
 
-        if (PlayerIntereactWasPressed == true) {
+        PlayerDashWasPressed = _dashAction.WasPressedThisFrame();
+        PlayerDashtWasReleased = _dashAction.WasReleasedThisFrame();
+        PlayerDashIsHeld = _dashAction.IsPressed();
+
+
+        if (PlayerInteractWasPressed == true) {
             PlayerInteractPressedEvent.Invoke();
         }
     }

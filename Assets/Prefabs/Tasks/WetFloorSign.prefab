@@ -74,7 +74,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aed2ac7f26633334f9dd4f5b74fdc345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holdableItem_SO: {fileID: 11400000, guid: 20742cdef89b8fb45b65f4d4ec744424, type: 2}
   _collider: {fileID: 6744907497893503865}
+  _sprite: {fileID: 8296862581978543603}
 --- !u!1 &2537507055625231071
 GameObject:
   m_ObjectHideFlags: 0
