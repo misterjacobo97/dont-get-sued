@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class HoldableItem : MonoBehaviour, I_Interactable {
     [Header("holdable refs")]
-    private Rigidbody2D _rb;
+    [SerializeField] private Rigidbody2D _rb;
     [SerializeField] public HoldableItem_SO holdableItem_SO;
     [SerializeField] protected Collider2D _collider;
     [SerializeField] protected SpriteRenderer _sprite;
@@ -15,7 +15,7 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
     private I_ItemHolder _parentHolder = null;
 
     protected void Start() {
-        _rb = GetComponent<Rigidbody2D>();
+        //_rb = GetComponent<Rigidbody2D>();
 
         PlayerInteract.Instance.OnSelectedInteractableChanged += OnSelectedInteractableChanged;
     }
@@ -33,9 +33,17 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
         _heldState = newState;
 
         if (GetHeldState() == false) {
+
+            _rb.simulated = true;
             _collider.gameObject.SetActive(true);
         }
-        else _collider.gameObject.SetActive(false);
+        else {
+            // reset rotation
+            _rb.transform.rotation = Quaternion.Euler(0,0,0);
+
+            _rb.simulated = false;
+            _collider.gameObject.SetActive(false);
+        }
     }
 
     public bool GetHeldState() => _heldState;

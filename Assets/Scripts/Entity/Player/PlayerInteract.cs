@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 public interface I_Interactable {
@@ -22,8 +23,10 @@ public class PlayerInteract : MonoBehaviour {
     [Header("Interact Refs")]
     [SerializeField] private Transform _itemHolderRef;
     private I_Interactable _selectedInteractable;
+    [SerializeField] private Transform _indicator;
 
     private  Vector2 _lastMovement = Vector2.zero;
+    private Tween _indicatorTween;
 
     private void Awake() {
         if (Instance == null) {
@@ -41,6 +44,7 @@ public class PlayerInteract : MonoBehaviour {
     void Update() {
         Vector2 _movement = InputManager.Instance.GetPlayerMovement();
 
+
         if (_movement != Vector2.zero && InputManager.Instance.PlayerInteractIsHeld == false) {
             _lastMovement = _movement;
         }
@@ -50,15 +54,30 @@ public class PlayerInteract : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, _lastMovement, 1f, _interactMask);
         Debug.DrawLine(transform.position, RayPos, Color.white);
 
+
+        if (_movement != Vector2.zero && hit.collider == null) {
+            ControlIndicator(_movement);
+        }
+
         if (hit.collider != null) {
 
             I_Interactable _currentInteractable = hit.transform.GetComponent<I_Interactable>();
 
             SetSelectedInteractable(_currentInteractable);
+
+            ControlIndicator(_indicator.transform.InverseTransformPoint(hit.collider.transform.position));
         }
         else if (hit.collider == null && _selectedInteractable != null) {
             SetSelectedInteractable(null);
         }
+    }
+
+    private void ControlIndicator(Vector2 newPos) {
+        if (_indicatorTween != null && _indicatorTween.active) {
+            _indicatorTween.Kill();
+        }
+
+        _indicatorTween = _indicator.DOLocalMove(newPos, 0.1f);
     }
 
     private void OnInteractInput() {

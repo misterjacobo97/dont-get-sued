@@ -1,10 +1,13 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
     [Header("Refs")]
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private Transform _playerInteract;
+    [SerializeField] private SpriteRenderer _sprite;
+
 
     [Header("Params")]
     // movement
@@ -23,16 +26,16 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Logger _logger;
 
     // movement related
-    private Vector2 Movement;
+    private Vector2 _movement;
+    private bool _walkingAnimActive = false;
 
     private void FixedUpdate() {
         MovePlayer();
-
     }
 
     #region Movement
     private void MovePlayer() {
-        Movement = InputManager.Instance.GetPlayerMovement();
+        _movement = InputManager.Instance.GetPlayerMovement();
 
         //if (InputManager.Instance.PlayerDashWasPressed && Time.time >= _timeOfLastDash + _dashDuration) {
         //    _timeOfLastDash = Time.time;
@@ -42,14 +45,14 @@ public class PlayerController : MonoBehaviour {
         //    PerformDashAction();
         //}
 
-        if (Movement != Vector2.zero && InputManager.Instance.PlayerInteractIsHeld == false) {
+        if (_movement != Vector2.zero && InputManager.Instance.PlayerInteractIsHeld == false) {
             // check dif between current and requested velocity direction
-            double dirDiff = Math.Round(Vector2.Distance(_rb.linearVelocity.normalized, Movement), 2);
+            double dirDiff = Math.Round(Vector2.Distance(_rb.linearVelocity.normalized, _movement), 2);
             // then create a dynamic float to add to the movementAccel if current vel is not in the requested direction
             float directionSwitchMult = _movementAccel * (float)dirDiff;
 
             // calculate movement force
-            Vector2 newForce = Movement * (_movementAccel + directionSwitchMult) * Time.fixedDeltaTime;
+            Vector2 newForce = _movement * (_movementAccel + directionSwitchMult) * Time.fixedDeltaTime;
             Log(newForce);
 
             // change clamping
@@ -57,7 +60,10 @@ public class PlayerController : MonoBehaviour {
 
             _rb.AddForce(newForce);
 
-            _lastMovementDir = Movement;
+            ControlSprite(_movement);
+            ControlAnimations();
+
+            _lastMovementDir = _movement;
         }
         else if (InputManager.Instance.PlayerInteractIsHeld) {
             _rb.linearVelocity = Vector2.zero;
@@ -74,6 +80,27 @@ public class PlayerController : MonoBehaviour {
 
     private void LimitPlayerVelocity() {
         _rb.linearVelocity = Vector2.ClampMagnitude(_rb.linearVelocity, _maxMovementSpeed);
+    }
+
+    private void ControlSprite(Vector2 dir) {
+        if (dir == Vector2.left && _sprite.flipX == false) {
+            _sprite.flipX = true;
+        }
+
+        else if (dir == Vector2.right && _sprite.flipX == true) {
+            _sprite.flipX = false; 
+        }
+    }
+
+    private async void ControlAnimations() {
+        if (_walkingAnimActive == true) return;
+
+        _walkingAnimActive = true;
+
+        await _sprite.transform.DOLocalMoveY(0.15f, 0.1f).SetEase(Ease.OutCirc).AsyncWaitForCompletion();
+        await _sprite.transform.DOLocalMoveY(0, 0.1f).SetEase(Ease.InCirc).AsyncWaitForCompletion();
+
+        _walkingAnimActive = false;
     }
 
     private void PerformDashAction() {

@@ -43,14 +43,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685403359921093267}
-  m_BodyType: 1
-  m_Simulated: 1
+  m_BodyType: 0
+  m_Simulated: 0
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_LinearDamping: 10
+  m_AngularDamping: 10
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aed2ac7f26633334f9dd4f5b74fdc345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rb: {fileID: 7236217725510561038}
   holdableItem_SO: {fileID: 11400000, guid: 20742cdef89b8fb45b65f4d4ec744424, type: 2}
   _collider: {fileID: 6744907497893503865}
   _sprite: {fileID: 8296862581978543603}
@@ -166,7 +167,7 @@ GameObject:
   - component: {fileID: 2945611803767856599}
   - component: {fileID: 8296862581978543603}
   m_Layer: 6
-  m_Name: Body
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -230,8 +231,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b3d38153b47f92749823abc9aa90532e, type: 3}
+  m_SortingOrder: 6
+  m_Sprite: {fileID: -2459187618373733716, guid: 3f13c8d683900724e8db663fd55a34a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
