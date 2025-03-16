@@ -12,7 +12,7 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
     [SerializeField] protected SpriteRenderer _sprite;
 
     private bool _heldState = false;
-    private I_ItemHolder _parentHolder = null;
+    protected I_ItemHolder _parentHolder = null;
 
     protected void Start() {
         //_rb = GetComponent<Rigidbody2D>();
@@ -47,6 +47,7 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
     }
 
     public bool GetHeldState() => _heldState;
+    public I_ItemHolder GetParentHolder() => _parentHolder;
 
     /// <summary>
     /// This should be used for whenever you want to try to change the parent of a holdable item. 

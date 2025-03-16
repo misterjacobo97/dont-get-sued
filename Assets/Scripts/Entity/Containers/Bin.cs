@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using DG.Tweening;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
@@ -6,6 +8,7 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Transform _itemTarget;
     [SerializeField] private List<ScriptableObject> _acceptedItems = new();
+    private Sequence _interactTween;
 
     private HoldableItem _heldItem = null;
 
@@ -23,11 +26,11 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
     }
 
     public void SetSelected() {
-        _sprite.color = Color.white;
+        _sprite.color = Color.gray;
     }
 
     public void SetUnselected() {
-        _sprite.color = Color.red;
+        _sprite.color = Color.white;
     }
 
     public void Interact(object caller) {
@@ -39,8 +42,32 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
 
                 // set holdable parent to this
                 (caller as PlayerInteract).GetItemHolder().GetHeldItem().ChangeParent(this);
+
+                HandleAnimation();
             }
         }
+    }
+
+    private void HandleAnimation() {
+        if (_interactTween != null && _interactTween.active) {
+            _interactTween.Kill();
+        }
+
+        _sprite.transform.rotation = quaternion.EulerXYZ(0,0,0);
+
+        _interactTween = DOTween.Sequence();
+
+        _interactTween.SetRelative(true);
+
+        _interactTween.Append(_sprite.transform.DOScale(0.01f, 0.1f))
+            .Insert(0, _sprite.transform.DORotate(new Vector3(0, 0, 20), 0.1f))
+            .Append(_sprite.transform.DOScale(-0.01f, 0.1f))
+            .Insert(0.1f, _sprite.transform.DORotate(new Vector3(0, 0, -40), 0.1f))
+            .Append(_sprite.transform.DORotate(new Vector3(0, 0, 20), 0.05f));
+
+
+
+
     }
 
     public void SetItem(HoldableItem newItem) {

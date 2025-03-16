@@ -1,25 +1,33 @@
 using System;
 using System.Collections.Generic;
-using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
-public abstract class BaseStateManager<EState> : MonoBehaviour where EState : Enum
-{
-    [SerializedDictionary] public Dictionary<EState, BaseState<EState>> States = new();
-    protected BaseState<EState> CurrentState;
-    protected EState InitialState;
+public abstract class BaseStateManager<EState> : MonoBehaviour where EState : Enum {
 
-    // protected bool isTransitioningState = false;
+    [SerializeField] protected List<BaseState<EState>> States = new();
+    [SerializeField] protected BaseState<EState> CurrentState;
+    [SerializeField] protected EState InitialState;
+    protected ScriptableObject _context;
 
-    void Awake(){}
-    void Start(){
+    public void Init(ScriptableObject context) {
+        _context = context;
+    }
+
+    protected virtual void Start(){
+        //foreach (BaseState state in States) {
+        //    state.Init(_context);
+        //}
+        // gotta do this in the derived state machine
+
+        CurrentState = States.Find(s => s.StateKey.Equals(InitialState));
+
         CurrentState.EnterState();
     }
 
-    void Update(){
+    protected virtual void Update(){
         EState nextStateKey = CurrentState.GetNextState();
 
-        if (/*!isTransitioningState &&*/ nextStateKey.Equals(CurrentState.StateKey)){
+        if (nextStateKey.Equals(CurrentState.StateKey)){
             CurrentState.UpdateState();
         } else {
             TransitionToState(nextStateKey);
@@ -40,12 +48,10 @@ public abstract class BaseStateManager<EState> : MonoBehaviour where EState : En
         CurrentState.OnTriggerExit(collider);
     }
 
-    void TransitionToState(EState stateKey){
-        // isTransitioningState = true;
+    protected void TransitionToState(EState stateKey){
         CurrentState.ExitState();
-        CurrentState = States[stateKey];
+        CurrentState = States.Find(s => s.StateKey.Equals(stateKey));
         CurrentState.EnterState();
-        // isTransitioningState = false;
     }
     
 

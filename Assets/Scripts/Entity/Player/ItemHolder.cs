@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ItemHolder : MonoBehaviour, I_ItemHolder {
@@ -16,6 +15,10 @@ public class ItemHolder : MonoBehaviour, I_ItemHolder {
         if (_movement != Vector2.zero) {
             _itemTarget.localPosition = _movement / 2;
         }
+    }
+
+    public List<HoldableItem_SO> GetAcceptedItems() {
+        return _acceptedItems;
     }
 
     public void SetItem(HoldableItem newItem) {

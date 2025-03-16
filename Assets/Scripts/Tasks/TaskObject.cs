@@ -1,21 +1,25 @@
 using Tasks;
-using UnityEngine;
 
 public class TaskObject : HoldableItem {
+
+    public enum TASK_STATE {
+        UNASSIGNED,
+        ACTIVE,
+        FAILED,
+        COMPLETED
+    }
+
+    protected TASK_STATE state = TASK_STATE.UNASSIGNED;
     protected I_ItemHolder _taskHolder;
     protected bool _taskActive;
 
     public void CompleteTask() {
-        //Debug.Log("Completing task: " + this);
-
         DeactivateTask();
 
         TaskManager.Instance.AddCompletedTask(this);
     }
 
     public void FailTask() {
-        //Debug.Log("failing task: " + this);
-
         DeactivateTask();
 
         TaskManager.Instance.AddToFailedTasks(this);
@@ -24,11 +28,10 @@ public class TaskObject : HoldableItem {
     protected void DeactivateTask() {
         _taskActive = false;
 
-        if (_taskHolder != null) {
-            _taskHolder.RemoveItem();
+        if (_parentHolder != null) {
+            _parentHolder.RemoveItem();
         }
-
-        _taskHolder = null;
+        _parentHolder = null;
 
         _sprite.enabled = false;
         _collider.enabled = false;

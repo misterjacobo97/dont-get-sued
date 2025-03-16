@@ -13,9 +13,12 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Transform _itemTarget;
     [SerializeField] private List<HoldableItem_SO> _acceptedItems = new();
+    [SerializeField] private Transform _customerMarker;
+
 
     [Header("Params")]
     [SerializeField] private ShelfType _shelfType = ShelfType.SINGLE_TASK;
+    [SerializeField] private bool _showGizmos = true;
 
     private HoldableItem _heldItem = null;
 
@@ -90,4 +93,15 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
         return _acceptedItems.Contains(item);
     }
 
+    public Transform GetCustomerTarget() {
+        return _customerMarker;
+    }
+
+
+    private void OnDrawGizmos() {
+        if (_showGizmos) {
+            Gizmos.DrawCube(_customerMarker.position, new(0.1f,0.1f,0));
+            Gizmos.color = Color.green;
+        }
+    }
 }

@@ -1,9 +1,21 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Tasks {
     public class TaskManager : PersistentSignleton<TaskManager> {
+        /// <summary>
+        /// a struct to store info about tasks, and any info relating to them
+        /// </summary>
+        public struct TaskInfo {
+            public int id;
+            public TaskObject task;
+            public I_ItemHolder taskContainer;
+            public NPCController assignedNPC;
+        };
+
         [Header("Refs")]
         [SerializeField] private TextMeshProUGUI _tasksLeftText;
         [SerializeField] private TextMeshProUGUI _tasksCompletedText;
@@ -15,6 +27,8 @@ namespace Tasks {
         private List<TaskObject> _completedTasks = new();
         private List<TaskObject> _failedTasks = new();
         private List<I_ItemHolder> _taskReceivers = new();
+
+        [NonSerialized] public UnityEvent taskListsChanged = new();
 
         private void Start() {
             AssignTaskTimer();
@@ -31,6 +45,17 @@ namespace Tasks {
             AssignNewTask();
 
             AssignTaskTimer();
+        }
+
+        public List<TaskObject> GetActiveTaskOfType(List<HoldableItem_SO> types) {
+            List<TaskObject> newList = new();
+
+            foreach (TaskObject task in _activeTasks.FindAll(t => types.Contains(t.holdableItem_SO))) {
+                newList.Add(task);
+            }
+
+            return newList;
+
         }
 
         public void AddTaskReceiver(I_ItemHolder newReceiver) {
@@ -56,7 +81,7 @@ namespace Tasks {
 
                 _activeTasks.Add(newTask);
 
-                I_ItemHolder selectedHolder = availableReceivers[Random.Range(0, availableReceivers.Count - 1)];
+                I_ItemHolder selectedHolder = availableReceivers[UnityEngine.Random.Range(0, availableReceivers.Count - 1)];
 
                 Debug.Log("assigning new task to: " + selectedHolder);
 
@@ -65,6 +90,7 @@ namespace Tasks {
 
                 // update tasks left text
                 UpdateUI();
+                taskListsChanged.Invoke();
             }
         }
 
@@ -79,6 +105,7 @@ namespace Tasks {
             newCompletedTask.transform.parent = _tasksParent;
             newCompletedTask.transform.position = _tasksParent.position;
             UpdateUI();
+            taskListsChanged.Invoke();
         }
 
         public void AddToFailedTasks(TaskObject newTask) {
@@ -89,6 +116,7 @@ namespace Tasks {
             newTask.transform.position = _tasksParent.position;
 
             UpdateUI();
+            taskListsChanged.Invoke();
         }
 
         private void UpdateUI() {
