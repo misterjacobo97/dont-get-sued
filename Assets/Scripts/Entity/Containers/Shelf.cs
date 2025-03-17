@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Tasks;
 using UnityEngine;
 
 public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
@@ -24,6 +23,10 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
 
     protected  void Start() {
         PlayerInteract.Instance.OnSelectedInteractableChanged += OnSelectedInteractableChanged;
+
+        if (_itemTarget.GetChild(0) != null) {
+            (_itemTarget.GetChild(0).GetComponent<HoldableItem>()).ChangeParent(this);
+        }
 
         TaskManager.Instance.AddTaskReceiver(this);
     }

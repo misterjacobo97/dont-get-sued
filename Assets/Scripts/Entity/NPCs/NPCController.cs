@@ -1,10 +1,14 @@
-using Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 public class NPCController : MonoBehaviour {
     [Header("refs")]
     [SerializeField] private CustomerStateMachine _stateMachine;
     private CustomerStateContext_SO _stateContext;
+    [SerializeField] private SpriteRenderer _sprite;
+
+    [Header("Sprites")]
+    [SerializeField] private Sprite _sideSprite;
+    [SerializeField] private Sprite _backSprite;
 
     private NavMeshAgent agent;
 
@@ -30,16 +34,28 @@ public class NPCController : MonoBehaviour {
 
     private void Update() {
         if (_stateContext.target != null && agent.isStopped == true) {
-            Debug.Log("here");
             agent.isStopped = false;
             agent.SetDestination(_stateContext.target.position);
         }
         else if (_stateContext.target == null) {
-            Debug.Log("there");
 
             agent.isStopped = true;
         }
-    }
 
+        ControlSprite(agent.velocity.normalized);
+    }
+    private void ControlSprite(Vector2 dir) {
+
+        if (dir.y > 0) _sprite.sprite = _backSprite;
+        else if (dir.y < 0) _sprite.sprite = _sideSprite;
+
+        if (dir.x < 0 && _sprite.flipX == false) {
+            _sprite.flipX = true;
+        }
+
+        else if (dir.x > 0 && _sprite.flipX == true) {
+            _sprite.flipX = false;
+        }
+    }
 
 }

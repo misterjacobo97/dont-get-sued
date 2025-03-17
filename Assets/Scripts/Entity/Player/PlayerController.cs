@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Transform _playerInteract;
     [SerializeField] private SpriteRenderer _sprite;
 
+    [Header("Sprites")]
+    [SerializeField] private Sprite _sideSprite;
+    [SerializeField] private Sprite _backSprite;
 
     [Header("Params")]
     // movement
@@ -83,12 +86,16 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void ControlSprite(Vector2 dir) {
-        if (dir == Vector2.left && _sprite.flipX == false) {
+
+        if (dir.y > 0) _sprite.sprite = _backSprite;
+        else if (dir.y < 0) _sprite.sprite = _sideSprite;
+
+        if (dir.x < 0 && _sprite.flipX == false) {
             _sprite.flipX = true;
         }
 
-        else if (dir == Vector2.right && _sprite.flipX == true) {
-            _sprite.flipX = false; 
+        else if (dir.x > 0 && _sprite.flipX == true) {
+            _sprite.flipX = false;
         }
     }
 
@@ -104,14 +111,14 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void PerformDashAction() {
-       if (Time.time >= _timeOfLastDash + _dashDuration) {
+        if (Time.time >= _timeOfLastDash + _dashDuration) {
             _currentlyDashing = false;
             return;
         }
 
         Debug.Log("dashed");
         _rb.linearDamping = 0.2f;
- 
+
         _rb.linearVelocity = _lastMovementDir * _dashMaxSpeed * Time.fixedDeltaTime;
     }
 

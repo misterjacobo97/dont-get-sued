@@ -5,6 +5,7 @@ public class CustomerSeekingState : CustomerBaseState {
     public CustomerSeekingState(CustomerStateMachine.STATES key, CustomerStateContext_SO context) : base(key, context) { }
 
     [SerializeField] private float _changeInterval = 2f;
+    private bool _initialStepsTaken = false;
 
     public override void EnterState() {
         base.EnterState();
@@ -16,25 +17,32 @@ public class CustomerSeekingState : CustomerBaseState {
             _context.target = (_context.currentTask.GetParentHolder() as BaseShelf).GetCustomerTarget();
             _context.agent.SetDestination(_context.target.position);
         }
+
+        _initialStepsTaken = true;
+
+
     }
 
     public override void UpdateState() {
         base.UpdateState();
 
-        
+
     }
 
     public override CustomerStateMachine.STATES GetNextState() {
-        if (_context.currentTask == null) {
+        if (_initialStepsTaken == false) return StateKey;
+
+        if (
+            _context.currentTask == null ||
+            _context.possibleTasks.Contains(_context.currentTask) == false
+            ) {
             return CustomerStateMachine.STATES.IDLE;
         }
 
-        if (_context.possibleTasks.Contains(_context.currentTask) == false) {
+        if (_context.agent.remainingDistance < 0.1) {
             return CustomerStateMachine.STATES.IDLE;
         }
-        //if (_context.agent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathComplete) {
-        //    return CustomerStateMachine.STATES.IDLE;
-        //}
+
 
         return StateKey;
     }
@@ -43,6 +51,9 @@ public class CustomerSeekingState : CustomerBaseState {
 
         _context.target = null;
         _context.currentTask = null;
+
+        _initialStepsTaken = false;
+
     }
 
 }

@@ -1,10 +1,15 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// the base holdable item class. This allows classes with the I_ItemHolder Interface to interact with these. 
 /// HoldableItems are responsible for changing their own parent.
 /// </summary>
 public class HoldableItem : MonoBehaviour, I_Interactable {
+    [NonSerialized] public UnityEvent<I_ItemHolder> ChangedParentHolder = new();
+
+
     [Header("holdable refs")]
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] public HoldableItem_SO holdableItem_SO;
@@ -67,6 +72,7 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
         transform.parent = newParent.GetItemTargetTransform();
 
         SetHeldState(true);
+        ChangedParentHolder.Invoke(_parentHolder);
     }
 
     public void DropItem() {

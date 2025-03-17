@@ -375,6 +375,8 @@ MonoBehaviour:
   _rb: {fileID: 7241204999789311181}
   _playerInteract: {fileID: 7392825520799445176}
   _sprite: {fileID: 7496421096236955562}
+  _sideSprite: {fileID: 3056186126888679272, guid: f3618529d1d033d429d5ec43e7200673, type: 3}
+  _backSprite: {fileID: -7902658530649608355, guid: 344957bef4b1bf04b8067958f06ebc44, type: 3}
   _movementAccel: 700
   _maxMovementSpeed: 6
   _linearDamping: 20
