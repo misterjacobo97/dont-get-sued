@@ -24,11 +24,10 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
     protected  void Start() {
         PlayerInteract.Instance.OnSelectedInteractableChanged += OnSelectedInteractableChanged;
 
+        // if target gameobject has a child, check if its allowed and set it up as held item
         if (_itemTarget.GetChild(0) != null) {
             (_itemTarget.GetChild(0).GetComponent<HoldableItem>()).ChangeParent(this);
         }
-
-        TaskManager.Instance.AddTaskReceiver(this);
     }
 
     private void OnSelectedInteractableChanged(object sender, PlayerInteract.OnSelectedInteractableChangedEventArgs e) {
@@ -73,9 +72,9 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
             return null;
         }
 
-        HoldableItem item = _heldItem;
-        _heldItem = null;
-        return item;
+        //HoldableItem item = _heldItem;
+        //_heldItem = null;
+        return _heldItem;
     }
 
 

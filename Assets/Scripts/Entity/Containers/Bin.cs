@@ -8,6 +8,9 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Transform _itemTarget;
     [SerializeField] private List<ScriptableObject> _acceptedItems = new();
+    [SerializeField] private AudioClip _trashSound;
+
+
     private Sequence _interactTween;
 
     private HoldableItem _heldItem = null;
@@ -44,6 +47,7 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
                 (caller as PlayerInteract).GetItemHolder().GetHeldItem().ChangeParent(this);
 
                 HandleAnimation();
+                SoundManager.Instance.PlaySound(_trashSound);
             }
         }
     }
@@ -117,7 +121,9 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
     private void CompleteTaskItem() {
         if (_heldItem is not TaskObject) return;
 
-        (_heldItem as TaskObject).CompleteTask();
+        if (_heldItem is SpoiledFoodTask) (_heldItem as SpoiledFoodTask).CompleteTask();
+
+        else (_heldItem as TaskObject).CompleteTask();
     }
 
 

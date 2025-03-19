@@ -117,6 +117,10 @@ MonoBehaviour:
   _acceptedItems:
   - {fileID: 11400000, guid: 8c6ca1165eaf62041b7f55682e126067, type: 2}
   - {fileID: 11400000, guid: 20742cdef89b8fb45b65f4d4ec744424, type: 2}
+  - {fileID: 11400000, guid: 86420ed71513fc740bf07a1d50087284, type: 2}
+  - {fileID: 11400000, guid: 78dd3c73afe1b84498eb9b21cab9bd43, type: 2}
+  - {fileID: 11400000, guid: e167eee3fd185a9429bf8be3bfebd7fa, type: 2}
+  _pickUpSound: {fileID: 8300000, guid: 3b44a1eba03c4444fa5314d99a20b477, type: 3}
 --- !u!1 &2212799905638464651
 GameObject:
   m_ObjectHideFlags: 0

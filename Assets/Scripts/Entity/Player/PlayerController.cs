@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour {
             Vector2 newForce = _movement * (_movementAccel + directionSwitchMult) * Time.fixedDeltaTime;
             Log(newForce);
 
-            // change clamping
+            // change so it doesnt feel sluggish when moving
             _rb.linearDamping = 0.2f;
 
             _rb.AddForce(newForce);
@@ -78,7 +78,6 @@ public class PlayerController : MonoBehaviour {
         }
 
         LimitPlayerVelocity();
-
     }
 
     private void LimitPlayerVelocity() {
@@ -86,7 +85,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void ControlSprite(Vector2 dir) {
-
         if (dir.y > 0) _sprite.sprite = _backSprite;
         else if (dir.y < 0) _sprite.sprite = _sideSprite;
 

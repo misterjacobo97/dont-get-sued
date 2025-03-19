@@ -10,7 +10,7 @@ public class CustomerFallingState : CustomerBaseState {
     public override void EnterState() {
         base.EnterState();
 
-        _context.target = GameObject.FindAnyObjectByType<PlayerController>().transform;
+        _context.currentTarget = GameObject.FindAnyObjectByType<PlayerController>().transform;
     }
 
     public override CustomerStateMachine.STATES GetNextState() {

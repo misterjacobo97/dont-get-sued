@@ -166,7 +166,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 10
   m_AngularDamping: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -175,7 +175,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -194,6 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 4025215493054148166}
   _sprite: {fileID: 2776958427186542106}
+  _itemHolder: {fileID: 1846056715573012283}
   _sideSprite: {fileID: 598418902483937163, guid: a5e957016411d8149bd0b82872da15ce, type: 3}
   _backSprite: {fileID: 7443571963151159799, guid: dd51f9e8c46672b4c87b8d59d194cfa0, type: 3}
 --- !u!195 &5722255225168319184
@@ -218,6 +219,51 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!1 &2922761950784457687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9016333750135110647}
+  - component: {fileID: 4408586207114080925}
+  m_Layer: 9
+  m_Name: Exit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9016333750135110647
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2922761950784457687}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 701272603437857649}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4408586207114080925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2922761950784457687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e2e3a3e3768f0458e89ce608edbed7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateKey: 3
 --- !u!1 &3959193155505505048
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,7 +273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1846056715573012283}
-  - component: {fileID: 1179471293115660153}
+  - component: {fileID: 5532853514605486073}
   m_Layer: 9
   m_Name: ItemHolder
   m_TagString: Untagged
@@ -251,7 +297,7 @@ Transform:
   - {fileID: 861597332642762857}
   m_Father: {fileID: 4252999180834578793}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1179471293115660153
+--- !u!114 &5532853514605486073
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -260,12 +306,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3959193155505505048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad09d7afeb760bd44af826ae8c1749ca, type: 3}
+  m_Script: {fileID: 11500000, guid: d4bb132fe7ace2a4698b61910f42919c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _itemTarget: {fileID: 861597332642762857}
   _acceptedItems:
   - {fileID: 11400000, guid: 8c6ca1165eaf62041b7f55682e126067, type: 2}
+  - {fileID: 11400000, guid: 86420ed71513fc740bf07a1d50087284, type: 2}
+  - {fileID: 11400000, guid: 78dd3c73afe1b84498eb9b21cab9bd43, type: 2}
+  - {fileID: 11400000, guid: e167eee3fd185a9429bf8be3bfebd7fa, type: 2}
+  _pickUpSound: {fileID: 8300000, guid: 3b44a1eba03c4444fa5314d99a20b477, type: 3}
 --- !u!1 &7257630152228803323
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +435,7 @@ Transform:
   m_Children:
   - {fileID: 7996052953685138061}
   - {fileID: 1584603040356373189}
+  - {fileID: 9016333750135110647}
   m_Father: {fileID: 4252999180834578793}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4025215493054148166
@@ -447,7 +498,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StateKey: 0
-  _changeInterval: 2
+  _minIdleDuration: 2
+  _maxIdleDuration: 8
 --- !u!1 &9129558216401477998
 GameObject:
   m_ObjectHideFlags: 0

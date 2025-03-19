@@ -20,8 +20,6 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
     protected I_ItemHolder _parentHolder = null;
 
     protected void Start() {
-        //_rb = GetComponent<Rigidbody2D>();
-
         PlayerInteract.Instance.OnSelectedInteractableChanged += OnSelectedInteractableChanged;
     }
 
@@ -60,7 +58,6 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
     /// </summary>
     /// <param name="newParent"></param>
     public void ChangeParent(I_ItemHolder newParent) {
-
         if (newParent.IsItemAccepted(holdableItem_SO) == false) {
             return;
         }

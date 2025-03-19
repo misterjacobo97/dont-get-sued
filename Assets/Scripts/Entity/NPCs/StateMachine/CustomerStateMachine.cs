@@ -2,7 +2,8 @@ public class CustomerStateMachine : BaseStateManager<CustomerStateMachine.STATES
     public enum STATES {
         IDLE,
         SEEKING,
-        FALLING
+        FALLING,
+        EXIT
     }
 
     protected override void Start() {

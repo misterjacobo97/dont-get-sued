@@ -1,16 +1,32 @@
+using System;
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
+
+[Serializable]
+public class ShoppingItem {
+    public int id;
+    public HoldableItem_SO item;
+    public bool collected;
+}
+
 public class NPCController : MonoBehaviour {
     [Header("refs")]
     [SerializeField] private CustomerStateMachine _stateMachine;
     private CustomerStateContext_SO _stateContext;
     [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] private Transform _itemHolder;
 
     [Header("Sprites")]
     [SerializeField] private Sprite _sideSprite;
     [SerializeField] private Sprite _backSprite;
+    private bool _walkingAnimActive = false;
 
     private NavMeshAgent agent;
+
+    // shopping list
+    //[SerializeField] private List<ShoppingItem> _shoppingList = new();
 
     private void Awake() {
         agent = GetComponent<NavMeshAgent>();
@@ -20,29 +36,33 @@ public class NPCController : MonoBehaviour {
         // fill in context refs
         _stateContext = ScriptableObject.CreateInstance<CustomerStateContext_SO>();
         _stateContext.agent = agent;
-        _stateContext.itemHolder = GetComponentInChildren<ItemHolder>();
+        _stateContext.itemHolder = GetItemHolder();
+        _stateContext.shoppingList = new();
 
         // the initialise state machine
         _stateMachine.Init(_stateContext);
+
     }
 
+
+
     private void Start() {
-        TaskManager.Instance.taskListsChanged.AddListener(() => {
-            _stateContext.possibleTasks = TaskManager.Instance.GetActiveTaskOfType(_stateContext.itemHolder.GetAcceptedItems());
-        });
+
+        NPCManager.Instance.AddNPC(this);
     }
 
     private void Update() {
-        if (_stateContext.target != null && agent.isStopped == true) {
+        if (_stateContext.currentTarget != null && agent.isStopped == true) {
             agent.isStopped = false;
-            agent.SetDestination(_stateContext.target.position);
+            agent.SetDestination(_stateContext.currentTarget.position);
         }
-        else if (_stateContext.target == null) {
+        else if (_stateContext.currentTarget == null) {
 
             agent.isStopped = true;
         }
 
         ControlSprite(agent.velocity.normalized);
+        ControlAnimations();
     }
     private void ControlSprite(Vector2 dir) {
 
@@ -58,4 +78,39 @@ public class NPCController : MonoBehaviour {
         }
     }
 
+    private async void ControlAnimations() {
+        if (_walkingAnimActive == true || agent.isStopped) return;
+
+        _walkingAnimActive = true;
+
+        await _sprite.transform.DOLocalMoveY(0.15f, 0.1f).SetEase(Ease.OutCirc).AsyncWaitForCompletion();
+        await _sprite.transform.DOLocalMoveY(0, 0.1f).SetEase(Ease.InCirc).AsyncWaitForCompletion();
+
+        _walkingAnimActive = false;
+    }
+
+    #region Shopping
+    public void AddToShoppingList(List<ShoppingItem> items) {
+        //_shoppingList = items;
+        _stateContext.shoppingList = items;
+    }
+
+    public void AddToShoppingList(ShoppingItem item) {
+        //_shoppingList.Add(item);
+        _stateContext.shoppingList.Add(item);
+    }
+
+    public void GrabItem(HoldableItem item) {
+        I_ItemHolder holder = _itemHolder.GetComponent<I_ItemHolder>();
+
+        holder.SetItem(item);
+    }
+    #endregion
+
+
+    public I_ItemHolder GetItemHolder() {
+        if (_itemHolder == null) return null;
+
+        return _itemHolder.GetComponent<I_ItemHolder>();
+    }
 }

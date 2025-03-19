@@ -1,9 +1,10 @@
 using System;
 using UnityEngine.Events;
+using UnityEngine;
 
 public class TaskObject : HoldableItem {
     [NonSerialized] public UnityEvent<TASK_STATE> ChangedTaskState = new();
-
+    [SerializeField] protected int _taskScore;
 
     public enum TASK_STATE {
         INACTIVE,
@@ -13,12 +14,16 @@ public class TaskObject : HoldableItem {
     }
 
     protected TASK_STATE state = TASK_STATE.INACTIVE;
-    protected I_ItemHolder _taskHolder = null;
+    //protected I_ItemHolder _taskHolder = null;
     protected bool _taskActive;
 
     protected new void Start() {
         base.Start();
-        TaskManager.Instance.AddTaskToList(this, _taskHolder);
+        TaskManager.Instance.AddTaskToList(this, _parentHolder);
+
+        ChangedParentHolder.AddListener(newParent => {
+            TaskManager.Instance.AddTaskToList(this, newParent);
+        });
     }
 
     public void ActivateTask() {
@@ -30,14 +35,13 @@ public class TaskObject : HoldableItem {
         DeactivateTask();
         ChangedTaskState.Invoke(TASK_STATE.COMPLETED);
 
-        TaskManager.Instance.AddCompletedTask(this);
+        GameManager.Instance.AddToScore(_taskScore);
     }
 
     public void FailTask() {
         DeactivateTask();
         ChangedTaskState.Invoke(TASK_STATE.FAILED);
 
-        TaskManager.Instance.AddToFailedTasks(this);
     }
 
     protected void DeactivateTask() {

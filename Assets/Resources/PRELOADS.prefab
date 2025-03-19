@@ -658,6 +658,7 @@ MonoBehaviour:
   _tasksLeftText: {fileID: 5529462377970717438}
   _tasksCompletedText: {fileID: 638240737384970299}
   _tasksParent: {fileID: 1706619006976066222}
+  _taskList: []
   _unassignedTasks:
   - {fileID: 3264991729415957471, guid: a0224cea67d2b11428a1266c52cc2e18, type: 3}
   - {fileID: 3264991729415957471, guid: a0224cea67d2b11428a1266c52cc2e18, type: 3}
@@ -708,6 +709,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c2941edb05ba045ac9ef7a94064786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scoreText: {fileID: 4908713425482972211}
+--- !u!1 &3413081015182942301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3043091804675568286}
+  - component: {fileID: 12370640380024670}
+  m_Layer: 0
+  m_Name: NPCManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3043091804675568286
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3413081015182942301}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 334.61847, y: 356.43005, z: -3.1382651}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 359147824064309380}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &12370640380024670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3413081015182942301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d72f030480cda48b03a70a888d0a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shopperPrefabs:
+  - {fileID: 4252999180834578793, guid: 39cd22ecf9d83674fa0979687011f148, type: 3}
+  _shoppableItems:
+  - {fileID: 11400000, guid: 8c6ca1165eaf62041b7f55682e126067, type: 2}
+  - {fileID: 11400000, guid: 86420ed71513fc740bf07a1d50087284, type: 2}
+  - {fileID: 11400000, guid: 78dd3c73afe1b84498eb9b21cab9bd43, type: 2}
+  - {fileID: 11400000, guid: e167eee3fd185a9429bf8be3bfebd7fa, type: 2}
+  _maxShoppingListSize: 3
+  _npcSpawnInterval: 15
+  _maxNpcCount: 4
 --- !u!1 &3637917177199190972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1681,6 +1737,7 @@ Transform:
   - {fileID: 2591422633120345258}
   - {fileID: 1743444490953570103}
   - {fileID: 4674265965002933280}
+  - {fileID: 3043091804675568286}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8102039256821274264

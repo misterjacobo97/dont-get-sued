@@ -9,15 +9,15 @@ public class CustomerStateContext_SO : ScriptableObject {
     // refs
     public CustomerStateMachine stateMachine;
     public NavMeshAgent agent;
-    public Transform target = null;
-    public ItemHolder itemHolder;
+    public I_ItemHolder itemHolder;
 
     // properties
     public float timeOfLastStateChange;
     public CustomerStateMachine.STATES lastState;
 
     // tasks related
-    public List<TaskObject> possibleTasks = new();
-    public TaskObject currentTask;
+    public List<ShoppingItem> shoppingList = new();
+    public TaskInfo currentTask;
+    public Transform currentTarget;
 
 }
