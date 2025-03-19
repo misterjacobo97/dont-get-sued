@@ -72,8 +72,6 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
             return null;
         }
 
-        //HoldableItem item = _heldItem;
-        //_heldItem = null;
         return _heldItem;
     }
 

@@ -33,7 +33,7 @@ public class TaskInfo {
     public void ChangeAssignedNPC(NPCController newNpc = null) {
         assignedNPC = newNpc;
         ChangedAssignedNPC.Invoke(assignedNPC);
-        Debug.Log(id + " changed assigned NPC");
+
     }
 
     public void ChangeTaskHolder(I_ItemHolder newHolder) {
@@ -45,7 +45,6 @@ public class TaskInfo {
     private void ChangeTaskState(TaskObject.TASK_STATE newState) {
         state = newState;
         ChangedTaskState.Invoke(state);
-        Debug.Log(id + " changed task state");
 
     }
 

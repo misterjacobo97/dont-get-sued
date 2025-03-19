@@ -25,8 +25,6 @@ public class NPCController : MonoBehaviour {
 
     private NavMeshAgent agent;
 
-    // shopping list
-    //[SerializeField] private List<ShoppingItem> _shoppingList = new();
 
     private void Awake() {
         agent = GetComponent<NavMeshAgent>();
@@ -41,13 +39,9 @@ public class NPCController : MonoBehaviour {
 
         // the initialise state machine
         _stateMachine.Init(_stateContext);
-
     }
 
-
-
     private void Start() {
-
         NPCManager.Instance.AddNPC(this);
     }
 
@@ -78,15 +72,22 @@ public class NPCController : MonoBehaviour {
         }
     }
 
-    private async void ControlAnimations() {
+    private void ControlAnimations() {
         if (_walkingAnimActive == true || agent.isStopped) return;
 
         _walkingAnimActive = true;
 
-        await _sprite.transform.DOLocalMoveY(0.15f, 0.1f).SetEase(Ease.OutCirc).AsyncWaitForCompletion();
-        await _sprite.transform.DOLocalMoveY(0, 0.1f).SetEase(Ease.InCirc).AsyncWaitForCompletion();
+        _sprite.transform.DOLocalMoveY(0.15f, 0.1f).SetEase(Ease.OutCirc).SetLink(this.gameObject).onComplete += () => {
+            _sprite.transform.DOLocalMoveY(0, 0.1f).SetEase(Ease.InCirc).SetLink(this.gameObject).onComplete += () => {
+                _walkingAnimActive = false;
+            };
+        };
 
-        _walkingAnimActive = false;
+
+    }
+
+    private void OnDestroy() {
+        
     }
 
     #region Shopping
