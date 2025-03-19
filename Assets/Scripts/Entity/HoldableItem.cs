@@ -62,6 +62,7 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
             return;
         }
 
+        if (_parentHolder != null) _parentHolder.RemoveItem();
         newParent.SetItem(this);
 
         _parentHolder = newParent;

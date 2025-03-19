@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possiblePrefabs: {fileID: 7802484458093726679, guid: cf21a9a75f22393469e466262fc243ba, type: 3}
   iconSprite: {fileID: 21300000, guid: 21520e69fb1889f4598c1a320b3c31bc, type: 3}
-  taskName: Spoiled Food
+  taskName: Milk
   pickableItem: 1

@@ -48,13 +48,6 @@ public class SpoiledFoodTask : TaskObject {
         }
     }
 
-    //public new void ActivateTask() {
-
-
-    //    _timerIcon.enabled = true;        
-    //    base.ActivateTask();
-    //}
-
     public new void CompleteTask() {
         if (_spoiled == true) {
             _taskScore = 0;

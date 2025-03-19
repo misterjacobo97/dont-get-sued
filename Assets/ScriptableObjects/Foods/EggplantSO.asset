@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possiblePrefabs: {fileID: 7802484458093726679, guid: a0224cea67d2b11428a1266c52cc2e18, type: 3}
   iconSprite: {fileID: 21300000, guid: 21520e69fb1889f4598c1a320b3c31bc, type: 3}
-  taskName: Spoiled Food
+  taskName: Eggplant
   pickableItem: 1
