@@ -44,6 +44,12 @@ public class TaskManager : PersistentSignleton<TaskManager> {
         }
     }
 
+    public void RemoveNPCFromAssignments(NPCController npc) {
+        foreach (var item in _taskList.Where(task => task.assignedNPC == npc)) {
+            item.assignedNPC = null;
+        }
+    }
+
     private async void AssignTaskTimer() {
         Debug.Log("starting assign task timer");
 

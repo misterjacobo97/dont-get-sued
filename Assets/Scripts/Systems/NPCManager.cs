@@ -63,9 +63,8 @@ public class NPCManager : PersistentSignleton<NPCManager> {
             // add shopping list to NPC
             List<ShoppingItem> newItems = GenerateNewShoppingList();
             AssignShoppingListToNPC(newNPC, newItems);
-        }
 
-        //await Awaitable.WaitForSecondsAsync(_npcSpawnInterval);
+        }
 
         SpawnNewNPC();
     }
@@ -91,12 +90,12 @@ public class NPCManager : PersistentSignleton<NPCManager> {
         npc.AddToShoppingList(newList);
     }
 
-    public void AddActiveTarget(NPCController npc, Transform target) {
-        _activeNpcTargetList.Add(new NPCTargets(npc, target));
-    }
+    //public void AddActiveTarget(NPCController npc, Transform target) {
+    //    _activeNpcTargetList.Add(new NPCTargets(npc, target));
+    //}
 
-    public void RemoveActiveTarget(NPCController npc) {
-        _activeNpcTargetList.Remove(_activeNpcTargetList.Find(t => t.npc == npc));
+    public void RemoveNPC(NPCController npc) {
+        _activeNpcList.Remove(npc);
     }
 
 }

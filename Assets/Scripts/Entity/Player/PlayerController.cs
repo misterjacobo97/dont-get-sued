@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private Transform _playerInteract;
     [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] private Collider2D _slapCollider;
+    [SerializeField] private LayerMask _hitboxLayer;
 
     [Header("Sprites")]
     [SerializeField] private Sprite _sideSprite;
@@ -32,8 +34,12 @@ public class PlayerController : MonoBehaviour {
     private Vector2 _movement;
     private bool _walkingAnimActive = false;
 
+
+
     private void FixedUpdate() {
         MovePlayer();
+
+
     }
 
     #region Movement
@@ -77,7 +83,17 @@ public class PlayerController : MonoBehaviour {
 
         }
 
+
+
         LimitPlayerVelocity();
+    }
+
+
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.layer == _hitboxLayer) {
+            Debug.Log("Slapped");
+        }
     }
 
     private void LimitPlayerVelocity() {

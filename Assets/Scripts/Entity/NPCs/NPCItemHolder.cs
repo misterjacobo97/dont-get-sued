@@ -71,7 +71,11 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
         return _acceptedItems.Contains(item);
     }
 
-
-
+    public void DropAllItems() {
+        for (int i = _heldItems.Count - 1; i >= 0; i--) {
+            _heldItems[i].DropItem();
+            RemoveItem(i);
+        }
+    }
 }
 

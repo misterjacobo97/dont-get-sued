@@ -18,11 +18,16 @@ public class InputManager : PersistentSignleton<InputManager> {
     [NonSerialized] public bool PlayerDashtWasReleased = false;
     [NonSerialized] public bool PlayerDashIsHeld = false;
 
+    // Slap
+    [NonSerialized] public bool PlayerSlapWasPressed = false;
+    [NonSerialized] public bool PlayerSlaptWasReleased = false;
+    [NonSerialized] public bool PlayerSlapIsHeld = false;
 
     // internal
     private InputAction _interactAction;
     private InputAction _moveAction;
     private InputAction _dashAction;
+    private InputAction _slapAction;
 
 
 
@@ -34,6 +39,7 @@ public class InputManager : PersistentSignleton<InputManager> {
         _interactAction = _playerActions.Player.Interact;
         _moveAction = _playerActions.Player.Move;
         _dashAction = _playerActions.Player.Dash;
+        _slapAction = _playerActions.Player.Slap;
     }
 
     private void Update() {
@@ -45,6 +51,9 @@ public class InputManager : PersistentSignleton<InputManager> {
         PlayerDashtWasReleased = _dashAction.WasReleasedThisFrame();
         PlayerDashIsHeld = _dashAction.IsPressed();
 
+        PlayerSlapIsHeld = _slapAction.IsPressed();
+        PlayerSlaptWasReleased = _slapAction.WasReleasedThisFrame();
+        PlayerSlapWasPressed = _slapAction.WasPressedThisFrame();
 
         if (PlayerInteractWasPressed == true) {
             PlayerInteractPressedEvent.Invoke();

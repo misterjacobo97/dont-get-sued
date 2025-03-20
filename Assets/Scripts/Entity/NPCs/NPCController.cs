@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
@@ -18,13 +19,13 @@ public class NPCController : MonoBehaviour {
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Transform _itemHolder;
 
+
     [Header("Sprites")]
     [SerializeField] private Sprite _sideSprite;
     [SerializeField] private Sprite _backSprite;
     private bool _walkingAnimActive = false;
 
     private NavMeshAgent agent;
-
 
     private void Awake() {
         agent = GetComponent<NavMeshAgent>();
@@ -82,22 +83,14 @@ public class NPCController : MonoBehaviour {
                 _walkingAnimActive = false;
             };
         };
-
-
-    }
-
-    private void OnDestroy() {
-        
     }
 
     #region Shopping
     public void AddToShoppingList(List<ShoppingItem> items) {
-        //_shoppingList = items;
         _stateContext.shoppingList = items;
     }
 
     public void AddToShoppingList(ShoppingItem item) {
-        //_shoppingList.Add(item);
         _stateContext.shoppingList.Add(item);
     }
 
@@ -106,6 +99,16 @@ public class NPCController : MonoBehaviour {
 
         holder.SetItem(item);
     }
+
+    public void GetSlapped() {
+        (GetItemHolder() as NPCItemHolder).DropAllItems();
+
+        foreach (ShoppingItem i in _stateContext.shoppingList.Where(item => item.collected == true)) {
+            i.collected = false;
+        }
+
+        TaskManager.Instance.RemoveNPCFromAssignments(this);
+    }
     #endregion
 
 
@@ -113,5 +116,9 @@ public class NPCController : MonoBehaviour {
         if (_itemHolder == null) return null;
 
         return _itemHolder.GetComponent<I_ItemHolder>();
+    }
+
+    private void OnDestroy() {
+        NPCManager.Instance.RemoveNPC(this);
     }
 }
