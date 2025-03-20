@@ -4,7 +4,7 @@ using UnityEngine;
 public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
 
     [Header("Refs")]
-    [SerializeField] private Transform _itemTarget;
+    [SerializeField] private List<Transform> _itemTargets = new();
     [SerializeField] private List<HoldableItem_SO> _acceptedItems = new();
     [SerializeField] private AudioClip _pickUpSound;
 
@@ -14,9 +14,9 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
     private void Update() {
         Vector2 _movement = InputManager.Instance.GetPlayerMovement();
 
-        if (_movement != Vector2.zero) {
-            _itemTarget.localPosition = _movement / 2;
-        }
+        //if (_movement != Vector2.zero) {
+        //    _itemTarget.localPosition = _movement / 2;
+        //}
     }
 
     public void CompleteItems() {
@@ -54,12 +54,12 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
 
 
     public Transform GetItemTargetTransform() {
-        if (_itemTarget == null) {
+        if (_itemTargets == null) {
             Debug.Log("no item taget ref at: " + this);
             return null;
         }
 
-        return _itemTarget;
+        return _itemTargets[_heldItems.Count - 1];
     }
 
     public void RemoveItem() { }
