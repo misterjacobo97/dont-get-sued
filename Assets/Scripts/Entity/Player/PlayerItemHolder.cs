@@ -9,6 +9,9 @@ public class PlayerItemHolder : MonoBehaviour, I_ItemHolder {
     [SerializeField] private AudioClip _pickUpSound;
 
 
+    [Header("throwing params")]
+    [SerializeField] private float _throwForce = 200f;
+
     private HoldableItem _heldItem = null;
 
     private void Update() {
@@ -54,6 +57,12 @@ public class PlayerItemHolder : MonoBehaviour, I_ItemHolder {
         }
 
         return _itemTarget;
+    }
+
+    public void ThrowItem(Vector2 dir) {
+        if (_heldItem == null) return;
+
+        _heldItem.ThrowItem(dir, _throwForce);
     }
 
     public void RemoveItem() {

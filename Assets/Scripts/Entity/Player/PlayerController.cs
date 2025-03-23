@@ -34,8 +34,6 @@ public class PlayerController : MonoBehaviour {
     private Vector2 _movement;
     private bool _walkingAnimActive = false;
 
-
-
     private void FixedUpdate() {
         MovePlayer();
 

@@ -39,6 +39,9 @@ public class PlayerInteract : MonoBehaviour {
 
     protected void Start() {
         InputManager.Instance.PlayerInteractPressedEvent.AddListener(OnInteractInput);
+
+        InputManager.Instance.PlayerInteractHeldReleasedEvent.AddListener(OnInteractHeldReleasedInput);
+
     }
 
     void Update() {
@@ -88,6 +91,10 @@ public class PlayerInteract : MonoBehaviour {
             // drop item
             GetItemHolder().GetHeldItem().DropItem();
         }
+    }
+
+    private void OnInteractHeldReleasedInput() {
+        _itemHolderRef.GetComponent<PlayerItemHolder>().ThrowItem(_lastMovement);
     }
 
     private void SetSelectedInteractable (I_Interactable newInteractable) {

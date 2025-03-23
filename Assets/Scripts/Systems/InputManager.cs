@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 public class InputManager : PersistentSignleton<InputManager> {
 
     [NonSerialized] public UnityEvent PlayerInteractPressedEvent = new();
+    [NonSerialized] public UnityEvent PlayerInteractHeldReleasedEvent = new();
+    [NonSerialized] public UnityEvent PlayerInteractHeldEvent = new();
+
 
     public InputSystem_Actions _playerActions;
     
@@ -13,6 +16,11 @@ public class InputManager : PersistentSignleton<InputManager> {
     [NonSerialized] public bool PlayerInteractWasPressed = false;
     [NonSerialized] public bool PlayerInteractWasReleased = false;
     [NonSerialized] public bool PlayerInteractIsHeld = false;
+    private float _minInteractHeldDuration = 0.2f;
+    private float _interactHeldDuration = 0;
+    private bool _isHoldingInteract = false;
+
+
     // Dash
     [NonSerialized] public bool PlayerDashWasPressed = false;
     [NonSerialized] public bool PlayerDashtWasReleased = false;
@@ -28,8 +36,6 @@ public class InputManager : PersistentSignleton<InputManager> {
     private InputAction _moveAction;
     private InputAction _dashAction;
     private InputAction _slapAction;
-
-
 
     private void Start() {
         // separating into its smaller chunks first
@@ -55,9 +61,7 @@ public class InputManager : PersistentSignleton<InputManager> {
         PlayerSlaptWasReleased = _slapAction.WasReleasedThisFrame();
         PlayerSlapWasPressed = _slapAction.WasPressedThisFrame();
 
-        if (PlayerInteractWasPressed == true) {
-            PlayerInteractPressedEvent.Invoke();
-        }
+        HandleInteractEvents();
     }
 
     /// <summary>
@@ -71,6 +75,34 @@ public class InputManager : PersistentSignleton<InputManager> {
         input = _moveAction.ReadValue<Vector2>();
 
         return input;
+    }
+
+    public void HandleInteractEvents() {
+
+        if (PlayerInteractIsHeld == true) {
+            _interactHeldDuration += Time.deltaTime;
+        }
+
+        // normal press
+        if (PlayerInteractWasReleased == true && (_interactHeldDuration < _minInteractHeldDuration) && _interactHeldDuration > 0) {
+            _interactHeldDuration = 0f;
+            PlayerInteractPressedEvent.Invoke();
+        }
+
+        // held started
+        else if (PlayerInteractIsHeld == true && _interactHeldDuration > _minInteractHeldDuration && _isHoldingInteract == false) {
+            _isHoldingInteract = true;
+            PlayerInteractHeldEvent.Invoke();
+        }
+
+
+        // held released
+        else if (PlayerInteractWasReleased == true && _isHoldingInteract == true) {
+            _isHoldingInteract = false;
+            _interactHeldDuration = 0f;
+            PlayerInteractHeldReleasedEvent.Invoke();
+        }
+
     }
 
 }

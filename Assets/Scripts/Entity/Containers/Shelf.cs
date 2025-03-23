@@ -69,6 +69,9 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
         if (caller is PlayerInteract) {
             PlayerInteract player = caller as PlayerInteract;
 
+            // if player holds item and shelf also hold an item, do nothing
+            if (_heldItem != null && player.GetItemHolder().HasItem()) return;
+
             if (_heldItem != null) {
                 Debug.Log("here");
                 _heldItem.ChangeParent(player.GetItemHolder());

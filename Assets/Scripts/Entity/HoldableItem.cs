@@ -83,6 +83,13 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
 
     public void SetSelected() { }
     public void SetUnselected() { }
+
+    public void ThrowItem(Vector2 dir, float force) {
+        DropItem();
+
+        _rb.AddForce(dir * force);
+
+    }
     public void Interact(object caller) {
         if (holdableItem_SO.pickableItem == false) {
             return;
