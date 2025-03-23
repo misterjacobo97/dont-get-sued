@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -6,6 +8,7 @@ public class SignContainer : MonoBehaviour, I_Interactable {
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private TextMeshProUGUI _maxText;
     [SerializeField] private TextMeshProUGUI _currentText;
+    [SerializeField] private List<Transform> _targets;
 
 
     [Header("Params")]
@@ -46,8 +49,6 @@ public class SignContainer : MonoBehaviour, I_Interactable {
     }
 
     public void Interact(object caller) {
-
-
         if (caller is not PlayerInteract) {
             return;
         }
@@ -73,13 +74,24 @@ public class SignContainer : MonoBehaviour, I_Interactable {
 
             GameObject.Instantiate(_signPrefab.transform).GetComponent<HoldableItem>().ChangeParent(holder);
         }
-
     }
 
     private void UpdateUI() {
         _maxText.text = _maxSignCount.ToString();
         _currentText.text = CurrentSignCount.ToString();
-    }
 
+        // update sprites shown on the cart
+        //List<Transform> targets = _targets.GetComponentsInChildren<Transform>().ToList();
+
+        for (int i = 0; i < _targets.Count; i++) { 
+           
+            if (i + 1 <= _currentSignsCount) {
+                _targets[i].GetComponent<SpriteRenderer>().enabled = true;
+            }
+
+            else _targets[i].GetComponent<SpriteRenderer>().enabled = false;
+
+        }
+    }
 
 }
