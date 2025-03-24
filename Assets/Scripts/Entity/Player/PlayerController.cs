@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour {
     private bool _currentlyDashing = false;
     private float _timeOfLastDash = 0f;
 
-
     [Header("Logging")]
     [SerializeField] private Logger _logger;
 
@@ -40,7 +39,6 @@ public class PlayerController : MonoBehaviour {
 
     #region Movement
     private void MovePlayer() {
-
         if (GameManager.Instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) {
             _rb.linearDamping = _linearDamping;
             return;
@@ -73,6 +71,7 @@ public class PlayerController : MonoBehaviour {
 
             ControlSprite(_movement);
             ControlAnimations();
+            //_slapCollider.
 
             _lastMovementDir = _movement;
         }

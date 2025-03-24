@@ -9,7 +9,6 @@ public class InputManager : PersistentSignleton<InputManager> {
     [NonSerialized] public UnityEvent PlayerInteractHeldReleasedEvent = new();
     [NonSerialized] public UnityEvent PlayerInteractHeldEvent = new();
 
-
     public InputSystem_Actions _playerActions;
     
     // Interact
@@ -20,7 +19,6 @@ public class InputManager : PersistentSignleton<InputManager> {
     private float _interactHeldDuration = 0;
     private bool _isHoldingInteract = false;
 
-
     // Dash
     [NonSerialized] public bool PlayerDashWasPressed = false;
     [NonSerialized] public bool PlayerDashtWasReleased = false;
@@ -30,6 +28,10 @@ public class InputManager : PersistentSignleton<InputManager> {
     [NonSerialized] public bool PlayerSlapWasPressed = false;
     [NonSerialized] public bool PlayerSlaptWasReleased = false;
     [NonSerialized] public bool PlayerSlapIsHeld = false;
+
+    // movement
+    [NonSerialized] public UnityEvent<Vector2> MovementInputEvent = new();
+    private Vector2 _lastMovementInput = Vector2.zero;
 
     // internal
     private InputAction _interactAction;
@@ -74,11 +76,20 @@ public class InputManager : PersistentSignleton<InputManager> {
         // get initial value
         input = _moveAction.ReadValue<Vector2>();
 
+        // update last player movement
+        if (_lastMovementInput != input && input != Vector2.zero) { 
+            _lastMovementInput = input;
+            MovementInputEvent.Invoke(_lastMovementInput);
+        }
+
         return input;
     }
 
-    public void HandleInteractEvents() {
+    public Vector2 GetLastPlayerMovment() {
+        return _lastMovementInput;
+    }
 
+    public void HandleInteractEvents() {
         if (PlayerInteractIsHeld == true) {
             _interactHeldDuration += Time.deltaTime;
         }
@@ -94,7 +105,6 @@ public class InputManager : PersistentSignleton<InputManager> {
             _isHoldingInteract = true;
             PlayerInteractHeldEvent.Invoke();
         }
-
 
         // held released
         else if (PlayerInteractWasReleased == true && _isHoldingInteract == true) {

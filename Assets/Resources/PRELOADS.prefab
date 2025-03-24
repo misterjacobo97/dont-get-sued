@@ -836,7 +836,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e167eee3fd185a9429bf8be3bfebd7fa, type: 2}
   _maxShoppingListSize: 3
   _activeNpcTargetList: []
-  _npcSpawnInterval: 15
+  _npcSpawnInterval: 5
   _maxNpcCount: 4
   exitArea: {fileID: 0}
 --- !u!1 &3637917177199190972
@@ -1802,6 +1802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _loadingScreen: {fileID: 1887528724048678572}
   _startingLevelTitle: StartScreen
+  _loadLevelOnStart: 1
 --- !u!1 &8102039256821274264
 GameObject:
   m_ObjectHideFlags: 0

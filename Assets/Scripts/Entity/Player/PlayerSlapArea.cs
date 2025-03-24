@@ -1,20 +1,53 @@
 using UnityEngine;
 
 public class PlayerSlapArea : MonoBehaviour {
+    [Header("refs")]
     [SerializeField] private LayerMask _npcLayer;
     [SerializeField] private Collider2D _slapCollider;
+    [SerializeField] private AudioClip _slapSound;
 
+
+    [Header("params")]
     [SerializeField] private int _slapFrames = 3;
     private int _currentSlapFrames = 0;
+    [SerializeField] private float _slapReach = 0.5f;
+
+    private void Start() {
+        InputManager.Instance.MovementInputEvent.AddListener(ChangeAreaRotation);
+    }
 
     private void Update() {
         ControlSlapCollision();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-
         Debug.Log("slap");
-        collision.GetComponentInParent<NPCController>().GetSlapped();
+        // find direction of npc
+        Vector2 slapDir = (collision.transform.position - transform.position).normalized;
+
+        collision.GetComponentInParent<NPCController>().GetSlapped(slapDir);
+        SoundManager.Instance.PlaySound(_slapSound);
+    }
+
+    public void ChangeAreaRotation(Vector2 moveDir) {
+
+        _slapCollider.offset = _slapReach * moveDir / 2;
+
+        if (moveDir == Vector2.right) {
+            (_slapCollider as BoxCollider2D).size = new(_slapReach, 1);
+        }
+
+        else if (moveDir == Vector2.up) {
+            (_slapCollider as BoxCollider2D).size = new(1, _slapReach);
+        }
+
+        else if (moveDir == Vector2.left) {
+            (_slapCollider as BoxCollider2D).size = new(_slapReach, 1);
+        }
+
+        else if (moveDir == Vector2.down) {
+            (_slapCollider as BoxCollider2D).size = new(1, _slapReach);
+        }
     }
 
     private void ControlSlapCollision() {
@@ -34,7 +67,5 @@ public class PlayerSlapArea : MonoBehaviour {
             _slapCollider.enabled = true;
             
         }
-
-
     }
 }

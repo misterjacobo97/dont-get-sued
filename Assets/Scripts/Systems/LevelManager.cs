@@ -18,8 +18,7 @@ public class LevelManager : PersistentSignleton<LevelManager> {
 
     [Header("params")]
     [SerializeField] private string _startingLevelTitle;
-    [SerializeField] private bool _loadLevelOnStart = true
-        ;
+    [SerializeField] private bool _loadLevelOnStart = true;
     public Transform CurrentSpawnpoint { get; private set; }
     public string LevelTitle { get; private set; }
 
@@ -40,6 +39,7 @@ public class LevelManager : PersistentSignleton<LevelManager> {
     /// <returns></returns>
     public async Awaitable LoadLevel(string levelName) {
 
+        _loadingScreen.blocksRaycasts = true;
         // play cross fade animations and pre loading actions
         await DOTween.To(() => _loadingScreen.alpha, x => _loadingScreen.alpha = x, 1, 1).AsyncWaitForCompletion();
         
@@ -55,6 +55,7 @@ public class LevelManager : PersistentSignleton<LevelManager> {
         LevelLoaded.Invoke(LevelTitle);
 
         await DOTween.To(() => _loadingScreen.alpha, x => _loadingScreen.alpha = x, 0, 1).AsyncWaitForCompletion();
+        _loadingScreen.blocksRaycasts = false;
     }
 
     public void SetSpawnpoint(Transform newSpawnpoint) {

@@ -121,6 +121,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 78dd3c73afe1b84498eb9b21cab9bd43, type: 2}
   - {fileID: 11400000, guid: e167eee3fd185a9429bf8be3bfebd7fa, type: 2}
   _pickUpSound: {fileID: 8300000, guid: 3b44a1eba03c4444fa5314d99a20b477, type: 3}
+  _throwForce: 200
 --- !u!1 &2212799905638464651
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +238,38 @@ Transform:
   m_LocalScale: {x: 0.375, y: 0.375, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
+  m_Father: {fileID: 4188594627056686022}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3185205049195590792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1918966696207208373}
+  m_Layer: 0
+  m_Name: SlapAreaGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1918966696207208373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3185205049195590792}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 640967940505514379}
   m_Father: {fileID: 4188594627056686022}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4214156916561143921
@@ -362,7 +395,7 @@ Transform:
   - {fileID: 7392825520799445176}
   - {fileID: 4047646906179653771}
   - {fileID: 218225362814035663}
-  - {fileID: 640967940505514379}
+  - {fileID: 1918966696207208373}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2830893038361256421
@@ -476,12 +509,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7169295379846901967}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4188594627056686022}
+  m_Father: {fileID: 1918966696207208373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2047756576946810920
 BoxCollider2D:
@@ -517,7 +550,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.5, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -545,7 +578,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   _slapCollider: {fileID: 2047756576946810920}
+  _slapSound: {fileID: 8300000, guid: 9f70b838d603c26458ea754e7bc6660a, type: 3}
   _slapFrames: 3
+  _slapReach: 1.2
 --- !u!1 &7759659765364573479
 GameObject:
   m_ObjectHideFlags: 0

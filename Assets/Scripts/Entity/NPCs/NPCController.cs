@@ -18,7 +18,7 @@ public class NPCController : MonoBehaviour {
     private CustomerStateContext_SO _stateContext;
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Transform _itemHolder;
-
+    [SerializeField] private Rigidbody2D _rb;
 
     [Header("Sprites")]
     [SerializeField] private Sprite _sideSprite;
@@ -37,6 +37,7 @@ public class NPCController : MonoBehaviour {
         _stateContext.agent = agent;
         _stateContext.itemHolder = GetItemHolder();
         _stateContext.shoppingList = new();
+        _stateContext.spriteRenderer = _sprite;
 
         // the initialise state machine
         _stateMachine.Init(_stateContext);
@@ -100,8 +101,13 @@ public class NPCController : MonoBehaviour {
         holder.SetItem(item);
     }
 
-    public void GetSlapped() {
+    public void GetSlapped(Vector2 direction) {
         (GetItemHolder() as NPCItemHolder).DropAllItems();
+
+        //_stateContext.SlappedTowardsDirection.Invoke(direction);
+        AddSlappedForce(direction);
+
+        _stateMachine.ForceTransitionState(CustomerStateMachine.STATES.SLAPPED);
 
         foreach (ShoppingItem i in _stateContext.shoppingList.Where(item => item.collected == true)) {
             i.collected = false;
@@ -109,6 +115,11 @@ public class NPCController : MonoBehaviour {
 
         TaskManager.Instance.RemoveNPCFromAssignments(this);
     }
+
+    private void AddSlappedForce(Vector2 dir) {
+        _rb.AddForce(dir * 900);
+    }
+
     #endregion
 
 

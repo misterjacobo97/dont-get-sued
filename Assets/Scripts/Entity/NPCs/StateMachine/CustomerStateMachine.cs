@@ -2,6 +2,7 @@ public class CustomerStateMachine : BaseStateManager<CustomerStateMachine.STATES
     public enum STATES {
         IDLE,
         SEEKING,
+        SLAPPED,
         FALLING,
         EXIT
     }

@@ -60,7 +60,6 @@ public class NPCManager : PersistentSignleton<NPCManager> {
         }
         else _npcSpawningActive = true;
 
-
         if (_npcSpawningActive) {
             // spawn and relocate
             NPCController newNPC = Transform.Instantiate(_shopperPrefabs[UnityEngine.Random.Range(0, _shopperPrefabs.Count - 1)]).GetComponent<NPCController>();
