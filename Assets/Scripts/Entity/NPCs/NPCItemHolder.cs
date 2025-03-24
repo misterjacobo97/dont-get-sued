@@ -52,7 +52,6 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
         return _heldItems[0];
     }
 
-
     public Transform GetItemTargetTransform() {
         if (_itemTargets == null) {
             Debug.Log("no item taget ref at: " + this);
@@ -73,7 +72,9 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
 
     public void DropAllItems() {
         for (int i = _heldItems.Count - 1; i >= 0; i--) {
-            _heldItems[i].DropItem();
+            Vector2 dir = new Vector2(Random.Range(-1,1), Random.Range(-1, 1));
+
+            _heldItems[i].ThrowItem(dir, 900); //DropItem();
             RemoveItem(i);
         }
     }

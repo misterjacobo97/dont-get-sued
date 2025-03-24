@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -36,6 +37,8 @@ public class GameManager : PersistentSignleton<GameManager> {
         LevelManager.Instance.LevelLoadingStarted.AddListener(() => ChangeGameState(GAME_STATE.LOADING));
 
         PreGameActions();
+
+        LoadStartScreen();
     }
 
     private void Update() {
@@ -92,7 +95,9 @@ public class GameManager : PersistentSignleton<GameManager> {
 
     }
 
-    public void StartScreenActions() {
+    public async Task LoadStartScreen() {
+        await LevelManager.Instance.LoadLevel("StartScreen");
+
         ChangeGameState(GAME_STATE.START_SCREEN);
 
     }

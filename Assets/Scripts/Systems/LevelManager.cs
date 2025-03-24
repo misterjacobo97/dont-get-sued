@@ -12,18 +12,25 @@ public class LevelManager : PersistentSignleton<LevelManager> {
 
     [NonSerialized] public UnityEvent RestartedFromCheckpoint = new();
 
+    [Header("refs")]
     [SerializeField] private CanvasGroup _loadingScreen;
 
+
+    [Header("params")]
     [SerializeField] private string _startingLevelTitle;
+    [SerializeField] private bool _loadLevelOnStart = true
+        ;
     public Transform CurrentSpawnpoint { get; private set; }
     public string LevelTitle { get; private set; }
 
     private void Start() {
+        _loadingScreen.alpha = 1;
+
         LevelTitle = SceneManager.GetActiveScene().name;
     
-        if (LevelTitle != _startingLevelTitle) {
-            LoadLevel(_startingLevelTitle);
-        }
+        //if (_loadLevelOnStart == true) {
+        //    LoadLevel(_startingLevelTitle);
+        //}
     }
 
     /// <summary>

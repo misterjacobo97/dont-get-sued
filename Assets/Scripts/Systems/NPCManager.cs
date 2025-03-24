@@ -35,7 +35,13 @@ public class NPCManager : PersistentSignleton<NPCManager> {
 
 
     private void Start() {
-        SpawnNewNPC();
+        //SpawnNewNPC();
+
+        GameManager.Instance.GameStateChanged.AddListener(state => { 
+            if (state == GameManager.GAME_STATE.MAIN_GAME) {
+                SpawnNewNPC();
+            }
+        });
     }
 
     public void AddSpawnpoint(NPCSpawnPoint newSpot) {
