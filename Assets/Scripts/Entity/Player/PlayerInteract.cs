@@ -45,6 +45,11 @@ public class PlayerInteract : MonoBehaviour {
     }
 
     void Update() {
+
+        if (GameManager.Instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) {
+            return;
+        }
+
         Vector2 _movement = InputManager.Instance.GetPlayerMovement();
 
 

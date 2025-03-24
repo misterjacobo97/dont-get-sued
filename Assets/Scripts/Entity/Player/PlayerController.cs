@@ -36,12 +36,16 @@ public class PlayerController : MonoBehaviour {
 
     private void FixedUpdate() {
         MovePlayer();
-
-
     }
 
     #region Movement
     private void MovePlayer() {
+
+        if (GameManager.Instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) {
+            _rb.linearDamping = _linearDamping;
+            return;
+        }
+
         _movement = InputManager.Instance.GetPlayerMovement();
 
         //if (InputManager.Instance.PlayerDashWasPressed && Time.time >= _timeOfLastDash + _dashDuration) {
