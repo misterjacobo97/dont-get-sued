@@ -10,6 +10,7 @@ public class TaskManager : PersistentSignleton<TaskManager> {
     [NonSerialized] public UnityEvent taskListChanged = new();
 
     [Header("Refs")]
+    [SerializeField] private CanvasGroup _uiCanvas;
     [SerializeField] private TextMeshProUGUI _tasksLeftText;
     [SerializeField] private TextMeshProUGUI _tasksCompletedText;
     [SerializeField] private Transform _tasksParent;
@@ -17,16 +18,28 @@ public class TaskManager : PersistentSignleton<TaskManager> {
     [SerializeField] private List<TaskInfo> _taskList = new();
     public List<TaskInfo> GetTaskList => _taskList; 
 
-
     private void Start() {
+
+
         taskListChanged.AddListener(UpdateUI);
 
-        AssignTaskTimer();
+        GameManager.instance.GameStateChanged.AddListener(state => { 
+            switch (state) {
+                case GameManager.GAME_STATE.MAIN_GAME:
+                    _uiCanvas.alpha = 1;
+                    AssignTaskTimer();
+                    return;
+
+                case not GameManager.GAME_STATE.MAIN_GAME:
+                    _uiCanvas.alpha = 0;
+                    return;
+            }
+        });
+
+        if (GameManager.Instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) _uiCanvas.alpha = 0;
     }
 
     public void AddTaskToList(TaskObject newTask, I_ItemHolder container = null) {
-
-
         // in case it exists, just change the parent
         if (_taskList.Exists(t => t.task == newTask)) {
             _taskList.Find(t => t.task == newTask).ChangeTaskHolder(container);
@@ -40,7 +53,6 @@ public class TaskManager : PersistentSignleton<TaskManager> {
             newTaskInfo.ChangedTaskHolder.AddListener(newHolder => { Debug.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new holder: " + newHolder); });
             newTaskInfo.ChangedAssignedNPC.AddListener(newNPC => { Debug.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new assigned NPC: " + newNPC); });
             newTaskInfo.ChangedTaskState.AddListener(newState => { Debug.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new State: " + newState); });
-
         }
     }
 
@@ -67,6 +79,8 @@ public class TaskManager : PersistentSignleton<TaskManager> {
     }
 
     private void UpdateUI() {
+        if (GameManager.instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) return;
+
         _tasksCompletedText.text = _taskList.Where(t => t.state == TaskObject.TASK_STATE.COMPLETED).ToList().Count.ToString();
         _tasksLeftText.text = _taskList.Where(t => t.state == TaskObject.TASK_STATE.ACTIVE).ToList().Count.ToString();
     }

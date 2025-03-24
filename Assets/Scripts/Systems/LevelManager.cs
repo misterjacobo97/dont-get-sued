@@ -12,11 +12,19 @@ public class LevelManager : PersistentSignleton<LevelManager> {
 
     [NonSerialized] public UnityEvent RestartedFromCheckpoint = new();
 
-    [SerializeField] private CanvasGroup loadingScreen;
+    [SerializeField] private CanvasGroup _loadingScreen;
 
-    [SerializeField] private string startingLevelTitle;
+    [SerializeField] private string _startingLevelTitle;
     public Transform CurrentSpawnpoint { get; private set; }
     public string LevelTitle { get; private set; }
+
+    private void Start() {
+        LevelTitle = SceneManager.GetActiveScene().name;
+    
+        if (LevelTitle != _startingLevelTitle) {
+            LoadLevel(_startingLevelTitle);
+        }
+    }
 
     /// <summary>
     /// takes a string name and loads the level of that name - then sets the LevelTitle and invokes an event so that other scripts can update themselves
@@ -26,7 +34,7 @@ public class LevelManager : PersistentSignleton<LevelManager> {
     public async Awaitable LoadLevel(string levelName) {
 
         // play cross fade animations and pre loading actions
-        await DOTween.To(() => loadingScreen.alpha, x => loadingScreen.alpha = x, 1, 1).AsyncWaitForCompletion();
+        await DOTween.To(() => _loadingScreen.alpha, x => _loadingScreen.alpha = x, 1, 1).AsyncWaitForCompletion();
         
         LevelLoadingStarted.Invoke();
 
@@ -39,7 +47,7 @@ public class LevelManager : PersistentSignleton<LevelManager> {
         LevelTitle = levelName;
         LevelLoaded.Invoke(LevelTitle);
 
-        await DOTween.To(() => loadingScreen.alpha, x => loadingScreen.alpha = x, 0, 1).AsyncWaitForCompletion();
+        await DOTween.To(() => _loadingScreen.alpha, x => _loadingScreen.alpha = x, 0, 1).AsyncWaitForCompletion();
     }
 
     public void SetSpawnpoint(Transform newSpawnpoint) {
