@@ -28,7 +28,7 @@ public class CustomerSeekingState : CustomerBaseState {
         if (_context.agent.remainingDistance < 0.1 && _context.currentTarget != null) {
 
             BaseShelf shelf = (_context.currentTarget.GetComponentInParent<BaseShelf>());
-            Debug.Log(shelf.GetHeldItem());
+            //Debug.Log(shelf.GetHeldItem());
 
             _context.shoppingList.Find(item => !item.collected && item.item == shelf.GetHeldItem().holdableItem_SO).collected = true;
 

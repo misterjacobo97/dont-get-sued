@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class CustomerStateMachine : BaseStateManager<CustomerStateMachine.STATES> {
     public enum STATES {
         IDLE,
@@ -17,6 +19,10 @@ public class CustomerStateMachine : BaseStateManager<CustomerStateMachine.STATES
 
         base.Start();
     }
+
+    //private void OnCollisionEnter2D(UnityEngine.Collision2D collision) {
+    //    Debug.Log(collision);
+    //}
 
     public void ForceTransitionState(STATES newState) => TransitionToState(newState);
 }

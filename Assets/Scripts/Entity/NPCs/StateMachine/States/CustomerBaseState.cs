@@ -23,6 +23,12 @@ public class CustomerBaseState : BaseState<CustomerStateMachine.STATES> {
         return StateKey;
     }
     public override void OnTriggerEnter(Collider collider) { }
+    public virtual void OnTriggerEnter2D(Collider2D collider) { }
+
     public override void OnTriggerStay(Collider collider) { }
+    public virtual void OnTriggerStay2D(Collider2D collider) { }
     public override void OnTriggerExit(Collider collider) { }
+    public virtual void OnTriggerExit2D(Collider2D collider) { }
+
+
 }

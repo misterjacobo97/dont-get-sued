@@ -29,4 +29,6 @@ public abstract class BaseState<EState> : MonoBehaviour where EState : Enum {
     public abstract void OnTriggerEnter(Collider collider);
     public abstract void OnTriggerStay(Collider collider);
     public abstract void OnTriggerExit(Collider collider);
+
+
 }

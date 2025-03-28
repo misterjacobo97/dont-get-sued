@@ -5,7 +5,9 @@ using UnityEngine;
 public abstract class BaseStateManager<EState> : MonoBehaviour where EState : Enum {
 
     [SerializeField] protected List<BaseState<EState>> States = new();
-    [SerializeField] protected BaseState<EState> CurrentState;
+    [SerializeField] protected BaseState<EState> _currentState;
+    public BaseState<EState> CurrentState => _currentState;
+
     [SerializeField] protected EState InitialState;
     protected ScriptableObject _context;
 
@@ -19,39 +21,39 @@ public abstract class BaseStateManager<EState> : MonoBehaviour where EState : En
         //}
         // gotta do this in the derived state machine
 
-        CurrentState = States.Find(s => s.StateKey.Equals(InitialState));
+        _currentState = States.Find(s => s.StateKey.Equals(InitialState));
 
-        CurrentState.EnterState();
+        _currentState.EnterState();
     }
 
     protected virtual void Update(){
-        EState nextStateKey = CurrentState.GetNextState();
+        EState nextStateKey = _currentState.GetNextState();
 
-        if (nextStateKey.Equals(CurrentState.StateKey)){
-            CurrentState.UpdateState();
+        if (nextStateKey.Equals(_currentState.StateKey)){
+            _currentState.UpdateState();
         } else {
             TransitionToState(nextStateKey);
         }
     }
 
     void FixedUpdate(){
-        CurrentState.FixedUpdateState();
+        _currentState.FixedUpdateState();
     }
 
     void OnTriggerEnter(Collider collider){
-        CurrentState.OnTriggerEnter(collider);
+        _currentState.OnTriggerEnter(collider);
     }
     void OnTriggerStay(Collider collider){
-        CurrentState.OnTriggerStay(collider);
+        _currentState.OnTriggerStay(collider);
     }
     void OnTriggerExit(Collider collider){
-        CurrentState.OnTriggerExit(collider);
+        _currentState.OnTriggerExit(collider);
     }
 
     protected void TransitionToState(EState stateKey){
-        CurrentState.ExitState();
-        CurrentState = States.Find(s => s.StateKey.Equals(stateKey));
-        CurrentState.EnterState();
+        _currentState.ExitState();
+        _currentState = States.Find(s => s.StateKey.Equals(stateKey));
+        _currentState.EnterState();
     }
     
 

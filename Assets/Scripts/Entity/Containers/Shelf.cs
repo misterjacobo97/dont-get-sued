@@ -73,7 +73,7 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
             if (_heldItem != null && player.GetItemHolder().HasItem()) return;
 
             if (_heldItem != null) {
-                Debug.Log("here");
+                //Debug.Log("here");
                 _heldItem.ChangeParent(player.GetItemHolder());
             }
 

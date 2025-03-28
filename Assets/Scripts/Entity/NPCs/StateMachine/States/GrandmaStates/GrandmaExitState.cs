@@ -18,20 +18,30 @@ public class GrandmaExitState : CustomerBaseState {
         _stateInitialsed = true;
     }
 
-    public override void UpdateState() {
-        base.UpdateState();
+    //public override void UpdateState() {
+    //    base.UpdateState();
 
-        if (_stateInitialsed == false) return;
+    //    if (_stateInitialsed == false) return;
 
-        if (_context.agent.remainingDistance < 0.1f && _finished == false) {
-            _finished = true;
-            //(_context.agent.gameObject);
-            (_context.itemHolder as NPCItemHolder).CompleteItems();
+    //    if (_context.agent.remainingDistance < 0.1f && _finished == false) {
+    //        _finished = true;
+    //        //(_context.agent.gameObject);
+    //        (_context.itemHolder as NPCItemHolder).CompleteItems();
 
+    //        Destroy(_context.agent.transform.gameObject);
+    //    }
+    //}
+
+    public override void OnTriggerEnter2D(Collider2D collider) {
+       if (_context.stateMachine.CurrentState != this) {
+            return;
+        }
+        
+        if (collider.transform.TryGetComponent<NPCExitArea>(out NPCExitArea area)) {
+            //Debug.Log("area");
             Destroy(_context.agent.transform.gameObject);
         }
     }
-
     public override CustomerStateMachine.STATES GetNextState() {
 
 
