@@ -26,6 +26,12 @@ public class SpoiledFoodTask : TaskObject {
         _timeLeft = _timeToSpoil;
         _taskActive = true;
         _spoiledIcon.enabled = false;
+
+        GameManager.Instance.GetCheatsSO.SpoilAllTasksEvent.AddListener(() => {
+            ActivateTask();
+
+            _timeLeft = 0;
+        });
     }
 
     private void Update() {

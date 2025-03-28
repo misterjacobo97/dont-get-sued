@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UIManager : PersistentSignleton<UIManager>
 {
-    [SerializeField] private CanvasGroup _hudGroup;
+    [SerializeField] private GameObject _hudGroup;
     [SerializeField] private Transform _failScreenGroup;
     [SerializeField] private Transform _endScreenGroup;
 
@@ -11,19 +11,19 @@ public class UIManager : PersistentSignleton<UIManager>
     [SerializeField] private Transform _healthNode;
 
     private void Start() {
-        _hudGroup.alpha = 0;
+        _hudGroup.SetActive(false);
         _failScreenGroup.gameObject.SetActive(false);
         _endScreenGroup.gameObject.SetActive(false);
 
         GameManager.Instance.GameStateChanged.AddListener(state => { 
             switch (state) {
                 case GameManager.GAME_STATE.MAIN_GAME:
-                    _hudGroup.alpha = 1;
+                    _hudGroup.SetActive(true);
                     _failScreenGroup.gameObject.SetActive(false);
                     _endScreenGroup.gameObject.SetActive(false);
                     return;
                 case GameManager.GAME_STATE.START_SCREEN | GameManager.GAME_STATE.PRE_GAME:
-                    _hudGroup.alpha = 0;
+                    _hudGroup.SetActive(false);
                     _failScreenGroup.gameObject.SetActive(false);
                     _endScreenGroup.gameObject.SetActive(false);
                     return;

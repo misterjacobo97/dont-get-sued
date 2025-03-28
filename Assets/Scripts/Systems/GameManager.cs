@@ -23,6 +23,10 @@ public class GameManager : PersistentSignleton<GameManager> {
     [Header("UI Refs")]
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private TextMeshProUGUI _timerText;
+    
+    
+
+
 
     [Header("Game Params")]
     [SerializeField] private int _secondsInRound = 90;
@@ -37,6 +41,8 @@ public class GameManager : PersistentSignleton<GameManager> {
     [Header("debug")]
     [SerializeField] private Logger _logger;
     [SerializeField] private bool _showDebugLogs = true;
+    [SerializeField] private Cheats_SO _cheats_SO;
+    public Cheats_SO GetCheatsSO => _cheats_SO;
 
 
     private void Start() {
@@ -159,3 +165,5 @@ public class GameManager : PersistentSignleton<GameManager> {
     
     #endregion
 }
+
+

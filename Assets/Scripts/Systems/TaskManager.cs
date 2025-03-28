@@ -97,4 +97,5 @@ public class TaskManager : PersistentSignleton<TaskManager> {
         _taskList.Clear();
     }
 
+
 }
