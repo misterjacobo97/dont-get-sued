@@ -14,7 +14,10 @@ public class HazardTask : TaskObject {
     protected bool _hazardSafeState = false;
     [SerializeField] protected HAZARD_TYPE _hazardType;
 
+    public bool IsSafe => _hazardSafeState;
+
     private void OnTriggerEnter2D(Collider2D collision) {
+
         if (collision.transform.parent.TryGetComponent<HoldableItem>(out HoldableItem item)) {
             if (item.holdableItem_SO == _hazardNullifyer) {
                 _nullifyers.Add(collision);

@@ -13,12 +13,12 @@ TagManager:
   - UI
   - Interactable
   - Walls
-  - Hazard
   - NPC
+  - 
+  - Hazard
   - SlapArea
   - Hitbox
   - ExitArea
-  - 
   - 
   - 
   - 

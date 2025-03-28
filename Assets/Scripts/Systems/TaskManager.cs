@@ -70,16 +70,22 @@ public class TaskManager : PersistentSignleton<TaskManager> {
     }
 
     private async void AssignTaskTimer() {
+        if (GameManager.Instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) return;
+
         _logger.Log("starting assign task timer", this, _showDebugLogs);
 
         await Awaitable.WaitForSecondsAsync(_taskInterval);
 
         // find any unnasigned tasks and activate them
         List<TaskInfo> inactiveTasks = GetTaskList.Where(t => t.state == TaskObject.TASK_STATE.INACTIVE).ToList();
-        int taskIdx = UnityEngine.Random.Range(0, inactiveTasks.Count - 1);
 
-        if (taskIdx > -1) {
-            inactiveTasks[taskIdx].task.ActivateTask();
+        //  check in case all tasks are currently active
+        if (inactiveTasks.Count > 0) {
+            int taskIdx = UnityEngine.Random.Range(0, inactiveTasks.Count - 1);
+
+            if (taskIdx > -1) {
+                inactiveTasks[taskIdx].task.ActivateTask();
+            }
         }
 
         AssignTaskTimer();

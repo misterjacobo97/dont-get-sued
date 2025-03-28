@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1429485423619039532}
   - component: {fileID: 5273223800508987835}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7073742806352632501}
   - component: {fileID: 8441039942831202834}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Slapped
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1584603040356373189}
   - component: {fileID: 368625049117075119}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Seeking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 2467457343696304539}
   - component: {fileID: 4770672943229773267}
   - component: {fileID: 5722255225168319184}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Toddler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9016333750135110647}
   - component: {fileID: 6344145470004726168}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Following
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -323,7 +323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1846056715573012283}
   - component: {fileID: 5532853514605486073}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: ItemHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,7 +377,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3968162418417620443}
   - component: {fileID: 2776958427186542106}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -464,7 +464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 701272603437857649}
   - component: {fileID: 8466197500454003054}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: StateMachine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   States: []
-  CurrentState: {fileID: 0}
+  _currentState: {fileID: 0}
   InitialState: 0
 --- !u!1 &8094897551140749251
 GameObject:
@@ -515,7 +515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7996052953685138061}
   - component: {fileID: 4921043416651272240}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 53764238846551406}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Target3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -593,7 +593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4345417889009777380}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Target2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,7 +624,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 861597332642762857}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Target1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

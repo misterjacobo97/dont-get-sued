@@ -28,15 +28,14 @@ public class CustomerSeekingState : CustomerBaseState {
         if (_context.agent.remainingDistance < 0.1 && _context.currentTarget != null) {
 
             BaseShelf shelf = (_context.currentTarget.GetComponentInParent<BaseShelf>());
-            //Debug.Log(shelf.GetHeldItem());
 
             _context.shoppingList.Find(item => !item.collected && item.item == shelf.GetHeldItem().holdableItem_SO).collected = true;
 
 
             shelf.GetHeldItem().ChangeParent(_context.itemHolder);
-            
+
             _context.currentTarget = null;
-        
+
         }
     }
 
@@ -55,17 +54,30 @@ public class CustomerSeekingState : CustomerBaseState {
         return StateKey;
     }
 
+
     public override void ExitState() {
         base.ExitState();
 
         _initialStepsTaken = false;
+    }
 
+    public override void OnTriggerEnter2D(Collider2D collider) {
+        if (_context.stateMachine.CurrentState != this) {
+            return;
+        }
+        if (collider.transform.TryGetComponent<HazardTask>(out HazardTask hz)) {
+            Debug.Log("npc on hazard");
+
+
+            if (!hz.IsSafe) GameManager.Instance.AddToHealth(-1);
+            _context.stateMachine.ForceTransitionState(CustomerStateMachine.STATES.FALLING);
+        }
     }
 
     private void FindNextTarget() {
 
         List<TaskInfo> tasks = TaskManager.Instance.GetTaskList.Where(t => t.assignedNPC == null && t.state != (TaskObject.TASK_STATE.COMPLETED | TaskObject.TASK_STATE.FAILED) && t.taskHolder != null).ToList();
-        
+
 
         if (tasks.Count > 0) {
             // only shopping list items

@@ -416,7 +416,7 @@ MonoBehaviour:
   _slapCollider: {fileID: 2047756576946810920}
   _hitboxLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   _sideSprite: {fileID: 3056186126888679272, guid: f3618529d1d033d429d5ec43e7200673, type: 3}
   _backSprite: {fileID: -7902658530649608355, guid: 344957bef4b1bf04b8067958f06ebc44, type: 3}
   _movementAccel: 700
@@ -425,6 +425,7 @@ MonoBehaviour:
   _dashMaxSpeed: 200
   _dashDuration: 0.3
   _logger: {fileID: 0}
+  _showDebugLogs: 0
 --- !u!50 &7241204999789311181
 Rigidbody2D:
   serializedVersion: 5
@@ -494,7 +495,7 @@ GameObject:
   - component: {fileID: 640967940505514379}
   - component: {fileID: 2047756576946810920}
   - component: {fileID: 4698985811885224328}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: SlapArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -576,7 +577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _npcLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   _slapCollider: {fileID: 2047756576946810920}
   _slapSound: {fileID: 8300000, guid: 9f70b838d603c26458ea754e7bc6660a, type: 3}
   _slapFrames: 3
