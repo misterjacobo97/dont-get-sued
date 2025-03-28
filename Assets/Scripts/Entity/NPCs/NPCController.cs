@@ -130,13 +130,6 @@ public class NPCController : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        //foreach (SpoiledFoodTask item in _stateContext.itemHolder.HeldItems) {
-        //    if (item.IsSpoiled) {
-        //        GameManager.Instance.AddToHealth(-1);
-        //        break;
-        //    }
-        //}
-
 
         NPCManager.Instance.RemoveNPC(this);
     }

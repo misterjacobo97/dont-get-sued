@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 5634704403781833531}
-  holdableItem_SO: {fileID: 11400000, guid: 78dd3c73afe1b84498eb9b21cab9bd43, type: 2}
+  holdableItem_SO: {fileID: 11400000, guid: f22450598905c2544ae3147ab537a21a, type: 2}
   _collider: {fileID: 7513478014783849132}
   _sprite: {fileID: 7172373947232219281}
   _taskScore: 100

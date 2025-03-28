@@ -65,18 +65,20 @@ public class CustomerSeekingState : CustomerBaseState {
     private void FindNextTarget() {
 
         List<TaskInfo> tasks = TaskManager.Instance.GetTaskList.Where(t => t.assignedNPC == null && t.state != (TaskObject.TASK_STATE.COMPLETED | TaskObject.TASK_STATE.FAILED) && t.taskHolder != null).ToList();
+        
 
         if (tasks.Count > 0) {
             // only shopping list items
             tasks = tasks.FindAll(t => _context.shoppingList.Exists(item => item.item == t.task.holdableItem_SO && item.collected == false) && t.taskHolder != null);
+            if (tasks.Count > 0) {
+                TaskInfo task = (tasks[Random.Range(0, tasks.Count - 1)]);
+                task.ChangeAssignedNPC(_context.stateMachine.GetComponentInParent<NPCController>());
 
-            TaskInfo task = (tasks[Random.Range(0, tasks.Count - 1)]);
-            task.ChangeAssignedNPC(_context.stateMachine.GetComponentInParent<NPCController>());
+                BaseShelf shelf = (task.taskHolder as BaseShelf);
+                if (shelf != null && shelf.GetCustomerTarget() != null) {
+                    _context.currentTarget = shelf.GetCustomerTarget();
 
-            BaseShelf shelf = (task.taskHolder as BaseShelf);
-            if (shelf != null && shelf.GetCustomerTarget() != null) {
-                _context.currentTarget = shelf.GetCustomerTarget();
-
+                }
             }
         }
     }

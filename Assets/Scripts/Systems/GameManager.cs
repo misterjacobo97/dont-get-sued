@@ -103,7 +103,16 @@ public class GameManager : PersistentSignleton<GameManager> {
     /// </summary>
     /// <param name="value"></param>
     public void AddToHealth(int value) {
-        _currentHealth += value;
+        if (_currentHealth + value == 0) {
+            _currentHealth = 0;
+            ChangeGameState(GAME_STATE.SUED);
+
+            SuedActions();
+        }
+
+        else if (_currentHealth + value > 0) {
+            _currentHealth += value;
+        }
 
         UpdateUI();
     }
@@ -131,6 +140,8 @@ public class GameManager : PersistentSignleton<GameManager> {
     private void EndGameActions() {
         ChangeGameState(GAME_STATE.END_GAME);
     }
+
+    private void SuedActions() {  }
 
     public async void GameStartActions() {
         await LevelManager.Instance.LoadLevel("TestLevel");
