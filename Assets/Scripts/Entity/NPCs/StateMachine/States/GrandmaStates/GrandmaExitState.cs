@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class CustomerExitState : CustomerBaseState {
+public class GrandmaExitState : CustomerBaseState {
 
-    public CustomerExitState(CustomerStateMachine.STATES key, CustomerStateContext_SO context) : base(key, context) { }
+    public GrandmaExitState(CustomerStateMachine.STATES key, CustomerStateContext_SO context) : base(key, context) { }
 
     private bool _finished = false;
     private bool _stateInitialsed = false;

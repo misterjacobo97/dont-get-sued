@@ -10,6 +10,7 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
 
 
     private List<HoldableItem> _heldItems = new();
+    public List<HoldableItem> HeldItems => _heldItems;
 
     private void Update() {
         Vector2 _movement = InputManager.Instance.GetPlayerMovement();
@@ -18,6 +19,7 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
         //    _itemTarget.localPosition = _movement / 2;
         //}
     }
+    
 
     public void CompleteItems() {
         _heldItems.ForEach(i => {

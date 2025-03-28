@@ -22,14 +22,14 @@ public class LevelManager : PersistentSignleton<LevelManager> {
     public Transform CurrentSpawnpoint { get; private set; }
     public string LevelTitle { get; private set; }
 
+    [Header("debug")]
+    [SerializeField] private Logger _logger;
+    [SerializeField] private bool _showDebugLogs = true;
+
     private void Start() {
         _loadingScreen.alpha = 1;
 
         LevelTitle = SceneManager.GetActiveScene().name;
-    
-        //if (_loadLevelOnStart == true) {
-        //    LoadLevel(_startingLevelTitle);
-        //}
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class LevelManager : PersistentSignleton<LevelManager> {
             to be used by the spawnpoint as it spawns in
         */
         CurrentSpawnpoint = newSpawnpoint;
-        Debug.Log("new spawnpoint");
+        _logger.Log("new spawnpoint", this, _showDebugLogs);
         NewCheckpointSet.Invoke();
     }
 

@@ -39,6 +39,10 @@ public class InputManager : PersistentSignleton<InputManager> {
     private InputAction _dashAction;
     private InputAction _slapAction;
 
+    [Header("debug")]
+    [SerializeField] private Logger _logger;
+    [SerializeField] private bool _showDebugLogs = true;
+
     private void Start() {
         // separating into its smaller chunks first
         _playerActions = new();

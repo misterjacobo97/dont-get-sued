@@ -4,7 +4,8 @@ public class CustomerStateMachine : BaseStateManager<CustomerStateMachine.STATES
         SEEKING,
         SLAPPED,
         FALLING,
-        EXIT
+        EXIT, 
+        FOLLOWING
     }
 
     protected override void Start() {

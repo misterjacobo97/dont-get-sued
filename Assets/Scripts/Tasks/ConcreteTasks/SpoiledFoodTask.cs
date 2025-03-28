@@ -8,7 +8,7 @@ public class SpoiledFoodTask : TaskObject {
 
 
     [Header("Params")]
-    [SerializeField] private float _timeToSpoil;
+    [SerializeField] private float _timeToSpoil = 15;
     private bool _spoiled = false;
     public bool IsSpoiled => _spoiled;
 
@@ -29,21 +29,17 @@ public class SpoiledFoodTask : TaskObject {
     }
 
     private void Update() {
-        if (/*_taskActive */ state == TASK_STATE.ACTIVE) {
+        if (state == TASK_STATE.ACTIVE) {
             _timeLeft -= Time.deltaTime;
 
             _timerRadial.fillAmount = _timeLeft / _timeToSpoil;
 
-
             if (_timeLeft <= 0) {
                 if (_spoiled == false) _spoiled = true;
                 if (_spoiledIcon.enabled == false) _spoiledIcon.enabled = true;
-                //_taskActive = false;
-                //FailTask();
 
                 float factor = Mathf.Abs(Mathf.Sin(Time.time * 3f) * 2f);
                 _spoiledIcon.transform.localScale = new Vector3(1, 1, 1) * Mathf.Clamp(factor, 0.5f, 2);
-                
             }
         }
     }
@@ -61,7 +57,6 @@ public class SpoiledFoodTask : TaskObject {
     }
 
     public new void DeactivateTask() {
-
         _timerIcon.enabled = false;
         base.DeactivateTask();
     }

@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 3264991729415957471}
   - component: {fileID: 5634704403781833531}
   m_Layer: 6
-  m_Name: Milk
+  m_Name: Bleach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 4049362127403371312}
   - component: {fileID: 7172373947232219281}
   m_Layer: 6
-  m_Name: Body
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,7 +406,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -5110731548806032159, guid: 0a9c02755c559a44aa859ff8f602388c, type: 3}
+  m_Sprite: {fileID: 5492257850738502248, guid: 7c4ece35f0bd3634197725a0a6d17da1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

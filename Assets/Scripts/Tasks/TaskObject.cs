@@ -39,6 +39,7 @@ public class TaskObject : HoldableItem {
     }
 
     public void FailTask() {
+        GameManager.Instance.AddToHealth(-1);
         DeactivateTask();
         ChangedTaskState.Invoke(TASK_STATE.FAILED);
 

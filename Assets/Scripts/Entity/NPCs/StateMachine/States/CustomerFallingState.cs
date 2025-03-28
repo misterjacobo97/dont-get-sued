@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class CustomerFallingState : CustomerBaseState {
+public class GrandmaFallingState : CustomerBaseState {
 
-    public CustomerFallingState(CustomerStateMachine.STATES key, CustomerStateContext_SO context) : base(key, context) { }
+    public GrandmaFallingState(CustomerStateMachine.STATES key, CustomerStateContext_SO context) : base(key, context) { }
 
     [SerializeField] private float _changeInterval = 2f;
 

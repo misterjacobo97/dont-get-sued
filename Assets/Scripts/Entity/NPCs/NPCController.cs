@@ -35,7 +35,7 @@ public class NPCController : MonoBehaviour {
         // fill in context refs
         _stateContext = ScriptableObject.CreateInstance<CustomerStateContext_SO>();
         _stateContext.agent = agent;
-        _stateContext.itemHolder = GetItemHolder();
+        _stateContext.itemHolder = GetItemHolder() as NPCItemHolder;
         _stateContext.shoppingList = new();
         _stateContext.spriteRenderer = _sprite;
 
@@ -130,6 +130,14 @@ public class NPCController : MonoBehaviour {
     }
 
     private void OnDestroy() {
+        //foreach (SpoiledFoodTask item in _stateContext.itemHolder.HeldItems) {
+        //    if (item.IsSpoiled) {
+        //        GameManager.Instance.AddToHealth(-1);
+        //        break;
+        //    }
+        //}
+
+
         NPCManager.Instance.RemoveNPC(this);
     }
 }

@@ -7,8 +7,8 @@ public class Logger : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] bool _showLog;
 
-    public void Log(object message, Object sender) {
-        if (_showLog) {
+    public void Log(object message, Object sender, bool enabled) {
+        if (_showLog && enabled) {
 
             Debug.Log(message, sender);
 

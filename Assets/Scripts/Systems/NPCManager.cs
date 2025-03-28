@@ -33,14 +33,22 @@ public class NPCManager : PersistentSignleton<NPCManager> {
     private List<NPCSpawnPoint> _spawnPoints = new();
     public Transform exitArea;
 
+    [Header("debug")]
+    [SerializeField] private Logger _logger;
+    [SerializeField] private bool _showDebugLogs = true;
 
     private void Start() {
-        //SpawnNewNPC();
+        GameManager.Instance.GameStateChanged.AddListener(state => {
 
-        GameManager.Instance.GameStateChanged.AddListener(state => { 
-            if (state == GameManager.GAME_STATE.MAIN_GAME) {
-                SpawnNewNPC();
+            switch (state) {
+                case GameManager.GAME_STATE.MAIN_GAME:
+                    SpawnNewNPC();
+                    return;
+                default:
+                    ResetManager();
+                    return;
             }
+
         });
     }
 
@@ -55,12 +63,12 @@ public class NPCManager : PersistentSignleton<NPCManager> {
     private async void SpawnNewNPC() {
         await Awaitable.WaitForSecondsAsync(_npcSpawnInterval);
 
-        if (_activeNpcList.Count > _maxNpcCount) {
+        if (_activeNpcList.Count >= _maxNpcCount) {
             _npcSpawningActive = false;
         }
         else _npcSpawningActive = true;
 
-        if (_npcSpawningActive) {
+        if (_npcSpawningActive && GameManager.Instance.GetGameState == GameManager.GAME_STATE.MAIN_GAME ) {
             // spawn and relocate
             NPCController newNPC = Transform.Instantiate(_shopperPrefabs[UnityEngine.Random.Range(0, _shopperPrefabs.Count - 1)]).GetComponent<NPCController>();
             newNPC.transform.position = _spawnPoints[UnityEngine.Random.Range(0, _spawnPoints.Count - 1)].transform.position;
@@ -95,9 +103,11 @@ public class NPCManager : PersistentSignleton<NPCManager> {
         npc.AddToShoppingList(newList);
     }
 
-    //public void AddActiveTarget(NPCController npc, Transform target) {
-    //    _activeNpcTargetList.Add(new NPCTargets(npc, target));
-    //}
+    private void ResetManager() {
+        _activeNpcList.Clear();
+
+        _spawnPoints.Clear();
+    }
 
     public void RemoveNPC(NPCController npc) {
         _activeNpcList.Remove(npc);

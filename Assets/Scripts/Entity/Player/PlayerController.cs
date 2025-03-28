@@ -26,8 +26,10 @@ public class PlayerController : MonoBehaviour {
     private bool _currentlyDashing = false;
     private float _timeOfLastDash = 0f;
 
-    [Header("Logging")]
+    [Header("debug")]
     [SerializeField] private Logger _logger;
+    [SerializeField] private bool _showDebugLogs;
+
 
     // movement related
     private Vector2 _movement;
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour {
 
             // calculate movement force
             Vector2 newForce = _movement * (_movementAccel + directionSwitchMult) * Time.fixedDeltaTime;
-            Log(newForce);
+            _logger.Log(newForce, this, _showDebugLogs);
 
             // change so it doesnt feel sluggish when moving
             _rb.linearDamping = 0.2f;
@@ -93,7 +95,7 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.layer == _hitboxLayer) {
-            Debug.Log("Slapped");
+            _logger.Log("Slapped", this, _showDebugLogs);
         }
     }
 
@@ -139,9 +141,4 @@ public class PlayerController : MonoBehaviour {
 
     #endregion
 
-    private void Log(object message) {
-        if (_logger) {
-            _logger.Log(message, this);
-        }
-    }
 }
