@@ -35,6 +35,7 @@ public class NPCController : MonoBehaviour {
         // fill in context refs
         _stateContext = ScriptableObject.CreateInstance<CustomerStateContext_SO>();
         _stateContext.agent = agent;
+        _stateContext.rb = _rb;
         _stateContext.itemHolder = GetItemHolder() as NPCItemHolder;
         _stateContext.shoppingList = new();
         _stateContext.spriteRenderer = _sprite;
@@ -45,12 +46,25 @@ public class NPCController : MonoBehaviour {
 
     private void Start() {
         NPCManager.Instance.AddNPC(this);
+
+        _stateMachine.StateChangedEvent.AddListener(state => {
+            if (state.StateKey == CustomerStateMachine.STATES.FALLING) {
+                _itemHolder.GetComponent<NPCItemHolder>().DropAllItems();
+            }
+        });
     }
 
     private void Update() {
+        if (agent.desiredVelocity != Vector3.zero) { 
+            _stateContext.lastMovementDir = agent.desiredVelocity.normalized;
+            
+        }
+
         if (_stateContext.currentTarget != null && agent.isStopped == true) {
             agent.isStopped = false;
             agent.SetDestination(_stateContext.currentTarget.position);
+
+            
         }
         else if (_stateContext.currentTarget == null) {
 

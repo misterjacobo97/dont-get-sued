@@ -20,6 +20,8 @@ public class GrandmaFallingState : CustomerBaseState {
         _context.currentTarget = null;
 
         _context.spriteRenderer.sprite = _fallingSprite;
+
+        _context.rb.AddForce(_context.lastMovementDir * 700);
     }
 
 

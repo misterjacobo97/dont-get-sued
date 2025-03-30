@@ -11,6 +11,7 @@ public class CustomerStateContext_SO : ScriptableObject {
     // refs
     public CustomerStateMachine stateMachine;
     public NavMeshAgent agent;
+    public Rigidbody2D rb;
     public NPCItemHolder itemHolder;
     public SpriteRenderer spriteRenderer;
 
@@ -18,6 +19,7 @@ public class CustomerStateContext_SO : ScriptableObject {
     // properties
     public float timeOfLastStateChange;
     public CustomerStateMachine.STATES lastState;
+    public Vector2 lastMovementDir = Vector2.zero;
 
     // tasks related
     public List<ShoppingItem> shoppingList = new();

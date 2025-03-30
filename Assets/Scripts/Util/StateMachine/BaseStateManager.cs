@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class BaseStateManager<EState> : MonoBehaviour where EState : Enum {
+
+    [NonSerialized] public UnityEvent<BaseState<EState>> StateChangedEvent = new();
 
     [SerializeField] protected List<BaseState<EState>> States = new();
     [SerializeField] protected BaseState<EState> _currentState;
@@ -54,6 +57,7 @@ public abstract class BaseStateManager<EState> : MonoBehaviour where EState : En
         _currentState.ExitState();
         _currentState = States.Find(s => s.StateKey.Equals(stateKey));
         _currentState.EnterState();
+        StateChangedEvent.Invoke(CurrentState);
     }
     
 
