@@ -736,6 +736,7 @@ MonoBehaviour:
   - {fileID: 1429628203261914565}
   - {fileID: 3455872520108322548}
   - {fileID: 4991903191592102194}
+  _playerContext: {fileID: 11400000, guid: 979454e8e673b2449898049a9de1494a, type: 2}
   _signPrefab: {fileID: 494350440038905295, guid: fc85b0fa2925f354c9fda16a9b717b28, type: 3}
   _maxSignCount: 3
 --- !u!1 &5166932762273501839

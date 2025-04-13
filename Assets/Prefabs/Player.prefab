@@ -121,7 +121,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 78dd3c73afe1b84498eb9b21cab9bd43, type: 2}
   - {fileID: 11400000, guid: e167eee3fd185a9429bf8be3bfebd7fa, type: 2}
   _pickUpSound: {fileID: 8300000, guid: 3b44a1eba03c4444fa5314d99a20b477, type: 3}
-  _throwForce: 200
+  _throwForce: 900
 --- !u!1 &2212799905638464651
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,7 +416,7 @@ MonoBehaviour:
   _slapCollider: {fileID: 2047756576946810920}
   _hitboxLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   _sideSprite: {fileID: 3056186126888679272, guid: f3618529d1d033d429d5ec43e7200673, type: 3}
   _backSprite: {fileID: -7902658530649608355, guid: 344957bef4b1bf04b8067958f06ebc44, type: 3}
   _movementAccel: 700
@@ -577,7 +577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _npcLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   _slapCollider: {fileID: 2047756576946810920}
   _slapSound: {fileID: 8300000, guid: 9f70b838d603c26458ea754e7bc6660a, type: 3}
   _slapFrames: 3
@@ -627,6 +627,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd382849035dc5e45960298fc118cbd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onPlayerInteractSelectedChangedEvent: {fileID: 11400000, guid: 0594a47cbe19b8740b9fe6defc2aa317, type: 2}
+  _onPlayerInteractEvent: {fileID: 11400000, guid: 72218f7be3c7edb4fa51f08034ec689c, type: 2}
+  _playerInteractContext: {fileID: 11400000, guid: 979454e8e673b2449898049a9de1494a, type: 2}
   _interactMask:
     serializedVersion: 2
     m_Bits: 64

@@ -21,11 +21,12 @@ public class PlayerSlapArea : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        Debug.Log("slap");
+        if (collision.gameObject.layer != _npcLayer) return;
+
         // find direction of npc
         Vector2 slapDir = (collision.transform.position - transform.position).normalized;
 
-        collision.GetComponentInParent<NPCController>().GetSlapped(slapDir);
+        collision.GetComponentInParent<NPCStateController>().GetSlapped(slapDir);
         SoundManager.Instance.PlaySound(_slapSound);
     }
 

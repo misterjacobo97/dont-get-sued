@@ -37,6 +37,7 @@ public class UIManager : PersistentSignleton<UIManager>
         });
     }
 
+
     public void ChangeHealthUI(int newHealth) {
         if (newHealth > _healthNodeGroup.childCount) {
             // add as many nodes as needed

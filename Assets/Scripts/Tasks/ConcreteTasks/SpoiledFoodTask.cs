@@ -51,13 +51,11 @@ public class SpoiledFoodTask : TaskObject {
     }
 
     public new void CompleteTask() {
-        if (_spoiled == true) {
+        if (_spoiled == true && _parentHolder is not Bin) {
             _taskScore = 0;
-        }
-
-        if (_spoiled == true) {
             base.FailTask();
         }
+
 
         else base.CompleteTask();
     }

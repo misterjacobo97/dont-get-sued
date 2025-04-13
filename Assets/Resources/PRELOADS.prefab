@@ -1661,6 +1661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scoreText: {fileID: 4908713425482972211}
   _timerText: {fileID: 5979597235744812559}
+  _gameState: {fileID: 11400000, guid: 88a5f3f35fd37544cbab58d9f04cde20, type: 2}
   _secondsInRound: 180
   _startingHealth: 3
   _logger: {fileID: 5672422042019910710}
@@ -1790,17 +1791,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shopperPrefabs:
-  - {fileID: 4252999180834578793, guid: 39cd22ecf9d83674fa0979687011f148, type: 3}
-  _shoppableItems:
-  - {fileID: 11400000, guid: 8c6ca1165eaf62041b7f55682e126067, type: 2}
-  - {fileID: 11400000, guid: 86420ed71513fc740bf07a1d50087284, type: 2}
-  - {fileID: 11400000, guid: 78dd3c73afe1b84498eb9b21cab9bd43, type: 2}
-  - {fileID: 11400000, guid: e167eee3fd185a9429bf8be3bfebd7fa, type: 2}
-  _maxShoppingListSize: 3
-  _activeNpcTargetList: []
+  - {fileID: 4252999180834578793, guid: 935402100df1d70468a0f76f45899f4c, type: 3}
+  - {fileID: 4252999180834578793, guid: 7e35763df2a51d849a5c61234bd500e1, type: 3}
+  - {fileID: 4252999180834578793, guid: 7ea93b958b6a1d144a150837a357cc1a, type: 3}
+  npcDatabase: {fileID: 11400000, guid: d2f9c1822c323de4792bc41b65742287, type: 2}
   _npcSpawnInterval: 5
   _maxNpcCount: 4
-  exitArea: {fileID: 0}
   _logger: {fileID: 5672422042019910710}
   _showDebugLogs: 1
 --- !u!1 &3637917177199190972

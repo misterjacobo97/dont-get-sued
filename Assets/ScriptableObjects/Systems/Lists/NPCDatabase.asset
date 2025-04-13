@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de017585c6bbb5c439c022c43b32c674, type: 3}
+  m_Name: NPCDatabase
+  m_EditorClassIdentifier: 
+  _listOfShelves:
+    list: {fileID: 11400000, guid: 6a0fdf286733a69419dadd10caf08bab, type: 2}
+    useGenericList: 0
+    genericList: []
+  _listActiveOfNPCs:
+    list: {fileID: 11400000, guid: c297754e9d8b16c48969b4cf26c36d2c, type: 2}
+    useGenericList: 0
+    genericList: []
+  _listOfLevelExits:
+    list: {fileID: 11400000, guid: a2f4fbc271df8c94789bc7f693e818ce, type: 2}
+    useGenericList: 0
+    genericList: []
+  _DictOfFollowerTargets:
+    dict: {fileID: 11400000, guid: 111eb9156e1e9e84a9de858844678a69, type: 2}
+  _DictOfShelfTargets:
+    dict: {fileID: 11400000, guid: e2cf7fa60001bee43a4c18bb1f16009e, type: 2}

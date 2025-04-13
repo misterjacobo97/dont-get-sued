@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
+using R3;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,11 +13,21 @@ public abstract class BaseStateManager<EState> : MonoBehaviour where EState : En
     [SerializeField] protected BaseState<EState> _currentState;
     public BaseState<EState> CurrentState => _currentState;
 
+
+    [SerializeField] protected BaseStateSO _initialStateSO;
+    public SerializedDictionary<BaseStateSO, BaseState<EState>> _listOfStates;
+    public ReactiveProperty<BaseStateSO> currentState { get; private set; }
+
     [SerializeField] protected EState InitialState;
     protected ScriptableObject _context;
 
     public void Init(ScriptableObject context) {
         _context = context;
+    }
+
+    protected virtual void Awake() {
+        currentState = new ReactiveProperty<BaseStateSO>(_initialStateSO);
+        _listOfStates = new();
     }
 
     protected virtual void Start(){
@@ -24,9 +36,13 @@ public abstract class BaseStateManager<EState> : MonoBehaviour where EState : En
         //}
         // gotta do this in the derived state machine
 
-        _currentState = States.Find(s => s.StateKey.Equals(InitialState));
+        foreach (BaseState<EState> state in GetComponentsInChildren<BaseState<EState>>()) {
+            _listOfStates.Add(state.stateRef, state);
+        }
 
-        _currentState.EnterState();
+        //_currentState = States.Find(s => s.StateKey.Equals(InitialState));
+
+        //_currentState.EnterState();
     }
 
     protected virtual void Update(){
@@ -59,6 +75,9 @@ public abstract class BaseStateManager<EState> : MonoBehaviour where EState : En
         _currentState.EnterState();
         StateChangedEvent.Invoke(CurrentState);
     }
-    
+
+    protected virtual void OnDestroy() {
+        Disposable.Dispose(currentState);
+    }
 
 }

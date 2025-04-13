@@ -1,28 +1,23 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEditor;
-using UnityEditor.UIElements;
+using R3;
 using UnityEngine;
-using UnityEngine.UIElements;
-
-
 
 public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
-
-    enum ShelfType {
-        SINGLE_TASK,
-        MULTI_TASK
-    }
 
     [Header("Refs")]
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Transform _itemTarget;
-    [SerializeField] public List<HoldableItem_SO> _acceptedItems = new();
+    //[SerializeField] public List<HoldableItem_SO> _acceptedItems = new();
     [SerializeField] private Transform _customerMarker;
+    [SerializeField] private TransformListReference _listOfShelves;
+    [SerializeField] public ScriptableObjectListReference _acceptedItems;
 
+    private I_Interactable interactableRef;
+
+    [Header("context objects")]
+    [SerializeField] private InteractContextSO _playerContext;
 
     [Header("Params")]
-    [SerializeField] private ShelfType _shelfType = ShelfType.SINGLE_TASK;
     [SerializeField] private bool _showGizmos = true;
     
     // item spawn 
@@ -32,13 +27,25 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
     private HoldableItem_SO _lastHeldItem = null;
     private HoldableItem _heldItem = null;
 
-    protected  void Start() {
-        PlayerInteract.Instance.OnSelectedInteractableChanged += OnSelectedInteractableChanged;
+    private void Awake() {
+        interactableRef = GetComponent<I_Interactable>();
+    }
+
+    private void Start() {
+        _listOfShelves.AddToList(this.transform);
 
         // if target gameobject has a child, check if its allowed and set it up as held item
         if (_itemTarget.GetChild(0) != null) {
             (_itemTarget.GetChild(0).GetComponent<HoldableItem>()).ChangeParent(this);
         }
+
+        _playerContext.selectedInteractableObject.AsObservable().Subscribe((item) => {
+            if (item != null && item.GetComponent<I_Interactable>() == interactableRef) {
+                Debug.Log("its me");
+                SetSelected();
+            }
+            else SetUnselected();
+        }).AddTo(this);
     }
 
     protected void Update() {
@@ -47,25 +54,14 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
 
         }
     }
-
-    private void OnSelectedInteractableChanged(object sender, PlayerInteract.OnSelectedInteractableChangedEventArgs e) {
-        if (e.selectedInteractable == (I_Interactable)this) {
-            SetSelected();
-        }
-        else {
-            SetUnselected();
-        }
-    }
-
     public void SetSelected() {
-        _sprite.color = Color.yellow;
+        _sprite.color = Color.gray;
     }
 
     public void SetUnselected() { 
         _sprite.color = Color.white;
     }
-
-    public void Interact(object caller) {
+    public void Interact(Object caller) {
         if (caller is PlayerInteract) {
             PlayerInteract player = caller as PlayerInteract;
 
@@ -73,7 +69,6 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
             if (_heldItem != null && player.GetItemHolder().HasItem()) return;
 
             if (_heldItem != null) {
-                //Debug.Log("here");
                 _heldItem.ChangeParent(player.GetItemHolder());
             }
 

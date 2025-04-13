@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
+using R3;
 using TMPro;
 using UnityEngine;
 
@@ -9,7 +9,10 @@ public class SignContainer : MonoBehaviour, I_Interactable {
     [SerializeField] private TextMeshProUGUI _maxText;
     [SerializeField] private TextMeshProUGUI _currentText;
     [SerializeField] private List<Transform> _targets;
+    private I_Interactable interactableRef;
 
+    [Header("context objects")]
+    [SerializeField] private InteractContextSO _playerContext;
 
     [Header("Params")]
     [SerializeField] private HoldableItem _signPrefab;
@@ -25,20 +28,31 @@ public class SignContainer : MonoBehaviour, I_Interactable {
             else _currentSignsCount += value;
         }
     }
+    private void Awake() {
+        interactableRef = GetComponent<I_Interactable>();
+    }
 
-    protected void Start() {
-        PlayerInteract.Instance.OnSelectedInteractableChanged += OnSelectedInteractableChanged;
+    private void Start() {
+        //PlayerInteract.Instance.OnSelectedInteractableChanged += OnSelectedInteractableChanged;
         UpdateUI();
+
+        _playerContext.selectedInteractableObject.AsObservable().Subscribe((item) => {
+            if (item != null && item.GetComponent<I_Interactable>() == interactableRef) {
+                Debug.Log("its me");
+                SetSelected();
+            }
+            else SetUnselected();
+        }).AddTo(this);
     }
 
-    private void OnSelectedInteractableChanged(object sender, PlayerInteract.OnSelectedInteractableChangedEventArgs e) {
-        if (e.selectedInteractable == (I_Interactable)this) {
-            SetSelected();
-        }
-        else {
-            SetUnselected();
-        }
-    }
+    //private void OnSelectedInteractableChanged(object sender, PlayerInteract.OnSelectedInteractableChangedEventArgs e) {
+    //    if (e.selectedInteractable == (I_Interactable)this) {
+    //        SetSelected();
+    //    }
+    //    else {
+    //        SetUnselected();
+    //    }
+    //}
 
     public void SetSelected() {
         _sprite.color = Color.white;
@@ -48,7 +62,7 @@ public class SignContainer : MonoBehaviour, I_Interactable {
         _sprite.color = Color.red;
     }
 
-    public void Interact(object caller) {
+    public void Interact(Object caller) {
         if (caller is not PlayerInteract) {
             return;
         }
@@ -61,14 +75,12 @@ public class SignContainer : MonoBehaviour, I_Interactable {
 
         if (holder.HasItem() && CurrentSignCount < _maxSignCount) {
             // if holder has sign, destroy and add 1 to counter
-
             Destroy(holder.GetHeldItem().gameObject);
             CurrentSignCount = 1;
             UpdateUI();
         }
 
         else if (holder.HasItem() == false && CurrentSignCount > 0) {
-
             CurrentSignCount = -1;
             UpdateUI();
 
@@ -80,18 +92,12 @@ public class SignContainer : MonoBehaviour, I_Interactable {
         _maxText.text = _maxSignCount.ToString();
         _currentText.text = CurrentSignCount.ToString();
 
-        // update sprites shown on the cart
-        //List<Transform> targets = _targets.GetComponentsInChildren<Transform>().ToList();
+        for (int i = 0; i < _targets.Count; i++) {
 
-        for (int i = 0; i < _targets.Count; i++) { 
-           
             if (i + 1 <= _currentSignsCount) {
                 _targets[i].GetComponent<SpriteRenderer>().enabled = true;
             }
-
             else _targets[i].GetComponent<SpriteRenderer>().enabled = false;
-
         }
     }
-
 }

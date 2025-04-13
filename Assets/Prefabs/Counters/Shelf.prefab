@@ -427,13 +427,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 5653378361849299591}
   _itemTarget: {fileID: 7482761991464861190}
-  _acceptedItems:
-  - {fileID: 11400000, guid: 8c6ca1165eaf62041b7f55682e126067, type: 2}
-  - {fileID: 11400000, guid: 86420ed71513fc740bf07a1d50087284, type: 2}
-  - {fileID: 11400000, guid: 78dd3c73afe1b84498eb9b21cab9bd43, type: 2}
-  - {fileID: 11400000, guid: e167eee3fd185a9429bf8be3bfebd7fa, type: 2}
-  - {fileID: 11400000, guid: f22450598905c2544ae3147ab537a21a, type: 2}
   _customerMarker: {fileID: 7864373180642620860}
-  _shelfType: 0
+  _listOfShelves:
+    list: {fileID: 11400000, guid: 6a0fdf286733a69419dadd10caf08bab, type: 2}
+    useGenericList: 0
+    genericList: []
+  _acceptedItems:
+    list: {fileID: 11400000, guid: ec3f438c188a4e140a1dd49d8e005d1c, type: 2}
+    useGenericList: 0
+    genericList: []
+  _playerContext: {fileID: 11400000, guid: 979454e8e673b2449898049a9de1494a, type: 2}
   _showGizmos: 1
   _itemRespawnTime: 10

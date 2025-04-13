@@ -1,5 +1,8 @@
 using System;
+using R3;
 using UnityEngine;
+
+
 
 /// <summary>
 /// An abstract State class to derive states from and to be used with state manager derived from the BaseStateManager class.
@@ -15,6 +18,13 @@ public abstract class BaseState<EState> : MonoBehaviour where EState : Enum {
     }
 
     public EState StateKey;
+    public BaseStateSO stateRef;
+
+    public ReactiveCommand<BaseStateSO> ChangeStateTo { get; private set; }
+
+    public void Awake() {
+        ChangeStateTo = new ReactiveCommand<BaseStateSO>();
+    }
 
     /// <summary>
     /// Use if attaching BaseState derived script to a gameObject as a child of the state manager.
@@ -30,5 +40,7 @@ public abstract class BaseState<EState> : MonoBehaviour where EState : Enum {
     public abstract void OnTriggerStay(Collider collider);
     public abstract void OnTriggerExit(Collider collider);
 
-
+    protected virtual void OnDestroy() {
+        Disposable.Dispose(ChangeStateTo);
+    }
 }

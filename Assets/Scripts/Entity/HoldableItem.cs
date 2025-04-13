@@ -1,4 +1,5 @@
-using System;
+//using System;
+using R3;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,29 +8,30 @@ using UnityEngine.Events;
 /// HoldableItems are responsible for changing their own parent.
 /// </summary>
 public class HoldableItem : MonoBehaviour, I_Interactable {
-    [NonSerialized] public UnityEvent<I_ItemHolder> ChangedParentHolder = new();
-
+    [System.NonSerialized] public UnityEvent<I_ItemHolder> ChangedParentHolder = new();
 
     [Header("holdable refs")]
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] public HoldableItem_SO holdableItem_SO;
     [SerializeField] protected Collider2D _collider;
     [SerializeField] protected SpriteRenderer _sprite;
+    private I_Interactable interactableRef;
 
     private bool _heldState = false;
     protected I_ItemHolder _parentHolder = null;
 
-    protected void Start() {
-        PlayerInteract.Instance.OnSelectedInteractableChanged += OnSelectedInteractableChanged;
+    private void Awake() {
+        interactableRef = GetComponent<I_Interactable>();
     }
 
-    private void OnSelectedInteractableChanged(object sender, PlayerInteract.OnSelectedInteractableChangedEventArgs e) {
-        if (e.selectedInteractable == (I_Interactable)this) {
-            SetSelected();
-        }
-        else {
-            SetUnselected();
-        }
+    protected void Start() {
+        holdableItem_SO.playerInteractContext.selectedInteractableObject.AsObservable().Subscribe((item) => {
+            if (item != null && item.GetComponent<I_Interactable>() == interactableRef) {
+                Debug.Log("its me");
+                SetSelected();
+            }
+            else SetUnselected();
+        }).AddTo(this);
     }
 
     protected void SetHeldState(bool newState) {
@@ -90,7 +92,7 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
         _rb.AddForce(dir * force);
 
     }
-    public void Interact(object caller) {
+    public void Interact(Object caller) {
         if (holdableItem_SO.pickableItem == false) {
             return;
         }

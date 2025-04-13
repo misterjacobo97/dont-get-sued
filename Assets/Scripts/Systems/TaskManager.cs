@@ -6,8 +6,13 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class TaskManager : PersistentSignleton<TaskManager> {
-
     [NonSerialized] public UnityEvent taskListChanged = new();
+
+    public event EventHandler<OnTaskCompletedEventArgs> OnTaskCompletedEvent;
+
+    public class OnTaskCompletedEventArgs : EventArgs {
+        public TaskInfo taskInfoCompleted;
+    }
 
     [Header("Refs")]
     [SerializeField] private CanvasGroup _uiCanvas;
@@ -58,16 +63,16 @@ public class TaskManager : PersistentSignleton<TaskManager> {
             _taskList.Add(newTaskInfo);
 
             newTaskInfo.ChangedTaskHolder.AddListener(newHolder => { _logger.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new holder: " + newHolder, this, _showDebugLogs); });
-            newTaskInfo.ChangedAssignedNPC.AddListener(newNPC => { _logger.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new assigned NPC: " + newNPC, this, _showDebugLogs); });
+            //newTaskInfo.ChangedAssignedNPC.AddListener(newNPC => { _logger.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new assigned NPC: " + newNPC, this, _showDebugLogs); });
             newTaskInfo.ChangedTaskState.AddListener(newState => { _logger.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new State: " + newState, this, _showDebugLogs); });
         }
     }
 
-    public void RemoveNPCFromAssignments(NPCController npc) {
-        foreach (var item in _taskList.Where(task => task.assignedNPC == npc)) {
-            item.assignedNPC = null;
-        }
-    }
+    //public void RemoveNPCFromAssignments(NPCController npc) {
+    //    foreach (var item in _taskList.Where(task => task.assignedNPC == npc)) {
+    //        item.assignedNPC = null;
+    //    }
+    //}
 
     private async void AssignTaskTimer() {
         if (GameManager.Instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) return;

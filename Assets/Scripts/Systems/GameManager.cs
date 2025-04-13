@@ -23,9 +23,11 @@ public class GameManager : PersistentSignleton<GameManager> {
     [Header("UI Refs")]
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private TextMeshProUGUI _timerText;
-    
-    
 
+
+
+    [Header("refs")]
+    [SerializeField] private GameStateSO _gameState;
 
 
     [Header("Game Params")]
@@ -34,7 +36,7 @@ public class GameManager : PersistentSignleton<GameManager> {
 
 
     private int _totalScore = 0;
-    private float _timeLeft = 0;
+    //private float _timeLeft = 0;
     private int _currentHealth;
 
 
@@ -46,7 +48,7 @@ public class GameManager : PersistentSignleton<GameManager> {
 
 
     private void Start() {
-        _timeLeft = _secondsInRound;
+        _gameState.gameTimeLeft.Value = _secondsInRound;
         _currentHealth = _startingHealth;
 
         UpdateUI();
@@ -64,7 +66,7 @@ public class GameManager : PersistentSignleton<GameManager> {
         ControlTimer();
 
 
-        if (GetGameState != GAME_STATE.END_GAME && _timeLeft <= 0) {
+        if (GetGameState != GAME_STATE.END_GAME && _gameState.gameTimeLeft.Value <= 0) {
             EndGameActions();
         }
 
@@ -73,8 +75,8 @@ public class GameManager : PersistentSignleton<GameManager> {
 
     private void ControlTimer() {
         if (GetGameState != GAME_STATE.MAIN_GAME) return;
-        if (_timeLeft > 0) {
-            _timeLeft -= Time.deltaTime;
+        if (_gameState.gameTimeLeft.Value > 0) {
+            _gameState.gameTimeLeft.Value -= Time.deltaTime;
         }
     }
 
@@ -88,8 +90,8 @@ public class GameManager : PersistentSignleton<GameManager> {
         UIManager.Instance.ChangeHealthUI(_currentHealth);
 
 
-        if (_timeLeft > 0) {
-            _timerText.text = _timeLeft.ToString("0.00");
+        if (_gameState.gameTimeLeft.Value > 0 ) {
+            _timerText.text = _gameState.gameTimeLeft.Value.ToString("0.00");
         }
         else _timerText.text = "0.00";
     }

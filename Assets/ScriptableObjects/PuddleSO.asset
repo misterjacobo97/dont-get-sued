@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a37d0610513c84f92fa7a152064561, type: 3}
   m_Name: PuddleSO
   m_EditorClassIdentifier: 
-  prefab: {fileID: 8861181103231935355, guid: 177c0feb999db8147a69df1e65cc07cf, type: 3}
+  possiblePrefabs: {fileID: 0}
   iconSprite: {fileID: 21300000, guid: 21520e69fb1889f4598c1a320b3c31bc, type: 3}
   taskName: Puddle Task
   pickableItem: 0
+  spoilable: 0
+  playerInteractContext: {fileID: 11400000, guid: 979454e8e673b2449898049a9de1494a, type: 2}

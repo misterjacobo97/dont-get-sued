@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
 
     [Header("Refs")]
     [SerializeField] private List<Transform> _itemTargets = new();
-    [SerializeField] private List<HoldableItem_SO> _acceptedItems = new();
+    //[SerializeField] private List<HoldableItem_SO> _acceptedItems = new();
+    [SerializeField] private ScriptableObjectListReference _acceptedItems;
+
     [SerializeField] private AudioClip _pickUpSound;
 
 
@@ -27,9 +30,9 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
         });
     }
 
-    public List<HoldableItem_SO> GetAcceptedItems() {
-        return _acceptedItems;
-    }
+    //public List<ScriptableObject> GetAcceptedItems() {
+    //    return _acceptedItems.GetList();
+    //}
 
     public void SetItem(HoldableItem newItem) {
         Debug.Log("holding new item");

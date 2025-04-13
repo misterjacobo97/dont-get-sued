@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a37d0610513c84f92fa7a152064561, type: 3}
   m_Name: WetFloorSignSO
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4221486141082867925, guid: fc85b0fa2925f354c9fda16a9b717b28, type: 3}
+  possiblePrefabs: {fileID: 0}
   iconSprite: {fileID: 0}
   taskName: Wet Floor Sign
   pickableItem: 1
+  spoilable: 0
+  playerInteractContext: {fileID: 11400000, guid: 979454e8e673b2449898049a9de1494a, type: 2}

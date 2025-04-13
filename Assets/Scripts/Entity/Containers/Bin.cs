@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using DG.Tweening;
+using R3;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -7,26 +8,47 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
     [Header("Refs")]
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Transform _itemTarget;
-    [SerializeField] private List<ScriptableObject> _acceptedItems = new();
+    [SerializeField] private ScriptableObjectListReference _acceptedItems;
     [SerializeField] private AudioClip _trashSound;
+    [SerializeField] private BinItemDetectArea _itemDetect;
+    private I_Interactable interactableRef;
 
+    [Header("context objects")]
+    [SerializeField] private InteractContextSO _playerContext;
 
     private Sequence _interactTween;
 
     private HoldableItem _heldItem = null;
 
-    protected void Start() {
-        PlayerInteract.Instance.OnSelectedInteractableChanged += OnSelectedInteractableChanged;
+    private void Awake() {
+        interactableRef = GetComponent<I_Interactable>();
     }
 
-    private void OnSelectedInteractableChanged(object sender, PlayerInteract.OnSelectedInteractableChangedEventArgs e) {
-        if (e.selectedInteractable == (I_Interactable)this) {
-            SetSelected();
-        }
-        else {
-            SetUnselected();
-        }
+    private void Start() {
+        //PlayerInteract.Instance.OnSelectedInteractableChanged += OnSelectedInteractableChanged;
+
+        _itemDetect.ItemDetected.AddListener(item => {
+            item.ChangeParent(this);
+        });
+
+        _playerContext.selectedInteractableObject.AsObservable().Subscribe((item) => {
+            if (item != null && item.GetComponent<I_Interactable>() == interactableRef) {
+                Debug.Log("its me");
+                SetSelected();
+            }
+            else SetUnselected();
+        }).AddTo(this);
     }
+
+
+    //private void OnSelectedInteractableChanged(object sender, PlayerInteract.OnSelectedInteractableChangedEventArgs e) {
+    //    if (e.selectedInteractable == (I_Interactable)this) {
+    //        SetSelected();
+    //    }
+    //    else {
+    //        SetUnselected();
+    //    }
+    //}
 
     public void SetSelected() {
         _sprite.color = Color.gray;
@@ -36,18 +58,14 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
         _sprite.color = Color.white;
     }
 
-    public void Interact(object caller) {
+    public void Interact(Object caller) {
         if (caller is PlayerInteract) {
 
-
             if ((caller as PlayerInteract).GetItemHolder().HasItem() && HasItem() == false) {
-                Debug.Log("receiving task from: " + caller.ToString());
+                Debug.Log("receiving item from: " + caller.ToString());
 
                 // set holdable parent to this
                 (caller as PlayerInteract).GetItemHolder().GetHeldItem().ChangeParent(this);
-
-                HandleAnimation();
-                SoundManager.Instance.PlaySound(_trashSound);
             }
         }
     }
@@ -84,6 +102,9 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
         HoldableItem item = _heldItem;
 
         RemoveItem();
+
+        HandleAnimation();
+        SoundManager.Instance.PlaySound(_trashSound);
 
         Destroy(item.gameObject);
     }

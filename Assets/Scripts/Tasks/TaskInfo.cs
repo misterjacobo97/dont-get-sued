@@ -9,13 +9,13 @@ using UnityEngine.Events;
 public class TaskInfo {
     [NonSerialized] public UnityEvent<TaskObject.TASK_STATE> ChangedTaskState = new();
     [NonSerialized] public UnityEvent<I_ItemHolder> ChangedTaskHolder = new();
-    [NonSerialized] public UnityEvent<NPCController> ChangedAssignedNPC = new();
+    //[NonSerialized] public UnityEvent<NPCController> ChangedAssignedNPC = new();
 
-    public TaskInfo(int newId, TaskObject newTask, I_ItemHolder container = null, NPCController npc = null) {
+    public TaskInfo(int newId, TaskObject newTask, I_ItemHolder container = null/*, NPCController npc = null*/) {
         id = newId;
         task = newTask;
         taskHolder = container;
-        assignedNPC = npc;
+        //assignedNPC = npc;
 
         ConnectEventListeners();
     }
@@ -24,17 +24,17 @@ public class TaskInfo {
     public TaskObject.TASK_STATE state = TaskObject.TASK_STATE.INACTIVE;
     public TaskObject task;
     public I_ItemHolder taskHolder;
-    public NPCController assignedNPC;
+    //public NPCController assignedNPC;
 
     /// <summary>
     /// Use to change the assigned NPC for this task, leave empty to remove any assignment previously made.
     /// </summary>
     /// <param name="newNpc"></param>
-    public void ChangeAssignedNPC(NPCController newNpc = null) {
-        assignedNPC = newNpc;
-        ChangedAssignedNPC.Invoke(assignedNPC);
+    //public void ChangeAssignedNPC(NPCController newNpc = null) {
+    //    assignedNPC = newNpc;
+    //    ChangedAssignedNPC.Invoke(assignedNPC);
 
-    }
+    //}
 
     public void ChangeTaskHolder(I_ItemHolder newHolder) {
         taskHolder = newHolder;

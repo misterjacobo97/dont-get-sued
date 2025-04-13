@@ -78,6 +78,7 @@ MonoBehaviour:
   holdableItem_SO: {fileID: 11400000, guid: 20742cdef89b8fb45b65f4d4ec744424, type: 2}
   _collider: {fileID: 6744907497893503865}
   _sprite: {fileID: 8296862581978543603}
+  _playerContext: {fileID: 11400000, guid: 979454e8e673b2449898049a9de1494a, type: 2}
 --- !u!1 &2537507055625231071
 GameObject:
   m_ObjectHideFlags: 0
