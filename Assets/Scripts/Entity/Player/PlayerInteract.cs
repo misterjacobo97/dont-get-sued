@@ -53,7 +53,7 @@ public class PlayerInteract : MonoBehaviour {
         if (hit.collider != null && hit.transform.TryGetComponent(out I_Interactable item) && hit.transform != _playerInteractContext.selectedInteractableObject.Value) {
             _playerInteractContext.selectedInteractableObject.Value = hit.transform;
 
-            ControlIndicator(_indicator.transform.InverseTransformPoint(_playerInteractContext.selectedInteractableObject.Value.position));
+            //ControlIndicator(_indicator.transform.InverseTransformPoint(hit.transform.position));
         }
         else if (hit.collider == null && _playerInteractContext.selectedInteractableObject != null) {
             _playerInteractContext.selectedInteractableObject.Value = null;
@@ -69,7 +69,7 @@ public class PlayerInteract : MonoBehaviour {
     }
 
     private void OnInteractInput() {
-        
+        Debug.Log(_playerInteractContext.selectedInteractableObject.Value);
         _playerInteractContext.selectedInteractableObject.Value?.GetComponent<I_Interactable>().Interact(this);
         
         if (_playerInteractContext.selectedInteractableObject.Value == null) {

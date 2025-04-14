@@ -5,8 +5,9 @@ public class PlayerItemHolder : MonoBehaviour, I_ItemHolder {
 
     [Header("Refs")]
     [SerializeField] private Transform _itemTarget;
-    [SerializeField] private List<HoldableItem_SO> _acceptedItems = new();
+    //[SerializeField] private List<HoldableItem_SO> _acceptedItems = new();
     [SerializeField] private AudioClip _pickUpSound;
+    [SerializeField] private ScriptableObjectListReference _acceptedItems;
 
 
     [Header("throwing params")]
@@ -22,9 +23,9 @@ public class PlayerItemHolder : MonoBehaviour, I_ItemHolder {
         }
     }
 
-    public List<HoldableItem_SO> GetAcceptedItems() {
-        return _acceptedItems;
-    }
+    //public List<HoldableItem_SO> GetAcceptedItems() {
+    //    return _acceptedItems.list;
+    //}
 
     public void SetItem(HoldableItem newItem) {
         Debug.Log("holding new item");
