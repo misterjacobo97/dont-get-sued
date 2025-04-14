@@ -96,7 +96,9 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
         _heldItem = newItem;
 
         // complete if the item is a task
-        CompleteTaskItem();
+        if (_heldItem.transform.TryGetComponent(out TaskObject task)) {
+            task.CompleteTask();
+        }
 
         // then remove and destroy the item
         HoldableItem item = _heldItem;
@@ -139,13 +141,13 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
         _heldItem = null;
     }
 
-    private void CompleteTaskItem() {
-        if (_heldItem is not TaskObject) return;
+    //private void CompleteTaskItem() {
+    //    if (_heldItem is not TaskObject) return;
 
-        if (_heldItem is SpoiledFoodTask) (_heldItem as SpoiledFoodTask).CompleteTask();
+    //    if (_heldItem is SpoiledFoodTask) (_heldItem as SpoiledFoodTask).CompleteTask();
 
-        else (_heldItem as TaskObject).CompleteTask();
-    }
+    //    else (_heldItem as TaskObject).CompleteTask();
+    //}
 
 
     public bool IsItemAccepted(HoldableItem_SO item) {

@@ -10,6 +10,7 @@ public class TaskManager : PersistentSignleton<TaskManager> {
 
     public event EventHandler<OnTaskCompletedEventArgs> OnTaskCompletedEvent;
 
+
     public class OnTaskCompletedEventArgs : EventArgs {
         public TaskInfo taskInfoCompleted;
     }
@@ -21,6 +22,8 @@ public class TaskManager : PersistentSignleton<TaskManager> {
     [SerializeField] private Transform _tasksParent;
 
     [SerializeField] private List<TaskInfo> _taskList = new();
+    [SerializeField] private TaskDatabaseSO _taskDB;
+
     public List<TaskInfo> GetTaskList => _taskList;
 
     [Header("params")]
@@ -51,28 +54,22 @@ public class TaskManager : PersistentSignleton<TaskManager> {
         if (GameManager.Instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) _uiCanvas.alpha = 0;
     }
 
-    public void AddTaskToList(TaskObject newTask, I_ItemHolder container = null) {
-        // in case it exists, just change the parent
-        if (_taskList.Exists(t => t.task == newTask)) {
-            _taskList.Find(t => t.task == newTask).ChangeTaskHolder(container);
+    //public void AddTaskToList(TaskObject newTask, I_ItemHolder container = null) {
+    //    // in case it exists, just change the parent
+    //    if (_taskList.Exists(t => t.task == newTask)) {
+    //        _taskList.Find(t => t.task == newTask).ChangeTaskHolder(container);
 
-        }
-        else {
-            TaskInfo newTaskInfo = new TaskInfo(newTask.GetInstanceID(), newTask, container);
+    //    }
+    //    else {
+    //        TaskInfo newTaskInfo = new TaskInfo(newTask.GetInstanceID(), newTask, container);
 
-            _taskList.Add(newTaskInfo);
+    //        _taskList.Add(newTaskInfo);
 
-            newTaskInfo.ChangedTaskHolder.AddListener(newHolder => { _logger.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new holder: " + newHolder, this, _showDebugLogs); });
-            //newTaskInfo.ChangedAssignedNPC.AddListener(newNPC => { _logger.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new assigned NPC: " + newNPC, this, _showDebugLogs); });
-            newTaskInfo.ChangedTaskState.AddListener(newState => { _logger.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new State: " + newState, this, _showDebugLogs); });
-        }
-    }
-
-    //public void RemoveNPCFromAssignments(NPCController npc) {
-    //    foreach (var item in _taskList.Where(task => task.assignedNPC == npc)) {
-    //        item.assignedNPC = null;
+    //        newTaskInfo.ChangedTaskHolder.AddListener(newHolder => { _logger.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new holder: " + newHolder, this, _showDebugLogs); });
+    //        newTaskInfo.ChangedTaskState.AddListener(newState => { _logger.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new State: " + newState, this, _showDebugLogs); });
     //    }
     //}
+
 
     private async void AssignTaskTimer() {
         if (GameManager.Instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) return;
@@ -82,7 +79,7 @@ public class TaskManager : PersistentSignleton<TaskManager> {
         await Awaitable.WaitForSecondsAsync(_taskInterval);
 
         // find any unnasigned tasks and activate them
-        List<TaskInfo> inactiveTasks = GetTaskList.Where(t => t.state == TaskObject.TASK_STATE.INACTIVE).ToList();
+        List<TaskInfo> inactiveTasks = _taskDB.GetTaskItemList.Where(t => t.state == TaskObject.TASK_STATE.INACTIVE && t.task is SpoiledFoodTask).ToList();
 
         //  check in case all tasks are currently active
         if (inactiveTasks.Count > 0) {

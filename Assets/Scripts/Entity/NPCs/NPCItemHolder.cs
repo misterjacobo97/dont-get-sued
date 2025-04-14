@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
@@ -26,7 +25,9 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
 
     public void CompleteItems() {
         _heldItems.ForEach(i => {
-            (i as SpoiledFoodTask).CompleteTask();
+            if (i.TryGetComponent(out SpoiledFoodTask task)) {
+                task.CompleteTask();
+            }
         });
     }
 

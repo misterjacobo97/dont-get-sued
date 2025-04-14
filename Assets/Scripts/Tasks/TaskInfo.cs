@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
@@ -14,16 +13,16 @@ public class TaskInfo {
     public TaskInfo(int newId, TaskObject newTask, I_ItemHolder container = null/*, NPCController npc = null*/) {
         id = newId;
         task = newTask;
-        taskHolder = container;
+        //taskHolder = container;
         //assignedNPC = npc;
 
-        ConnectEventListeners();
+        //ConnectEventListeners();
     }
 
     public int id;
     public TaskObject.TASK_STATE state = TaskObject.TASK_STATE.INACTIVE;
     public TaskObject task;
-    public I_ItemHolder taskHolder;
+    //public I_ItemHolder taskHolder;
     //public NPCController assignedNPC;
 
     /// <summary>
@@ -36,24 +35,24 @@ public class TaskInfo {
 
     //}
 
-    public void ChangeTaskHolder(I_ItemHolder newHolder) {
-        taskHolder = newHolder;
-        ChangedTaskHolder.Invoke(taskHolder);
-        //ChangeAssignedNPC(null);
-    }
+    //public void ChangeTaskHolder(I_ItemHolder newHolder) {
+    //    taskHolder = newHolder;
+    //    ChangedTaskHolder.Invoke(taskHolder);
+    //    //ChangeAssignedNPC(null);
+    //}
 
-    private void ChangeTaskState(TaskObject.TASK_STATE newState) {
-        state = newState;
-        ChangedTaskState.Invoke(state);
+    //private void ChangeTaskState(TaskObject.TASK_STATE newState) {
+    //    state = newState;
+    //    ChangedTaskState.Invoke(state);
 
-    }
+    //}
 
-    private void ConnectEventListeners() {
-        // connect to events
-        task.ChangedParentHolder.AddListener(ChangeTaskHolder);
+    //private void ConnectEventListeners() {
+    //    // connect to events
+    //    task.ChangedParentHolder.AddListener(ChangeTaskHolder);
 
-        task.ChangedTaskState.AddListener(ChangeTaskState);
-    }
+    //    task.ChangedTaskState.AddListener(ChangeTaskState);
+    //}
 
 
 };

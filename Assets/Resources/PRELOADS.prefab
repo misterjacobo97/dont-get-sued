@@ -1476,6 +1476,7 @@ MonoBehaviour:
   _tasksCompletedText: {fileID: 638240737384970299}
   _tasksParent: {fileID: 1706619006976066222}
   _taskList: []
+  _taskDB: {fileID: 11400000, guid: 85c50a5fe17bff741820f5589549a521, type: 2}
   _taskInterval: 10
   _logger: {fileID: 5672422042019910710}
   _showDebugLogs: 0

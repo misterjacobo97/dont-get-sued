@@ -11,16 +11,19 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
     [System.NonSerialized] public UnityEvent<I_ItemHolder> ChangedParentHolder = new();
 
     [Header("holdable refs")]
-    [SerializeField] private Rigidbody2D _rb;
+    private Rigidbody2D _rb;
     [SerializeField] public HoldableItem_SO holdableItem_SO;
-    [SerializeField] protected Collider2D _collider;
-    [SerializeField] protected SpriteRenderer _sprite;
+    private Collider2D _collider;
+    private SpriteRenderer _sprite;
     private I_Interactable interactableRef;
 
     private bool _heldState = false;
     protected I_ItemHolder _parentHolder = null;
 
     private void Awake() {
+        _rb = GetComponent<Rigidbody2D>();
+        _collider = GetComponentInChildren<Collider2D>();
+        _sprite = GetComponentInChildren<SpriteRenderer>();
         interactableRef = GetComponent<I_Interactable>();
     }
 

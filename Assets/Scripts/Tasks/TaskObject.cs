@@ -2,9 +2,11 @@ using System;
 using UnityEngine.Events;
 using UnityEngine;
 
-public class TaskObject : HoldableItem {
+public class TaskObject : MonoBehaviour {
     [NonSerialized] public UnityEvent<TASK_STATE> ChangedTaskState = new();
-    [SerializeField] protected int _taskScore;
+    [NonSerialized] public UnityEvent<TASK_STATE> ChangedParentHolder = new();
+
+    [SerializeField] private TaskDatabaseSO _taskDatabase;
 
     public enum TASK_STATE {
         INACTIVE,
@@ -14,15 +16,17 @@ public class TaskObject : HoldableItem {
     }
 
     protected TASK_STATE state = TASK_STATE.INACTIVE;
-    //protected I_ItemHolder _taskHolder = null;
+    public TASK_STATE GetTaskState => state;
+    
     protected bool _taskActive;
 
-    protected new void Start() {
-        base.Start();
-        TaskManager.Instance.AddTaskToList(this, _parentHolder);
+    [SerializeField] protected int _taskScore;
+
+    protected void Start() {
+        _taskDatabase.AddToTaskItemList(this);
 
         ChangedParentHolder.AddListener(newParent => {
-            TaskManager.Instance.AddTaskToList(this, newParent);
+            _taskDatabase.AddToTaskItemList(this);
         });
     }
 
@@ -48,13 +52,13 @@ public class TaskObject : HoldableItem {
     protected void DeactivateTask() {
         _taskActive = false;
 
-        if (_parentHolder != null) {
-            _parentHolder.RemoveItem();
-        }
-        _parentHolder = null;
+        //if (_parentHolder != null) {
+        //    _parentHolder.RemoveItem();
+        //}
+        //_parentHolder = null;
 
-        _sprite.enabled = false;
-        _collider.enabled = false;
+        //_sprite.enabled = false;
+        //_collider.enabled = false;
 
         // disconnect all event listeners
         ChangedTaskState.RemoveAllListeners();
