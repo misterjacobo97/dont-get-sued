@@ -46,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -84,7 +84,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -128,9 +128,9 @@ TextureImporter:
         x: 1009
         y: 1335
         width: 2729
-        height: 2522
+        height: 2871
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -143,77 +143,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: BABY SLAPPED_1
-      rect:
-        serializedVersion: 2
-        x: 2554
-        y: 3785
-        width: 104
-        height: 417
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0f6d22e5a7c867970800000000000000
-      internalID: 8752337383034377968
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BABY SLAPPED_2
-      rect:
-        serializedVersion: 2
-        x: 2792
-        y: 3735
-        width: 65
-        height: 449
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7b0f74f6ae527b580800000000000000
-      internalID: -8811532457107525449
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BABY SLAPPED_3
-      rect:
-        serializedVersion: 2
-        x: 2947
-        y: 3687
-        width: 164
-        height: 414
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 26ab870e2117370d0800000000000000
-      internalID: -3426270565609457054
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: d9fa878df8062604aadddeb0fc959ec6
     internalID: 0
     vertices: []
     indices: 
@@ -222,7 +156,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BABY SLAPPED_0: 5239940289032799812
+      BABY SLAPPED_1: 8752337383034377968
+      BABY SLAPPED_2: -8811532457107525449
+      BABY SLAPPED_3: -3426270565609457054
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

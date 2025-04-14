@@ -22,16 +22,15 @@ public class WaitDecision : PluggableDecision {
     }
 
     private void IdleWait(NPCStateController controller) {
+        if (awaiters.Contains(controller)) return;
+
         awaiters.Add(controller);
-
-        //controller.agent.isStopped = true;
-
-        controller.WaitBeforeNextAction(Random.Range(minWaitTime, maxWaitTime), () => {
-            OnDecisionMade.Invoke(controller);
+        Awaitable.WaitForSecondsAsync(Random.Range(minWaitTime, maxWaitTime)).GetAwaiter().OnCompleted(() => { 
+            if (controller != null) {
+                OnDecisionMade.Invoke(controller);
+            }
             awaiters.Remove(controller);
         });
-
-
 
 
     }

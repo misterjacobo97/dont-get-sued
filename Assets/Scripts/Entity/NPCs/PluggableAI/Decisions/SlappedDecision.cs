@@ -10,9 +10,9 @@ public class SlappedDecision : PluggableDecision {
     }
 
     private void IsSlapped(NPCStateController controller) {
-        if (controller.isSlapped.Value == true) {
-            OnDecisionMade.Invoke(controller);
-        }
+        //if (controller.isSlapped.Value == true) {
+        //    OnDecisionMade.Invoke(controller);
+        //}
 
     }
 

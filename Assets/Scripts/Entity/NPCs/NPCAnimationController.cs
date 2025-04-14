@@ -1,4 +1,5 @@
 using DG.Tweening;
+using R3;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,13 +20,19 @@ public class NPCAnimationController : MonoBehaviour {
         _agent = GetComponent<NavMeshAgent>();
     }
 
+    private void Start() {
+        GetComponentInChildren<NPCSlapDetectionArea>().IsSlapped.AsObservable().Subscribe(state => {
+            _isSlapped = state;
+        }).AddTo(this);
+    }
+
     private void Update() {
         ControlAnimations();
         ControlSprite(_agent.velocity.normalized);
     }
 
     private void ControlSprite(Vector2 dir) {
-        if (_isSlapped) _sprite.sprite = _slappedSprite;
+        if (_isSlapped && _slappedSprite != null) _sprite.sprite = _slappedSprite;
         else if (dir.y > 0) _sprite.sprite = _backSprite;
         else if (dir.y < 0) _sprite.sprite = _sideSprite;
 

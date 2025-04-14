@@ -41,7 +41,6 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
 
         _playerContext.selectedInteractableObject.AsObservable().Subscribe((item) => {
             if (item != null && item.GetComponent<I_Interactable>() == interactableRef) {
-                Debug.Log("its me");
                 SetSelected();
             }
             else SetUnselected();
@@ -51,7 +50,6 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
     protected void Update() {
         if (_heldItem == null && _lastHeldItem != null && Time.time > _timeOfLastItemDrop + _itemRespawnTime) {
             Transform.Instantiate<HoldableItem>(_lastHeldItem.possiblePrefabs.GetComponent<HoldableItem>()).ChangeParent(this);
-
         }
     }
     public void SetSelected() {

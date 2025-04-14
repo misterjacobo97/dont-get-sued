@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4040794579703079455}
   - component: {fileID: 7496421096236955562}
+  - component: {fileID: 8543157856349383611}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -209,6 +210,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!210 &8543157856349383611
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2212799905638464651}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &2658414562049947398
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,6 +595,7 @@ MonoBehaviour:
   _slapSound: {fileID: 8300000, guid: 9f70b838d603c26458ea754e7bc6660a, type: 3}
   _slapFrames: 3
   _slapReach: 1.2
+  _npcStunTime: 2
 --- !u!1 &7759659765364573479
 GameObject:
   m_ObjectHideFlags: 0

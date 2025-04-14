@@ -11,6 +11,7 @@ public class PlayerSlapArea : MonoBehaviour {
     [SerializeField] private int _slapFrames = 3;
     private int _currentSlapFrames = 0;
     [SerializeField] private float _slapReach = 0.5f;
+    [SerializeField] private float _npcStunTime = 2f;
 
     private void Start() {
         InputManager.Instance.MovementInputEvent.AddListener(ChangeAreaRotation);
@@ -22,11 +23,10 @@ public class PlayerSlapArea : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.layer != _npcLayer) return;
-
         // find direction of npc
         Vector2 slapDir = (collision.transform.position - transform.position).normalized;
 
-        collision.GetComponentInParent<NPCStateController>().GetSlapped(slapDir);
+        collision.transform.parent.GetComponentInChildren<NPCStateController>().GetSlapped(slapDir, _npcStunTime);
         SoundManager.Instance.PlaySound(_slapSound);
     }
 

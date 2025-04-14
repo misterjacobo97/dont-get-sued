@@ -8,15 +8,18 @@ namespace PluggableAI {
     /// </summary>
     public abstract class StateController : MonoBehaviour {
         [Header("state controller")]
-        public SerializableReactiveProperty<BaseStateSO> currentState = new();
-        [SerializeField] private BaseStateSO _initialState;
+        public SerializableReactiveProperty<BaseStateSO> currentState;
+        [SerializeField] protected BaseStateSO _initialState;
 
 
         private SerializedDictionary<BaseStateSO, PluggableState> _stateDict = new();
 
-        private bool _aiActive = false;
+        protected bool _aiActive = false;
 
         protected virtual void Awake() {
+            currentState = new SerializableReactiveProperty<BaseStateSO>().AddTo(this);
+
+
             foreach (PluggableState state in GetComponentsInChildren<PluggableState>()) {
                 currentState.Value = _initialState;
 
@@ -37,7 +40,7 @@ namespace PluggableAI {
         }
 
         protected virtual void OnDrawGizmos() {
-            if (UnityEngine.Application.isPlaying == false) return;
+            if (UnityEngine.Application.isPlaying == false || _aiActive == false) return;
 
             if (_stateDict.ContainsKey(currentState.Value)) {
                 Gizmos.color = _stateDict[currentState.Value].sceneGizmosColor;
@@ -49,8 +52,6 @@ namespace PluggableAI {
             _aiActive = true;
         }
 
-        protected virtual void OnDestroy() {
-            currentState.Dispose();
-        }
+  
     }
 }

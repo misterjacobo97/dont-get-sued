@@ -1,32 +1,40 @@
 using R3;
+using R3.Triggers;
 using UnityEngine;
 
 public class NPCSlapDetectionArea : MonoBehaviour {
+    
 
-    [SerializeField] private NPCStateController _parentRef;
-    [SerializeField] private BaseStateSO _stateEnumObj;
-    [SerializeField] private Collider2D _triggerCollider;
     [SerializeField] private LayerMask _slapAreaLayer;
+    [SerializeField] private float _slapStunTime = 2.0f;
+
+    public ReactiveProperty<bool> IsSlapped { get; private set; }
+    public ReactiveProperty<Vector2> SlapDir { get; private set; }
+    
+    private void Awake() {
+        IsSlapped = new ReactiveProperty<bool>().AddTo(this);
+        SlapDir = new ReactiveProperty<Vector2>(Vector2.zero).AddTo(this);
+
+        this.OnTriggerEnter2DAsObservable().Subscribe(collider => {
+            if (collider.gameObject.layer != LayerMask.NameToLayer("SlapArea")) return;
+
+            SlapDir.Value = (transform.position - collider.transform.position).normalized;
+
+            StartSlapTimer();
 
 
-    private void Start() {
-        _parentRef.currentState.AsObservable().Subscribe(state => {
-            if (state == _stateEnumObj) _triggerCollider.enabled = false;
-            else _triggerCollider.enabled = true;
         }).AddTo(this);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.layer == _slapAreaLayer) {
-            _parentRef.isSlapped.Value = true;
 
-            _parentRef.isSlapped.Value = false;
-        }
+    public async void StartSlapTimer() {
+        if (IsSlapped.Value == true) return;
+
+        IsSlapped.Value = true;
+
+        await Awaitable.WaitForSecondsAsync(_slapStunTime);
+
+        IsSlapped.Value = false;
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision) {
-    //    if (collision.gameObject.layer == _slapAreaLayer) {
-    //        _parentRef.isSlapped.Value = true;
-    //    }
-    //}
 }

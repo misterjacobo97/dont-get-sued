@@ -10,20 +10,8 @@ public interface I_Interactable {
 
 public class PlayerInteract : MonoBehaviour {
 
-    [Header("Game events")]
-    [SerializeField] private GameEventSO<object> _onPlayerInteractSelectedChangedEvent;
-
-    [SerializeField] private GameEventSO _onPlayerInteractEvent;
-
     [Header("refs")]
     [SerializeField] private InteractContextSO _playerInteractContext;
-
-    public static PlayerInteract Instance { get; private set; }
-
-    //public event EventHandler<OnSelectedInteractableChangedEventArgs> OnSelectedInteractableChanged;
-    //public class OnSelectedInteractableChangedEventArgs : EventArgs {
-    //    public I_Interactable selectedInteractable;
-    //}
 
     [Header("params")]
     [SerializeField] private LayerMask _interactMask;
@@ -35,14 +23,6 @@ public class PlayerInteract : MonoBehaviour {
     private  Vector2 _lastMovement = Vector2.zero;
     private Tween _indicatorTween;
 
-    private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-        }
-        else {
-            Destroy(this.gameObject);
-        }
-    }
 
     private void Start() {
         InputManager.Instance.PlayerInteractPressedEvent.AddListener(OnInteractInput);
@@ -89,6 +69,7 @@ public class PlayerInteract : MonoBehaviour {
     }
 
     private void OnInteractInput() {
+        
         _playerInteractContext.selectedInteractableObject.Value?.GetComponent<I_Interactable>().Interact(this);
         
         if (_playerInteractContext.selectedInteractableObject.Value == null) {

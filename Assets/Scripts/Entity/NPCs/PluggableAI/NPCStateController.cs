@@ -6,8 +6,6 @@ using UnityEngine.AI;
 
 public class NPCStateController : PluggableAI.StateController {
 
-    private Awaitable _waitTimer;
-
     [Header("NPC refs")]
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Rigidbody2D rb;
@@ -15,23 +13,20 @@ public class NPCStateController : PluggableAI.StateController {
     [HideInInspector] public Transform agentFollowTarget;
     [HideInInspector] public NPCItemHolder itemHolder;
     public Collider2D exitCollider;
-
+    [SerializeField] private NPCSlapDetectionArea _slapDetect;
     public NPCDatabase npcDatabase;
 
-    [Header("list references")]    
+    [Header("list references")]
     public TransformListReference _listOfActiveNPCs;
     [SerializeField] private int shoppingListSize = 3;
     public List<ShoppingItem> shoppingList = new();
     public ScriptableObjectListReference acceptedShoppingItems;
 
-    [Header("NPC params")]
-    public SerializableReactiveProperty<bool> isSlapped = new(false);
-    public Sprite slappedSprite;
-
     protected override void Awake() {
         base.Awake();
+
+        rb = GetComponent<Rigidbody2D>();
         itemHolder = GetComponentInChildren<NPCItemHolder>();
-        
 
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -42,43 +37,39 @@ public class NPCStateController : PluggableAI.StateController {
         for (int i = 0; i < shoppingListSize; i++) {
             shoppingList.Add(new ShoppingItem());
 
-            
             shoppingList[i].item = acceptedShoppingItems.GetRandomFromList() as HoldableItem_SO;
         }
 
         _listOfActiveNPCs.AddToList(this.transform);
 
+        _slapDetect.IsSlapped.AsObservable().Subscribe(slapped => {
+            if (slapped == true) {
+                GetSlapped(GetComponentInChildren<NPCSlapDetectionArea>().SlapDir.Value, 2);
+            }
+            else {
+                currentState.Value = _initialState;
+                _aiActive = true;
+            }
+        });
+
         InitialiseAI();
     }
 
-    public void WaitBeforeNextAction(float waitTime, Action callback) {
-        if (_waitTimer != null && !_waitTimer.IsCompleted) return;
+    public void GetSlapped(Vector2 direction, float stunTime) {
+        _aiActive = false;
 
-        _waitTimer = Awaitable.WaitForSecondsAsync(waitTime);
-
-        _waitTimer.GetAwaiter().OnCompleted(() => { callback(); });
-    }
-
-    public void GetSlapped(Vector2 direction) {
+        agent.isStopped = true;
         itemHolder.DropAllItems();
-
         AddSlappedForce(direction);
 
         foreach (ShoppingItem i in shoppingList) {
             i.collected = false;
         }
+
     }
 
     private void AddSlappedForce(Vector2 dir) {
         rb.AddForce(dir * 900);
     }
-
-    protected override void OnDestroy() {
-        base.OnDestroy();
-        _waitTimer?.Cancel();
-        isSlapped.Dispose();
-    }
-
-
 
 }
