@@ -47,13 +47,13 @@ public class PlayerInteract : MonoBehaviour {
         Debug.DrawLine(transform.position, RayPos, Color.white);
 
         if (_movement != Vector2.zero && hit.collider == null) {
-            ControlIndicator(_movement);
+            ControlIndicator((Vector2)transform.position + _movement);
         }
 
         if (hit.collider != null && hit.transform.TryGetComponent(out I_Interactable item) && hit.transform != _playerInteractContext.selectedInteractableObject.Value) {
             _playerInteractContext.selectedInteractableObject.Value = hit.transform;
 
-            //ControlIndicator(_indicator.transform.InverseTransformPoint(hit.transform.position));
+            ControlIndicator(hit.collider.transform.position);
         }
         else if (hit.collider == null && _playerInteractContext.selectedInteractableObject != null) {
             _playerInteractContext.selectedInteractableObject.Value = null;
@@ -65,7 +65,7 @@ public class PlayerInteract : MonoBehaviour {
             _indicatorTween.Kill();
         }
 
-        _indicatorTween = _indicator.DOLocalMove(newPos, 0.1f);
+        _indicatorTween = _indicator.DOMove(newPos, 0.1f);
     }
 
     private void OnInteractInput() {

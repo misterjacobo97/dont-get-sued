@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerItemHolder : MonoBehaviour, I_ItemHolder {
@@ -22,10 +21,6 @@ public class PlayerItemHolder : MonoBehaviour, I_ItemHolder {
             _itemTarget.localPosition = _movement / 2;
         }
     }
-
-    //public List<HoldableItem_SO> GetAcceptedItems() {
-    //    return _acceptedItems.list;
-    //}
 
     public void SetItem(HoldableItem newItem) {
         Debug.Log("holding new item");
