@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using TMPro;
+using R3;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -21,13 +21,9 @@ public class GameManager : PersistentSignleton<GameManager> {
     public GAME_STATE GetGameState => _currentGameState;
 
     [Header("UI Refs")]
-    [SerializeField] private TextMeshProUGUI _scoreText;
-    [SerializeField] private TextMeshProUGUI _timerText;
-
-
 
     [Header("refs")]
-    [SerializeField] private GameStateSO _gameState;
+    [SerializeField] private GameStatsSO _gameState;
 
 
     [Header("Game Params")]
@@ -36,7 +32,6 @@ public class GameManager : PersistentSignleton<GameManager> {
 
 
     private int _totalScore = 0;
-    //private float _timeLeft = 0;
     private int _currentHealth;
 
 
@@ -48,10 +43,27 @@ public class GameManager : PersistentSignleton<GameManager> {
 
 
     private void Start() {
-        _gameState.gameTimeLeft.Value = _secondsInRound;
-        _currentHealth = _startingHealth;
 
-        UpdateUI();
+        _gameState.suedStatus.GetReactiveValue.AsObservable().Subscribe(status => {
+            Debug.Log(status);
+        }).AddTo(this);
+
+        _gameState.managementSatisfaction.GetReactiveValue?.AsObservable().Subscribe(num =>{
+            if (num <= 0) _gameState.suedStatus.SetReactiveValue(true);
+        }).AddTo(this);
+
+        _gameState.customerSatisfaction.GetReactiveValue?.AsObservable().Subscribe(num =>{
+            if (num <= 0) _gameState.suedStatus.SetReactiveValue(true);
+        }).AddTo(this);
+
+        _gameState.gameTimeLeft.GetReactiveValue?.AsObservable().Subscribe(time => {
+            if (time <= 0){
+                ChangeGameState(GAME_STATE.END_GAME);
+            }
+        }).AddTo(this);
+
+        // _gameState.gameTimeLeft.Value = _secondsInRound;
+        _currentHealth = _startingHealth;
 
         LevelManager.Instance.LevelLoadingStarted.AddListener(() => ChangeGameState(GAME_STATE.LOADING));
 
@@ -66,34 +78,16 @@ public class GameManager : PersistentSignleton<GameManager> {
         ControlTimer();
 
 
+
         if (GetGameState != GAME_STATE.END_GAME && _gameState.gameTimeLeft.Value <= 0) {
             EndGameActions();
         }
 
-        UpdateUI();
     }
 
     private void ControlTimer() {
         if (GetGameState != GAME_STATE.MAIN_GAME) return;
-        if (_gameState.gameTimeLeft.Value > 0) {
-            _gameState.gameTimeLeft.Value -= Time.deltaTime;
-        }
-    }
-
-    /// <summary>
-    /// Use to change the game state and invoke an event including the new state.
-    /// </summary>
-    /// <param name="newState"></param>
-    private void UpdateUI() {
-        _scoreText.text = _totalScore.ToString();
-
-        UIManager.Instance.ChangeHealthUI(_currentHealth);
-
-
-        if (_gameState.gameTimeLeft.Value > 0 ) {
-            _timerText.text = _gameState.gameTimeLeft.Value.ToString("0.00");
-        }
-        else _timerText.text = "0.00";
+            _gameState?.gameTimeLeft?.AddToReactiveValue(-Time.deltaTime);
     }
 
     /// <summary>
@@ -103,7 +97,6 @@ public class GameManager : PersistentSignleton<GameManager> {
     public void AddToScore(int amount) {
         _totalScore += amount;
 
-        UpdateUI();
     }
 
     /// <summary>
@@ -122,7 +115,6 @@ public class GameManager : PersistentSignleton<GameManager> {
             _currentHealth += value;
         }
 
-        UpdateUI();
     }
 
     #region Game State Actions
@@ -135,14 +127,12 @@ public class GameManager : PersistentSignleton<GameManager> {
 
     private void PreGameActions() {
         ChangeGameState(GAME_STATE.PRE_GAME);
-
     }
 
-    public async Task LoadStartScreen() {
+    public async void LoadStartScreen() {
         await LevelManager.Instance.LoadLevel("StartScreen");
 
         ChangeGameState(GAME_STATE.START_SCREEN);
-
     }
 
     private void EndGameActions() {
@@ -155,7 +145,6 @@ public class GameManager : PersistentSignleton<GameManager> {
         await LevelManager.Instance.LoadLevel("TestLevel");
 
         ChangeGameState(GAME_STATE.MAIN_GAME);
-
     }
 
     public void QuitGame() {

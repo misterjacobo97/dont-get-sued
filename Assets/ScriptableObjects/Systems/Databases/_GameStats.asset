@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7480a75a3f75e4743a1780c63e5112c1, type: 3}
+  m_Name: _GameStats
+  m_EditorClassIdentifier: 
+  gameTimeLeft:
+    useConstant: 0
+    constantValue: 120
+    variable: {fileID: 11400000, guid: a9e0433a62a1ac546adab13d0b7aaf29, type: 2}
+  customerSatisfaction:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: 5b0d8a2e406252642873e4ed3fbd874e, type: 2}
+  managementSatisfaction:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: f7d7d5b5077c60f4d8f50e3f0abf4d84, type: 2}
+  suedStatus:
+    variable: {fileID: 11400000, guid: f994ccd71a1515448996762931a42131, type: 2}

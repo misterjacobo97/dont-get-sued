@@ -448,8 +448,11 @@ MonoBehaviour:
     useGenericList: 0
     genericList: []
   _trashSound: {fileID: 0}
-  _itemDetect: {fileID: 4014197566332212027}
   _playerContext: {fileID: 11400000, guid: 979454e8e673b2449898049a9de1494a, type: 2}
+  _scoreToChange:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: f7d7d5b5077c60f4d8f50e3f0abf4d84, type: 2}
 --- !u!50 &5129921604395869628
 Rigidbody2D:
   serializedVersion: 5

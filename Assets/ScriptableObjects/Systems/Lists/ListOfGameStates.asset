@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e30f8f583489544f9254a4cc196e5f5, type: 3}
+  m_Name: ListOfGameStates
+  m_EditorClassIdentifier: 
+  Value:
+  - {fileID: 11400000, guid: bf3955d0170c6b140aaccc94cd2c8c8f, type: 2}
+  - {fileID: 11400000, guid: d1fdf658c438e5845aa350c8eb29dc24, type: 2}
+  - {fileID: 11400000, guid: 1b743d13b9de7f946afcd139e78f4a5c, type: 2}
+  - {fileID: 11400000, guid: 52d1bacf25b42114fa53853be311ba67, type: 2}
+  - {fileID: 11400000, guid: d80739f5ae9031f409c2f1171a126f9d, type: 2}
+  - {fileID: 11400000, guid: 8ca4b108ad2298c48a0ce8e8c4c44c4c, type: 2}
+  - {fileID: 11400000, guid: f7969f6cb8b0e86498798eee3c2a7352, type: 2}
+  clearOnSceneChange: 0

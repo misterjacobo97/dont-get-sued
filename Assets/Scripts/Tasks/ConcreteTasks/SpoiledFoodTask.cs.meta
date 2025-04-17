@@ -1,2 +1,15 @@
 fileFormatVersion: 2
 guid: b08a1b87854474945adc54e1682804c8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _taskDatabase: {fileID: 11400000, guid: 85c50a5fe17bff741820f5589549a521, type: 2}
+  - _timerRadial: {instanceID: 0}
+  - _timerIcon: {instanceID: 0}
+  - _spoiledIcon: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

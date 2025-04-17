@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using R3;
 using UnityEngine;
@@ -16,11 +15,15 @@ public class NPCStateController : PluggableAI.StateController {
     [SerializeField] private NPCSlapDetectionArea _slapDetect;
     public NPCDatabase npcDatabase;
 
-    [Header("list references")]
+    [Header("context")]
     public TransformListReference _listOfActiveNPCs;
     [SerializeField] private int shoppingListSize = 3;
     public List<ShoppingItem> shoppingList = new();
     public ScriptableObjectListReference acceptedShoppingItems;
+    [SerializeField] private FloatReference _customerSatisfactionScore;
+
+    
+
 
     protected override void Awake() {
         base.Awake();
@@ -53,6 +56,27 @@ public class NPCStateController : PluggableAI.StateController {
         });
 
         InitialiseAI();
+    }
+
+    public void Slip(Vector2 direction, float stunTime, bool penalise = false){
+        if (penalise) {
+            _customerSatisfactionScore.variable.reactiveValue.Value -= 10;
+        }
+
+        _aiActive = false;
+
+        agent.isStopped = true;
+        itemHolder.DropAllItems();
+        AddSlappedForce(direction);
+
+        foreach (ShoppingItem i in shoppingList) {
+            i.collected = false;
+        }
+
+        Awaitable.WaitForSecondsAsync(stunTime).GetAwaiter().OnCompleted(() => {
+            currentState.Value = _initialState;
+            _aiActive = true;
+        });
     }
 
     public void GetSlapped(Vector2 direction, float stunTime) {

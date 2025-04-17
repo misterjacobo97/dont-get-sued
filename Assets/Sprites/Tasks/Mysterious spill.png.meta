@@ -272,7 +272,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Mysterious spill_0: -571566681312256969
+      Mysterious spill_1: -2139746168514263257
+      Mysterious spill_2: -4433879715941329679
+      Mysterious spill_3: -2317900185958590628
+      Mysterious spill_4: -5601548482947199884
+      Mysterious spill_5: -2104803407778315734
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

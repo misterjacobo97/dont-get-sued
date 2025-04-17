@@ -46,9 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b1592198c4bbc49a320a89612f3666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slapAreaLayer:
-    serializedVersion: 2
-    m_Bits: 2048
+  _slapAreaLayerName: SlapArea
   _slapStunTime: 2
 --- !u!61 &1704520141178264782
 BoxCollider2D:
@@ -319,6 +317,10 @@ MonoBehaviour:
     list: {fileID: 11400000, guid: 43e6d775dd014ce4586582c48b83bbf8, type: 2}
     useGenericList: 0
     genericList: []
+  _customerSatisfactionScore:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: 5b0d8a2e406252642873e4ed3fbd874e, type: 2}
 --- !u!114 &627080433225325239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,7 +335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backSprite: {fileID: 8621722615928003790, guid: ac5a4a4cad3fbe546b7816aad40f1d1f, type: 3}
   _sideSprite: {fileID: 5328332788402992666, guid: 1f6695141fa8b324e986b40346250af6, type: 3}
-  _slappedSprite: {fileID: -8811532457107525449, guid: 9adf4a60173aafa41b4e2b7f340f0f58, type: 3}
+  _slappedSprite: {fileID: 5239940289032799812, guid: 9adf4a60173aafa41b4e2b7f340f0f58, type: 3}
 --- !u!50 &2467457343696304539
 Rigidbody2D:
   serializedVersion: 5
@@ -549,6 +551,14 @@ MonoBehaviour:
     useGenericList: 0
     genericList: []
   _pickUpSound: {fileID: 8300000, guid: 3b44a1eba03c4444fa5314d99a20b477, type: 3}
+  _customerSatisfaction:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: f7d7d5b5077c60f4d8f50e3f0abf4d84, type: 2}
+  _scoreRef:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: 17f872a487084c8449303d3fcf8bb3ea, type: 2}
 --- !u!1 &4723981368430850461
 GameObject:
   m_ObjectHideFlags: 0

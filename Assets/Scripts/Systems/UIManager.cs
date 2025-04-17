@@ -7,6 +7,8 @@ public class UIManager : PersistentSignleton<UIManager>
     [SerializeField] private Transform _endScreenGroup;
 
     [Header("health")]
+    [SerializeField] private FloatReference _customerSatisfactionReference;
+
     [SerializeField] private Transform _healthNodeGroup;
     [SerializeField] private Transform _healthNode;
 
@@ -14,6 +16,8 @@ public class UIManager : PersistentSignleton<UIManager>
         _hudGroup.SetActive(false);
         _failScreenGroup.gameObject.SetActive(false);
         _endScreenGroup.gameObject.SetActive(false);
+
+
 
         GameManager.Instance.GameStateChanged.AddListener(state => { 
             switch (state) {
@@ -38,21 +42,21 @@ public class UIManager : PersistentSignleton<UIManager>
     }
 
 
-    public void ChangeHealthUI(int newHealth) {
-        if (newHealth > _healthNodeGroup.childCount) {
-            // add as many nodes as needed
-            for (int i = 0; i < newHealth - _healthNodeGroup.childCount; i++) {
-                Transform.Instantiate(_healthNode).SetParent(_healthNodeGroup);
-            }
-        }
+    // public void ChangeHealthUI(int newHealth) {
+    //     if (newHealth > _healthNodeGroup.childCount) {
+    //         // add as many nodes as needed
+    //         for (int i = 0; i < newHealth - _healthNodeGroup.childCount; i++) {
+    //             Transform.Instantiate(_healthNode).SetParent(_healthNodeGroup);
+    //         }
+    //     }
 
-        else if (newHealth < _healthNodeGroup.childCount) {
-            // remove as many nodes as needed
-            for (int i = 0; i < _healthNodeGroup.childCount - newHealth; i++) {
-                Destroy(_healthNodeGroup.GetChild(0).gameObject);
-            }
+    //     else if (newHealth < _healthNodeGroup.childCount) {
+    //         // remove as many nodes as needed
+    //         for (int i = 0; i < _healthNodeGroup.childCount - newHealth; i++) {
+    //             Destroy(_healthNodeGroup.GetChild(0).gameObject);
+    //         }
 
            
-        }
-    }
+    //     }
+    // }
 }

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class BinItemDetectArea : MonoBehaviour
+public class ItemDetectionArea : MonoBehaviour
 {
     [NonSerialized] public UnityEvent<HoldableItem> ItemDetected = new();
 

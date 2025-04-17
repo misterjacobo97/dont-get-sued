@@ -5,7 +5,6 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
 
     [Header("Refs")]
     [SerializeField] private List<Transform> _itemTargets = new();
-    //[SerializeField] private List<HoldableItem_SO> _acceptedItems = new();
     [SerializeField] private ScriptableObjectListReference _acceptedItems;
 
     [SerializeField] private AudioClip _pickUpSound;
@@ -14,26 +13,36 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
     private List<HoldableItem> _heldItems = new();
     public List<HoldableItem> HeldItems => _heldItems;
 
+    [Header("context")]
+    [SerializeField] private FloatReference _customerSatisfaction;
+    [SerializeField] private FloatReference _scoreRef;
+
+
     private void Update() {
         Vector2 _movement = InputManager.Instance.GetPlayerMovement();
-
-        //if (_movement != Vector2.zero) {
-        //    _itemTarget.localPosition = _movement / 2;
-        //}
     }
-    
 
     public void CompleteItems() {
         _heldItems.ForEach(i => {
             if (i.TryGetComponent(out SpoiledFoodTask task)) {
+                switch (task.IsSpoiled){
+                    case true:
+                        _customerSatisfaction.AddToReactiveValue(-5);
+                        break;
+                    case false:
+                        _customerSatisfaction.AddToReactiveValue(5);
+                        _scoreRef.AddToReactiveValue(5);
+                        break;
+                }
+
                 task.CompleteTask();
+            }
+            else {
+                _customerSatisfaction.AddToReactiveValue(5);
+                _scoreRef.AddToReactiveValue(5);
             }
         });
     }
-
-    //public List<ScriptableObject> GetAcceptedItems() {
-    //    return _acceptedItems.GetList();
-    //}
 
     public void SetItem(HoldableItem newItem) {
         Debug.Log("holding new item");
@@ -80,7 +89,7 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
         for (int i = _heldItems.Count - 1; i >= 0; i--) {
             Vector2 dir = new Vector2(Random.Range(-1,1), Random.Range(-1, 1));
 
-            _heldItems[i].ThrowItem(dir, 900); //DropItem();
+            _heldItems[i].ThrowItem(dir, 900); 
             RemoveItem(i);
         }
     }

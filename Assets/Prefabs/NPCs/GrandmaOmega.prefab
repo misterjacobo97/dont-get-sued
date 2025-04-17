@@ -46,9 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b1592198c4bbc49a320a89612f3666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slapAreaLayer:
-    serializedVersion: 2
-    m_Bits: 2048
+  _slapAreaLayerName: SlapArea
   _slapStunTime: 2
 --- !u!50 &1645047179080568308
 Rigidbody2D:
@@ -265,6 +263,10 @@ MonoBehaviour:
     list: {fileID: 11400000, guid: ec3f438c188a4e140a1dd49d8e005d1c, type: 2}
     useGenericList: 0
     genericList: []
+  _customerSatisfactionScore:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: 5b0d8a2e406252642873e4ed3fbd874e, type: 2}
 --- !u!114 &627080433225325239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,6 +510,14 @@ MonoBehaviour:
     useGenericList: 0
     genericList: []
   _pickUpSound: {fileID: 8300000, guid: 3b44a1eba03c4444fa5314d99a20b477, type: 3}
+  _customerSatisfaction:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: 5b0d8a2e406252642873e4ed3fbd874e, type: 2}
+  _scoreRef:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: 17f872a487084c8449303d3fcf8bb3ea, type: 2}
 --- !u!1 &4723981368430850461
 GameObject:
   m_ObjectHideFlags: 0

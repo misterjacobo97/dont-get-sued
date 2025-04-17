@@ -47,13 +47,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1bf85c31ee7ace4f88232a588ba9875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rb: {fileID: 7976025024515206095}
-  holdableItem_SO: {fileID: 11400000, guid: 38a2856e08d62ea408c07e0fb315fb09, type: 2}
-  _collider: {fileID: 3625218771315392225}
-  _sprite: {fileID: 3310479686424428587}
+  _taskDatabase: {fileID: 11400000, guid: 85c50a5fe17bff741820f5589549a521, type: 2}
   _taskScore: 0
   _hazardNullifyer: {fileID: 11400000, guid: 20742cdef89b8fb45b65f4d4ec744424, type: 2}
-  _hazardType: 0
+  _customerSatisfactionScore:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: 5b0d8a2e406252642873e4ed3fbd874e, type: 2}
+  _managementSatisfactionScore:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: f7d7d5b5077c60f4d8f50e3f0abf4d84, type: 2}
 --- !u!50 &7976025024515206095
 Rigidbody2D:
   serializedVersion: 5

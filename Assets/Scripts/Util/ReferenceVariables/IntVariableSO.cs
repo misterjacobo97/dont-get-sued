@@ -1,3 +1,4 @@
+using R3;
 using UnityEngine;
 
 [CreateAssetMenu (fileName ="IntVariable", menuName ="Primitives/IntVariable")]
