@@ -39,11 +39,9 @@ public class TaskObject : MonoBehaviour {
         DeactivateTask();
         ChangedTaskState.Invoke(TASK_STATE.COMPLETED);
 
-        GameManager.Instance.AddToScore(_taskScore);
     }
 
     public void FailTask() {
-        GameManager.Instance.AddToHealth(-1);
         DeactivateTask();
         ChangedTaskState.Invoke(TASK_STATE.FAILED);
 
@@ -51,14 +49,6 @@ public class TaskObject : MonoBehaviour {
 
     protected void DeactivateTask() {
         _taskActive = false;
-
-        //if (_parentHolder != null) {
-        //    _parentHolder.RemoveItem();
-        //}
-        //_parentHolder = null;
-
-        //_sprite.enabled = false;
-        //_collider.enabled = false;
 
         // disconnect all event listeners
         ChangedTaskState.RemoveAllListeners();

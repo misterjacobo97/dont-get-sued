@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using R3;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,8 +16,8 @@ public class GameManager : PersistentSignleton<GameManager> {
     }
 
     [NonSerialized] public UnityEvent<GAME_STATE> GameStateChanged = new();
-    private GAME_STATE _currentGameState = GAME_STATE.PRE_GAME;
-    public GAME_STATE GetGameState => _currentGameState;
+    private ReactiveProperty<GAME_STATE> _currentGameState = new ReactiveProperty<GAME_STATE>(GAME_STATE.PRE_GAME);
+    public ReadOnlyReactiveProperty<GAME_STATE> GetGameState => _currentGameState;
 
     [Header("UI Refs")]
 
@@ -30,20 +29,13 @@ public class GameManager : PersistentSignleton<GameManager> {
     [SerializeField] private int _secondsInRound = 90;
     [SerializeField] private int _startingHealth = 3;
 
-
-    private int _totalScore = 0;
-    private int _currentHealth;
-
-
     [Header("debug")]
     [SerializeField] private Logger _logger;
     [SerializeField] private bool _showDebugLogs = true;
     [SerializeField] private Cheats_SO _cheats_SO;
     public Cheats_SO GetCheatsSO => _cheats_SO;
 
-
     private void Start() {
-
         _gameState.suedStatus.GetReactiveValue.AsObservable().Subscribe(status => {
             Debug.Log(status);
         }).AddTo(this);
@@ -62,8 +54,7 @@ public class GameManager : PersistentSignleton<GameManager> {
             }
         }).AddTo(this);
 
-        // _gameState.gameTimeLeft.Value = _secondsInRound;
-        _currentHealth = _startingHealth;
+
 
         LevelManager.Instance.LevelLoadingStarted.AddListener(() => ChangeGameState(GAME_STATE.LOADING));
 
@@ -79,48 +70,23 @@ public class GameManager : PersistentSignleton<GameManager> {
 
 
 
-        if (GetGameState != GAME_STATE.END_GAME && _gameState.gameTimeLeft.Value <= 0) {
+        if (GetGameState.CurrentValue != GAME_STATE.END_GAME && _gameState.gameTimeLeft.GetReactiveValue.Value <= 0) {
             EndGameActions();
         }
 
     }
 
     private void ControlTimer() {
-        if (GetGameState != GAME_STATE.MAIN_GAME) return;
+        if (GetGameState.CurrentValue != GAME_STATE.MAIN_GAME) return;
             _gameState?.gameTimeLeft?.AddToReactiveValue(-Time.deltaTime);
     }
 
-    /// <summary>
-    /// This can be both positive or negative scores
-    /// </summary>
-    /// <param name="amount"></param>
-    public void AddToScore(int amount) {
-        _totalScore += amount;
 
-    }
-
-    /// <summary>
-    /// to change the health of the player, pass in a negative number to damage it
-    /// </summary>
-    /// <param name="value"></param>
-    public void AddToHealth(int value) {
-        if (_currentHealth + value == 0) {
-            _currentHealth = 0;
-            ChangeGameState(GAME_STATE.SUED);
-
-            SuedActions();
-        }
-
-        else if (_currentHealth + value > 0) {
-            _currentHealth += value;
-        }
-
-    }
 
     #region Game State Actions
     public void ChangeGameState(GAME_STATE newState) {
-        _currentGameState = newState;
-        GameStateChanged.Invoke(_currentGameState);
+        _currentGameState.Value = newState;
+        GameStateChanged.Invoke(_currentGameState.Value);
 
         _logger.Log("Game state changed to: " + GetGameState, this, _showDebugLogs);
     }

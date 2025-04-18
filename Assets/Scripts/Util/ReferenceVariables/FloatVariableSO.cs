@@ -11,7 +11,6 @@ public class FloatVariable : ScriptableObject {
     }
     public RESET_TYPE resetType = RESET_TYPE.NONE;
 
-    public float Value;
     public float maxValue;
     public float minValue;
 

@@ -50,6 +50,7 @@ MonoBehaviour:
   _taskDatabase: {fileID: 11400000, guid: 85c50a5fe17bff741820f5589549a521, type: 2}
   _taskScore: 0
   _hazardNullifyer: {fileID: 11400000, guid: 20742cdef89b8fb45b65f4d4ec744424, type: 2}
+  _NPCLayerName: NPC
   _customerSatisfactionScore:
     useConstant: 0
     constantValue: 0

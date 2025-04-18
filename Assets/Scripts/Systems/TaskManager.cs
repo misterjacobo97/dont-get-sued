@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,8 +16,6 @@ public class TaskManager : PersistentSignleton<TaskManager> {
 
     [Header("Refs")]
     [SerializeField] private CanvasGroup _uiCanvas;
-    [SerializeField] private TextMeshProUGUI _tasksLeftText;
-    [SerializeField] private TextMeshProUGUI _tasksCompletedText;
     [SerializeField] private Transform _tasksParent;
 
     [SerializeField] private List<TaskInfo> _taskList = new();
@@ -34,8 +31,6 @@ public class TaskManager : PersistentSignleton<TaskManager> {
     [SerializeField] private bool _showDebugLogs = true;
 
     private void Start() {
-        taskListChanged.AddListener(UpdateUI);
-
         GameManager.instance.GameStateChanged.AddListener(state => {
             switch (state) {
                 case GameManager.GAME_STATE.MAIN_GAME:
@@ -51,28 +46,12 @@ public class TaskManager : PersistentSignleton<TaskManager> {
             }
         });
 
-        if (GameManager.Instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) _uiCanvas.alpha = 0;
+        if (GameManager.Instance.GetGameState.CurrentValue != GameManager.GAME_STATE.MAIN_GAME) _uiCanvas.alpha = 0;
     }
-
-    //public void AddTaskToList(TaskObject newTask, I_ItemHolder container = null) {
-    //    // in case it exists, just change the parent
-    //    if (_taskList.Exists(t => t.task == newTask)) {
-    //        _taskList.Find(t => t.task == newTask).ChangeTaskHolder(container);
-
-    //    }
-    //    else {
-    //        TaskInfo newTaskInfo = new TaskInfo(newTask.GetInstanceID(), newTask, container);
-
-    //        _taskList.Add(newTaskInfo);
-
-    //        newTaskInfo.ChangedTaskHolder.AddListener(newHolder => { _logger.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new holder: " + newHolder, this, _showDebugLogs); });
-    //        newTaskInfo.ChangedTaskState.AddListener(newState => { _logger.Log("taskInfo at pos: " + _taskList.IndexOf(newTaskInfo) + " has a new State: " + newState, this, _showDebugLogs); });
-    //    }
-    //}
 
 
     private async void AssignTaskTimer() {
-        if (GameManager.Instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) return;
+        if (GameManager.Instance.GetGameState.CurrentValue != GameManager.GAME_STATE.MAIN_GAME) return;
 
         _logger.Log("starting assign task timer", this, _showDebugLogs);
 
@@ -91,13 +70,6 @@ public class TaskManager : PersistentSignleton<TaskManager> {
         }
 
         AssignTaskTimer();
-    }
-
-    private void UpdateUI() {
-        if (GameManager.instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) return;
-
-        _tasksCompletedText.text = _taskList.Where(t => t.state == TaskObject.TASK_STATE.COMPLETED).ToList().Count.ToString();
-        _tasksLeftText.text = _taskList.Where(t => t.state == TaskObject.TASK_STATE.ACTIVE).ToList().Count.ToString();
     }
 
     private void ResetManager() {

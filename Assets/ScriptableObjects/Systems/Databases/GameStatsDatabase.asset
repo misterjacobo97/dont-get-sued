@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7480a75a3f75e4743a1780c63e5112c1, type: 3}
-  m_Name: _GameStats
+  m_Name: GameStatsDatabase
   m_EditorClassIdentifier: 
+  suedStatus:
+    variable: {fileID: 11400000, guid: f994ccd71a1515448996762931a42131, type: 2}
   gameTimeLeft:
     useConstant: 0
     constantValue: 120
@@ -24,5 +26,7 @@ MonoBehaviour:
     useConstant: 0
     constantValue: 0
     variable: {fileID: 11400000, guid: f7d7d5b5077c60f4d8f50e3f0abf4d84, type: 2}
-  suedStatus:
-    variable: {fileID: 11400000, guid: f994ccd71a1515448996762931a42131, type: 2}
+  levelScore:
+    useConstant: 0
+    constantValue: 0
+    variable: {fileID: 11400000, guid: 17f872a487084c8449303d3fcf8bb3ea, type: 2}

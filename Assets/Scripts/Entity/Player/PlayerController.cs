@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
 
     #region Movement
     private void MovePlayer() {
-        if (GameManager.Instance.GetGameState != GameManager.GAME_STATE.MAIN_GAME) {
+        if (GameManager.Instance.GetGameState.CurrentValue != GameManager.GAME_STATE.MAIN_GAME) {
             _rb.linearDamping = _linearDamping;
             return;
         }
