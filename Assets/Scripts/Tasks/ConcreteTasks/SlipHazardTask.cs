@@ -46,4 +46,11 @@ public class SlipHazardTask : TaskObject {
             _hazardSafeState = false;
         }
     }
+
+    private void OnDrawGizmos() {
+        Color gizmosColor = IsSafe ? Color.green : Color.red;
+
+        Gizmos.color = gizmosColor;
+        Gizmos.DrawCube(transform.position, new Vector3(1,1,0) * 0.2f);
+    }
 }

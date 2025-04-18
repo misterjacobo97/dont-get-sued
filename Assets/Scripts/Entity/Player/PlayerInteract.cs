@@ -69,7 +69,6 @@ public class PlayerInteract : MonoBehaviour {
     }
 
     private void OnInteractInput() {
-        Debug.Log(_playerInteractContext.selectedInteractableObject.Value);
         _playerInteractContext.selectedInteractableObject.Value?.GetComponent<I_Interactable>().Interact(this);
         
         if (_playerInteractContext.selectedInteractableObject.Value == null) {

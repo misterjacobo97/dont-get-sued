@@ -12,6 +12,10 @@ public class BoolVariable : ScriptableObject {
     public RESET_TYPE resetType = RESET_TYPE.NONE;
     public SerializableReactiveProperty<bool> Value;
 
+    public void Toggle(){
+        Value.Value = !Value.Value;
+    }
+
     private void OnEnable(){
         Value = new SerializableReactiveProperty<bool>();
 

@@ -51,8 +51,10 @@ MonoBehaviour:
   _door1: {fileID: 8009141846476430155}
   _door2: {fileID: 2254268581866271339}
   _triggerCollisionLayerName: NPC
-  _openDuration: 3
-  _movementDuration: 1
+  _openDuration: 2
+  _movementDuration: 0.8
+  _openTimeLeft:
+    value: 0
 --- !u!50 &3653189984673317455
 Rigidbody2D:
   serializedVersion: 5

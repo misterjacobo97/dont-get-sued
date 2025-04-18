@@ -12,7 +12,6 @@ public class CustomerExitDecision : PluggableDecision {
 
     public bool ShouldExit(NPCStateController controller) { 
         if (controller.shoppingList.All(item => item.collected)) {
-            Debug.Log("Should exit");
             return true;
         }
 

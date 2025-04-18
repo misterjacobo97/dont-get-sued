@@ -30,7 +30,6 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
     protected void Start() {
         holdableItem_SO.playerInteractContext.selectedInteractableObject.AsObservable().Subscribe((item) => {
             if (item != null && item.GetComponent<I_Interactable>() == interactableRef) {
-                Debug.Log("its me");
                 SetSelected();
             }
             else SetUnselected();

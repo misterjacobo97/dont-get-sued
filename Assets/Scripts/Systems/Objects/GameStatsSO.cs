@@ -8,4 +8,6 @@ public class GameStatsSO : ScriptableObject {
     public FloatReference managementSatisfaction;
     public FloatReference levelScore;
 
+    public BoolReference pauseStatus;
+
 }

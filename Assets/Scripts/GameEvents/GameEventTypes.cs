@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu (fileName ="new AnyObjectGameEvent", menuName ="GameEvents/AnyObjectGameEvent")]
 public class AnyObjectGameEventSO : GameEventSO<object> { }
 
+[CreateAssetMenu (fileName ="new ScriptableObjectGameEvent", menuName ="GameEvents/ScriptableObjectGameEvent")]
+public class ScriptableObjectGameEventSO : GameEventSO<ScriptableObject> { }
+
 [CreateAssetMenu(menuName = "GameEvents/FloatGameEvent")]
 public class FloatGameEventSO : GameEventSO<float> { }
 

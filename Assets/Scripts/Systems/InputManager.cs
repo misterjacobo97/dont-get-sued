@@ -5,6 +5,10 @@ using UnityEngine.InputSystem;
 
 public class InputManager : PersistentSignleton<InputManager> {
 
+    [Header("UI game events")]
+    [SerializeField] private GameEventSO _PausedButtonPressedEvent;
+
+
     [NonSerialized] public UnityEvent PlayerInteractPressedEvent = new();
     [NonSerialized] public UnityEvent PlayerInteractHeldReleasedEvent = new();
     [NonSerialized] public UnityEvent PlayerInteractHeldEvent = new();
@@ -39,6 +43,9 @@ public class InputManager : PersistentSignleton<InputManager> {
     private InputAction _dashAction;
     private InputAction _slapAction;
 
+    // ui
+    private InputAction _pauseAction;
+
     [Header("debug")]
     [SerializeField] private Logger _logger;
     [SerializeField] private bool _showDebugLogs = true;
@@ -52,6 +59,11 @@ public class InputManager : PersistentSignleton<InputManager> {
         _moveAction = _playerActions.Player.Move;
         _dashAction = _playerActions.Player.Dash;
         _slapAction = _playerActions.Player.Slap;
+
+        // ui
+        _pauseAction = _playerActions.UI.Pause;
+
+        
     }
 
     private void Update() {
@@ -67,7 +79,13 @@ public class InputManager : PersistentSignleton<InputManager> {
         PlayerSlaptWasReleased = _slapAction.WasReleasedThisFrame();
         PlayerSlapWasPressed = _slapAction.WasPressedThisFrame();
 
+        HandleUIEvent();
+
         HandleInteractEvents();
+    }
+
+    private void HandleUIEvent(){
+        if (_pauseAction.WasPressedThisFrame()) _PausedButtonPressedEvent.RaiseEvent();
     }
 
     /// <summary>

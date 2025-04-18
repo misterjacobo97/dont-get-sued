@@ -16,7 +16,7 @@ public class UICounter : MonoBehaviour {
         else _text = GetComponentInChildren<TextMeshProUGUI>();
 
         _counterToChange.GetReactiveValue?.AsObservable().Subscribe(val => {
-            _text.text = val.ToString();
+            _text.text = val.ToString("0.0");
         }).AddTo(this);
     }
 }

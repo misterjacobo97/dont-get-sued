@@ -14,20 +14,14 @@ public class GameManager : PersistentSignleton<GameManager> {
         PAUSED,
         END_GAME
     }
-
     [NonSerialized] public UnityEvent<GAME_STATE> GameStateChanged = new();
     private ReactiveProperty<GAME_STATE> _currentGameState = new ReactiveProperty<GAME_STATE>(GAME_STATE.PRE_GAME);
     public ReadOnlyReactiveProperty<GAME_STATE> GetGameState => _currentGameState;
 
-    [Header("UI Refs")]
-
     [Header("refs")]
     [SerializeField] private GameStatsSO _gameState;
+    [SerializeField] private GameStateEventChannel _gameEventChannel;
 
-
-    [Header("Game Params")]
-    [SerializeField] private int _secondsInRound = 90;
-    [SerializeField] private int _startingHealth = 3;
 
     [Header("debug")]
     [SerializeField] private Logger _logger;
@@ -54,7 +48,16 @@ public class GameManager : PersistentSignleton<GameManager> {
             }
         }).AddTo(this);
 
-
+        _gameState.pauseStatus.GetReactiveValue?.AsObservable().Subscribe(status =>{
+            switch (status){
+                case true:
+                    _gameEventChannel.gamePaused.RaiseEvent();
+                    break;
+                case false:
+                    _gameEventChannel.gameUnpaused.RaiseEvent();
+                    break;
+            }
+        }).AddTo(this);
 
         LevelManager.Instance.LevelLoadingStarted.AddListener(() => ChangeGameState(GAME_STATE.LOADING));
 
@@ -104,8 +107,6 @@ public class GameManager : PersistentSignleton<GameManager> {
     private void EndGameActions() {
         ChangeGameState(GAME_STATE.END_GAME);
     }
-
-    private void SuedActions() {  }
 
     public async void GameStartActions() {
         await LevelManager.Instance.LoadLevel("TestLevel");
