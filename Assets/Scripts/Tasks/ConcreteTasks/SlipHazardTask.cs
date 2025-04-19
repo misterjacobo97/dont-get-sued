@@ -23,7 +23,7 @@ public class SlipHazardTask : TaskObject {
         if (collision.gameObject.layer == LayerMask.NameToLayer(_NPCLayerName)) {
             Vector2 dir = (transform.position - collision.transform.position).normalized;
 
-            collision.GetComponentInParent<NPCStateController>().Slip(dir, 2, IsSafe ? false : true);
+            collision.GetComponentInParent<NPCStateController>().Slip(this.transform, dir, 2, IsSafe ? false : true);
         }
 
         if (collision.transform.parent.TryGetComponent<HoldableItem>(out HoldableItem item)) {

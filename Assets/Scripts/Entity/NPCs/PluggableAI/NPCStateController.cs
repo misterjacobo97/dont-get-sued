@@ -13,9 +13,12 @@ public class NPCStateController : PluggableAI.StateController {
     [HideInInspector] public NPCItemHolder itemHolder;
     public Collider2D exitCollider;
     [SerializeField] private NPCSlapDetectionArea _slapDetect;
-    public NPCDatabase npcDatabase;
+    
+    [SerializeField] private List<Transform> _hazardsEncountered = new();
+
 
     [Header("context")]
+    public NPCDatabase npcDatabase;
     public TransformListReference _listOfActiveNPCs;
     [SerializeField] private int shoppingListSize = 3;
     public List<ShoppingItem> shoppingList = new();
@@ -58,11 +61,14 @@ public class NPCStateController : PluggableAI.StateController {
         InitialiseAI();
     }
 
-    public void Slip(Vector2 direction, float stunTime, bool penalise = false){
+    public void Slip(Transform hazard, Vector2 direction, float stunTime, bool penalise = false){
+        if (_hazardsEncountered.Contains(hazard)) return;
+
         if (penalise) {
             _customerSatisfactionScore.variable.reactiveValue.Value -= 10;
         }
 
+        _hazardsEncountered.Add(hazard);
         _aiActive = false;
 
         agent.isStopped = true;

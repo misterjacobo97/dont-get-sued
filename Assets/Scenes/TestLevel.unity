@@ -17246,6 +17246,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4481863104277081946, guid: b7ec9e05b89b7634f848aafd296b40fe, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4481863104277081946, guid: b7ec9e05b89b7634f848aafd296b40fe, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4481863104277081946, guid: b7ec9e05b89b7634f848aafd296b40fe, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8564058033447173519, guid: b7ec9e05b89b7634f848aafd296b40fe, type: 3}
       propertyPath: m_Name
       value: PauseScreen
