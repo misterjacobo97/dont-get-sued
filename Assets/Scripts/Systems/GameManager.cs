@@ -31,7 +31,7 @@ public class GameManager : PersistentSignleton<GameManager> {
 
     private void Start() {
         _gameState.suedStatus.GetReactiveValue.AsObservable().Subscribe(status => {
-            Debug.Log(status);
+            ChangeGameState(GAME_STATE.END_GAME);
         }).AddTo(this);
 
         _gameState.managementSatisfaction.GetReactiveValue?.AsObservable().Subscribe(num =>{
@@ -80,9 +80,6 @@ public class GameManager : PersistentSignleton<GameManager> {
             EndGameActions();
         }
 
-        else if (_gameState.suedStatus.GetReactiveValue.Value == true) {
-            EndGameActions();
-        }
 
         
 
@@ -125,6 +122,7 @@ public class GameManager : PersistentSignleton<GameManager> {
         await LevelManager.Instance.LoadLevel("TestLevel");
 
         ChangeGameState(GAME_STATE.MAIN_GAME);
+        _gameEventChannel.gameStarted.RaiseEvent();
     }
 
     public void OnGamePauseActions(){

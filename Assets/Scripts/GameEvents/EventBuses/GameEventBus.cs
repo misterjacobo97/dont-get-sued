@@ -10,7 +10,8 @@ public class GameStateEventChannel : ScriptableObject {
     public GameEventSO gamePaused;
     public GameEventSO gameUnpaused;
 
+    public GameEventSO gameStarted;
     public GameEventSO gameFinished;
-
+    
 
 }

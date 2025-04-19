@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gamePaused: {fileID: 11400000, guid: ac2475a0729d61a4cbb6196841899182, type: 2}
   gameUnpaused: {fileID: 11400000, guid: a7205dab0b906b246b39a6e0387e72cb, type: 2}
+  gameStarted: {fileID: 11400000, guid: 6e7b82e2634c769488977db2e69d185f, type: 2}
   gameFinished: {fileID: 11400000, guid: 2364480fdd1c2a04893b7fb3a99d2fe2, type: 2}
