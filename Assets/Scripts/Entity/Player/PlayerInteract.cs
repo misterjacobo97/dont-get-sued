@@ -1,6 +1,7 @@
-using System;
 using DG.Tweening;
+using R3;
 using UnityEngine;
+using UnityEngine.UI;
 
 public interface I_Interactable {
     public void SetSelected();
@@ -12,38 +13,59 @@ public class PlayerInteract : MonoBehaviour {
 
     [Header("refs")]
     [SerializeField] private InteractContextSO _playerInteractContext;
+    [SerializeField] private Image _throwIndicator;
+
 
     [Header("params")]
     [SerializeField] private LayerMask _interactMask;
 
+    [SerializeField] private float _throwInputThreshold = 0.4f;
+    [SerializeField] private float _throwForceMax = 900;
+    [SerializeField] private float _throwForceBuildUpPerSec = 500;
+
+    private bool _canDropItem = false;
+    private float _timeSinceInteractInput = 0f;
+    // private bool _isThrowing = false;
+    private float _currentThrowForce = 0;
+
+    
     [Header("Interact Refs")]
     [SerializeField] private Transform _itemHolderRef;
     [SerializeField] private Transform _indicator;
 
-    private  Vector2 _lastMovement = Vector2.zero;
+    [Header("context")]
+    [SerializeField] private UserInputChannelSO _userInputChannel;
+    [SerializeField] private GameStatsSO _gameStatsDB;
+
+
     private Tween _indicatorTween;
 
-
     private void Start() {
-        InputManager.Instance.PlayerInteractPressedEvent.AddListener(OnInteractInput);
+        // InputManager.Instance.PlayerInteractPressedEvent.AddListener(OnInteractInput);
 
-        InputManager.Instance.PlayerInteractHeldReleasedEvent.AddListener(OnInteractHeldReleasedInput);
+        // InputManager.Instance.PlayerInteractHeldReleasedEvent.AddListener(OnInteractHeldReleasedInput);
+
+        HandleInteractInput();
+
+        _throwIndicator.enabled = false;
+
     }
 
     void Update() {
+        if (_gameStatsDB.pauseStatus.GetReactiveValue.Value == true) return;
+
         if (GameManager.Instance.GetGameState.CurrentValue != GameManager.GAME_STATE.MAIN_GAME) {
             return;
         }
 
-        Vector2 _movement = InputManager.Instance.GetPlayerMovement();
+        HandleItemDrop();
 
-        if (_movement != Vector2.zero && InputManager.Instance.PlayerInteractIsHeld == false) {
-            _lastMovement = _movement;
-        }
 
-        Vector2 RayPos = transform.TransformPoint(_lastMovement);
+        Vector2 _movement = _userInputChannel.moveInput.GetReactiveValue.Value;
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, _lastMovement, 1f, _interactMask);
+        Vector2 RayPos = transform.TransformPoint(_userInputChannel.lastMoveDir.GetReactiveValue.Value);
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, _userInputChannel.lastMoveDir.GetReactiveValue.Value, 1f, _interactMask);
         Debug.DrawLine(transform.position, RayPos, Color.white);
 
         if (_movement != Vector2.zero && hit.collider == null) {
@@ -68,18 +90,83 @@ public class PlayerInteract : MonoBehaviour {
         _indicatorTween = _indicator.DOMove(newPos, 0.1f);
     }
 
-    private void OnInteractInput() {
-        _playerInteractContext.selectedInteractableObject.Value?.GetComponent<I_Interactable>().Interact(this);
+    private void HandleItemDrop(){
+        PlayerItemHolder holder;
+
+        // if not holding an item, do nothing
+        if (!_itemHolderRef.TryGetComponent(out holder)) return;
+        if (!holder.HasItem()) {
+            _throwIndicator.fillAmount = 0;
+            _throwIndicator.enabled = false;
+            return;
+        }
+
+        bool interactHeld = _userInputChannel.InteractInput.GetReactiveValue.Value;
         
-        if (_playerInteractContext.selectedInteractableObject.Value == null) {
-            // drop item
-            GetItemHolder().GetHeldItem()?.DropItem();
+        // decide and add to timer if interact is held
+        if (interactHeld && _canDropItem) {
+            _timeSinceInteractInput += Time.deltaTime;
+
+            if (_timeSinceInteractInput > _throwInputThreshold) {
+                _throwIndicator.enabled = true;
+                _currentThrowForce = Mathf.Clamp(_timeSinceInteractInput * _throwForceBuildUpPerSec, 0, _throwForceMax);
+
+                _throwIndicator.fillAmount = _currentThrowForce / _throwForceMax;
+            }
         }
     }
 
-    private void OnInteractHeldReleasedInput() {
-        _itemHolderRef.GetComponent<PlayerItemHolder>().ThrowItem(_lastMovement);
+    private void HandleInteractInput() {
+        _userInputChannel.InteractInput.GetReactiveValue.AsObservable().Subscribe(state => {
+            // if pressed
+            if (state == true) {
+                // and if container
+                if (_playerInteractContext.selectedInteractableObject.Value != null) {
+                    _playerInteractContext.selectedInteractableObject.Value.GetComponent<I_Interactable>().Interact(this);
+                    _canDropItem = false;
+                }
+            }
+
+            // if released
+            else if (state == false){
+                if (!GetItemHolder().HasItem()) return;
+
+                // make sure it doesnt drop on the initial grab
+                if (_canDropItem == false) {
+                    _canDropItem = true;
+                }
+
+                // if is not holding interact 
+                else if (_timeSinceInteractInput < _throwInputThreshold) {
+                    GetItemHolder().GetHeldItem()?.DropItem();
+                    
+                    _throwIndicator.fillAmount = 0;
+                    _throwIndicator.enabled = false;
+                    _timeSinceInteractInput = 0;
+
+                    _canDropItem = false;
+                    return;
+                }
+
+                else {
+                    GetItemHolder().GetHeldItem()?.ThrowItem(_userInputChannel.lastMoveDir.GetReactiveValue.Value, Mathf.Clamp(_currentThrowForce, 0, _throwForceMax));
+
+                    _throwIndicator.fillAmount = 0;
+                    _throwIndicator.enabled = false;
+                    _timeSinceInteractInput = 0;
+                    
+                    _canDropItem = false;
+                }
+            }
+        }).AddTo(this);
+
     }
+
+    private void OnInteractHeldReleasedInput() {
+        _itemHolderRef.GetComponent<PlayerItemHolder>().ThrowItem(_userInputChannel.lastMoveDir.GetReactiveValue.Value);
+    }
+
+
 
     public bool HasItemHolder() {
         return _itemHolderRef != null;

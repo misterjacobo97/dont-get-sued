@@ -25,17 +25,21 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float _dashDuration = 0.3f;
     private bool _currentlyDashing = false;
     private float _timeOfLastDash = 0f;
+    
+    [Header("context")]
+    [SerializeField] private GameStatsSO _gameStatsDB;
+    [SerializeField] private UserInputChannelSO _userInputChannel;
+
 
     [Header("debug")]
     [SerializeField] private Logger _logger;
     [SerializeField] private bool _showDebugLogs;
 
-
-    // movement related
-    private Vector2 _movement;
     private bool _walkingAnimActive = false;
 
     private void FixedUpdate() {
+        if (_gameStatsDB?.pauseStatus.GetReactiveValue.Value == true) return;
+
         MovePlayer();
     }
 
@@ -46,24 +50,16 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
-        _movement = InputManager.Instance.GetPlayerMovement();
+        Vector2 movement = _userInputChannel.moveInput.GetReactiveValue.Value;
 
-        //if (InputManager.Instance.PlayerDashWasPressed && Time.time >= _timeOfLastDash + _dashDuration) {
-        //    _timeOfLastDash = Time.time;
-        //    _currentlyDashing = true;
-        //}
-        //if (_currentlyDashing == true) {
-        //    PerformDashAction();
-        //}
-
-        if (_movement != Vector2.zero && InputManager.Instance.PlayerInteractIsHeld == false) {
+        if (movement != Vector2.zero && _userInputChannel.freezeInput.GetReactiveValue.Value == false) {
             // check dif between current and requested velocity direction
-            double dirDiff = Math.Round(Vector2.Distance(_rb.linearVelocity.normalized, _movement), 2);
+            double dirDiff = Math.Round(Vector2.Distance(_rb.linearVelocity.normalized, movement), 2);
             // then create a dynamic float to add to the movementAccel if current vel is not in the requested direction
             float directionSwitchMult = _movementAccel * (float)dirDiff;
 
             // calculate movement force
-            Vector2 newForce = _movement * (_movementAccel + directionSwitchMult) * Time.fixedDeltaTime;
+            Vector2 newForce = movement * (_movementAccel + directionSwitchMult) * Time.fixedDeltaTime;
             _logger.Log(newForce, this, _showDebugLogs);
 
             // change so it doesnt feel sluggish when moving
@@ -71,11 +67,11 @@ public class PlayerController : MonoBehaviour {
 
             _rb.AddForce(newForce);
 
-            ControlSprite(_movement);
+            ControlSprite(movement);
             ControlAnimations();
             //_slapCollider.
 
-            _lastMovementDir = _movement;
+            _lastMovementDir = movement;
         }
         else if (InputManager.Instance.PlayerInteractIsHeld) {
             _rb.linearVelocity = Vector2.zero;
@@ -85,8 +81,6 @@ public class PlayerController : MonoBehaviour {
             _rb.linearDamping = _linearDamping;
 
         }
-
-
 
         LimitPlayerVelocity();
     }
@@ -127,17 +121,17 @@ public class PlayerController : MonoBehaviour {
         _walkingAnimActive = false;
     }
 
-    private void PerformDashAction() {
-        if (Time.time >= _timeOfLastDash + _dashDuration) {
-            _currentlyDashing = false;
-            return;
-        }
+    // private void PerformDashAction() {
+    //     if (Time.time >= _timeOfLastDash + _dashDuration) {
+    //         _currentlyDashing = false;
+    //         return;
+    //     }
 
-        Debug.Log("dashed");
-        _rb.linearDamping = 0.2f;
+    //     Debug.Log("dashed");
+    //     _rb.linearDamping = 0.2f;
 
-        _rb.linearVelocity = _lastMovementDir * _dashMaxSpeed * Time.fixedDeltaTime;
-    }
+    //     _rb.linearVelocity = _lastMovementDir * _dashMaxSpeed * Time.fixedDeltaTime;
+    // }
 
     #endregion
 

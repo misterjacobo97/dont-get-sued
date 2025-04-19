@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 4918445537653821484}
   - component: {fileID: 2467457343696304539}
   - component: {fileID: 5722255225168319184}
+  - component: {fileID: 8343009943112882662}
   m_Layer: 8
   m_Name: GrandmaOmega
   m_TagString: Untagged
@@ -246,6 +247,7 @@ MonoBehaviour:
   currentState:
     value: {fileID: 0}
   _initialState: {fileID: 11400000, guid: a72d83fccfda7b042b480e7a0acc1471, type: 2}
+  npcTemplateSO: {fileID: 11400000, guid: 00ee3ccadbd0f034aafdce09b84989c0, type: 2}
   agent: {fileID: 0}
   rb: {fileID: 0}
   nextDestinationTarget: {fileID: 0}
@@ -253,6 +255,7 @@ MonoBehaviour:
   itemHolder: {fileID: 0}
   exitCollider: {fileID: 4814455962765761790}
   _slapDetect: {fileID: 732585867345444463}
+  _hazardsEncountered: []
   npcDatabase: {fileID: 11400000, guid: d2f9c1822c323de4792bc41b65742287, type: 2}
   _listOfActiveNPCs:
     list: {fileID: 11400000, guid: c297754e9d8b16c48969b4cf26c36d2c, type: 2}
@@ -347,6 +350,34 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 1
+--- !u!114 &8343009943112882662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2343737679276048031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd613e0fa64f32e44a9354b9ac6b6cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameEvent: {fileID: 11400000, guid: 2364480fdd1c2a04893b7fb3a99d2fe2, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4354962232997584990}
+        m_TargetAssemblyTypeName: NPCStateController, Assembly-CSharp
+        m_MethodName: UnaliveNPC
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2679827840339153576
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,8 +802,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 005c7bc5c9f11f9469f124c1c9d96266, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemHolder: {fileID: 5532853514605486073}
-  _npcDB: {fileID: 11400000, guid: d2f9c1822c323de4792bc41b65742287, type: 2}
   _parent: {fileID: 4354962232997584990}
 --- !u!61 &4814455962765761790
 BoxCollider2D:

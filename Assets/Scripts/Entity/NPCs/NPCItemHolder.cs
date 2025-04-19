@@ -25,6 +25,11 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
     public void CompleteItems() {
         _heldItems.ForEach(i => {
             if (i.TryGetComponent(out SpoiledFoodTask task)) {
+                if (GameManager.Instance.GetGameState.CurrentValue != GameManager.GAME_STATE.MAIN_GAME) {
+                    task.CompleteTask();
+                    return;
+                }
+
                 switch (task.IsSpoiled){
                     case true:
                         _customerSatisfaction.AddToReactiveValue(-5);

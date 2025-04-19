@@ -1,5 +1,6 @@
 using System;
 using R3;
+using UnityEngine;
 
 [Serializable]
 public class FloatReference {
@@ -65,7 +66,6 @@ public class IntReference {
     public void SetReactiveValue(int newVal){
         variable.reactiveValue.Value = newVal;
     }
-
     
 }
 
@@ -78,4 +78,58 @@ public class BoolReference {
     public void SetReactiveValue(bool newValue) {
         variable.Value.Value = newValue;
     }
+}
+
+[Serializable]
+public class Vector2Reference {
+
+    public Vector2Variable variable;
+
+    public void Reset() {
+        switch (variable.resetType) {
+            case Vector2Variable.RESET_TYPE.ZERO:
+                variable.reactiveValue.Value = Vector2.zero;
+                break;
+        }
+    }
+
+    public ReactiveProperty<Vector2> GetReactiveValue => variable.reactiveValue;
+    public void AddToReactiveValue(Vector2 newVal){
+        Vector2 newVec = Vector2.zero;
+
+        // check for max X axis
+        newVec.x = variable.maxXMagnitude != -1 
+            ? Mathf.Clamp(newVal.x + variable.reactiveValue.Value.x, -variable.maxXMagnitude, variable.maxXMagnitude) 
+            : newVal.x + variable.reactiveValue.Value.x;
+
+        // check for max Y axis
+        newVec.y = variable.maxYMagnitude != -1 
+            ? Mathf.Clamp(newVal.y + variable.reactiveValue.Value.y, -variable.maxYMagnitude, variable.maxYMagnitude)
+            : newVal.y + variable.reactiveValue.Value.y;
+        
+        // check for max magnitude / length and set
+        variable.reactiveValue.Value = variable.maxVectorLength != -1 
+            ? Vector2.ClampMagnitude(newVec, variable.maxVectorLength)
+            : newVec;
+    }
+
+    public void SetReactiveValue(Vector2 newVal){
+                Vector2 newVec = Vector2.zero;
+
+        // check for max X axis
+        newVec.x = variable.maxXMagnitude != -1 
+            ? Mathf.Clamp(newVal.x, -variable.maxXMagnitude, variable.maxXMagnitude) 
+            : newVal.x;
+
+        // check for max Y axis
+        newVec.y = variable.maxYMagnitude != -1 
+            ? Mathf.Clamp(newVal.y, -variable.maxYMagnitude, variable.maxYMagnitude)
+            : newVal.y;
+        
+        // check for max magnitude / length and set
+        variable.reactiveValue.Value = variable.maxVectorLength != -1 
+            ? Vector2.ClampMagnitude(newVec, variable.maxVectorLength)
+            : newVec;
+    }
+    
 }

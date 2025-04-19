@@ -6,9 +6,11 @@ using UnityEngine;
 /// </summary>
 [CreateAssetMenu(menuName = "Systems/GameStateEventChannel")]
 public class GameStateEventChannel : ScriptableObject {
-    public ScriptableObjectGameEventSO changedGameState;
     
     public GameEventSO gamePaused;
     public GameEventSO gameUnpaused;
+
+    public GameEventSO gameFinished;
+
 
 }

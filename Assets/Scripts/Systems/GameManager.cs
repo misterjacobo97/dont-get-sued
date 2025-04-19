@@ -52,12 +52,15 @@ public class GameManager : PersistentSignleton<GameManager> {
             switch (status){
                 case true:
                     _gameEventChannel.gamePaused.RaiseEvent();
+                    OnGamePauseActions();
                     break;
                 case false:
                     _gameEventChannel.gameUnpaused.RaiseEvent();
+                    OnGamePauseActions();
                     break;
             }
         }).AddTo(this);
+
 
         LevelManager.Instance.LevelLoadingStarted.AddListener(() => ChangeGameState(GAME_STATE.LOADING));
 
@@ -69,13 +72,19 @@ public class GameManager : PersistentSignleton<GameManager> {
     }
 
     private void Update() {
-        ControlTimer();
-
-
+        if (GetGameState.CurrentValue == GAME_STATE.MAIN_GAME){
+            ControlTimer();
+        }
 
         if (GetGameState.CurrentValue != GAME_STATE.END_GAME && _gameState.gameTimeLeft.GetReactiveValue.Value <= 0) {
             EndGameActions();
         }
+
+        else if (_gameState.suedStatus.GetReactiveValue.Value == true) {
+            EndGameActions();
+        }
+
+        
 
     }
 
@@ -106,12 +115,22 @@ public class GameManager : PersistentSignleton<GameManager> {
 
     private void EndGameActions() {
         ChangeGameState(GAME_STATE.END_GAME);
+
+        _gameEventChannel.gameFinished.RaiseEvent();
     }
 
     public async void GameStartActions() {
+        if (_currentGameState.Value != GAME_STATE.START_SCREEN) return;
+
         await LevelManager.Instance.LoadLevel("TestLevel");
 
         ChangeGameState(GAME_STATE.MAIN_GAME);
+    }
+
+    public void OnGamePauseActions(){
+        if (_currentGameState.Value != GAME_STATE.MAIN_GAME) return;
+
+        Time.timeScale = _gameState.pauseStatus?.GetReactiveValue.Value == true ? 0 : 1;
     }
 
     public void QuitGame() {

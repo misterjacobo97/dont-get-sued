@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _PausedButtonPressedEvent: {fileID: 11400000, guid: 0780eab1dfbc31f41a58a9b6b3a9648e, type: 2}
+  _userInputChannel: {fileID: 11400000, guid: f0bad2b87c65dc5468e0e96f8df88fd1, type: 2}
   _logger: {fileID: 5672422042019910710}
   _showDebugLogs: 0
 --- !u!1 &1633183853296388562

@@ -8,6 +8,9 @@ public class PlayerItemHolder : MonoBehaviour, I_ItemHolder {
     [SerializeField] private AudioClip _pickUpSound;
     [SerializeField] private ScriptableObjectListReference _acceptedItems;
 
+    [Header("context")]
+    [SerializeField] private UserInputChannelSO _userInputChannel;
+    [SerializeField] private GameStatsSO _gameStatsDB;
 
     [Header("throwing params")]
     [SerializeField] private float _throwForce = 200f;
@@ -15,11 +18,9 @@ public class PlayerItemHolder : MonoBehaviour, I_ItemHolder {
     private HoldableItem _heldItem = null;
 
     private void Update() {
-        Vector2 _movement = InputManager.Instance.GetPlayerMovement();
+        if (_gameStatsDB.pauseStatus.GetReactiveValue.Value == true) return;
 
-        if (_movement != Vector2.zero) {
-            _itemTarget.localPosition = _movement / 2;
-        }
+        _itemTarget.localPosition = _userInputChannel.lastMoveDir.GetReactiveValue.Value / 2;
     }
 
     public void SetItem(HoldableItem newItem) {

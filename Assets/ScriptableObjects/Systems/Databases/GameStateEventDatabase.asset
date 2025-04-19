@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b81bd39005d754cb3004699131c0d2, type: 3}
   m_Name: GameStateEventDatabase
   m_EditorClassIdentifier: 
-  changedGameState: {fileID: 11400000, guid: cd7635d9133f6314192104e0412d879c, type: 2}
   gamePaused: {fileID: 11400000, guid: ac2475a0729d61a4cbb6196841899182, type: 2}
   gameUnpaused: {fileID: 11400000, guid: a7205dab0b906b246b39a6e0387e72cb, type: 2}
+  gameFinished: {fileID: 11400000, guid: 2364480fdd1c2a04893b7fb3a99d2fe2, type: 2}

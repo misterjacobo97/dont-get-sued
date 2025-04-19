@@ -58,6 +58,7 @@ public class BaseShelf : MonoBehaviour, I_ItemHolder, I_Interactable {
     public void SetUnselected() { 
         _sprite.color = Color.white;
     }
+    
     public void Interact(Object caller) {
         if (caller is PlayerInteract) {
             PlayerInteract player = caller as PlayerInteract;

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class NPCStateController : PluggableAI.StateController {
 
     [Header("NPC refs")]
+    public NPCTemplateSO npcTemplateSO;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Rigidbody2D rb;
     public Transform nextDestinationTarget;
@@ -13,7 +14,6 @@ public class NPCStateController : PluggableAI.StateController {
     [HideInInspector] public NPCItemHolder itemHolder;
     public Collider2D exitCollider;
     [SerializeField] private NPCSlapDetectionArea _slapDetect;
-    
     [SerializeField] private List<Transform> _hazardsEncountered = new();
 
 
@@ -24,8 +24,7 @@ public class NPCStateController : PluggableAI.StateController {
     public List<ShoppingItem> shoppingList = new();
     public ScriptableObjectListReference acceptedShoppingItems;
     [SerializeField] private FloatReference _customerSatisfactionScore;
-
-    
+    // [SerializeField] private GameStateEventChannel _gameEventChannel;
 
 
     protected override void Awake() {
@@ -33,6 +32,10 @@ public class NPCStateController : PluggableAI.StateController {
 
         rb = GetComponent<Rigidbody2D>();
         itemHolder = GetComponentInChildren<NPCItemHolder>();
+
+        GetComponentInChildren<NPCExitAreaDectector>().unaliveNPC.AddListener(UnaliveNPC);
+
+        // _gameEventChannel.gameFinished.RegisterListener((_) => {UnaliveNPC();});
 
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -100,6 +103,15 @@ public class NPCStateController : PluggableAI.StateController {
 
     private void AddSlappedForce(Vector2 dir) {
         rb.AddForce(dir * 900);
+    }
+
+    public void UnaliveNPC(){
+            itemHolder.CompleteItems();
+
+            npcDatabase.UnassignTarget(this);
+            npcDatabase.ActiveNPCList.GetList().Remove(transform);
+
+            Destroy(gameObject);
     }
 
 }

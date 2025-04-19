@@ -1,4 +1,5 @@
 using System;
+using R3;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -8,6 +9,7 @@ public class InputManager : PersistentSignleton<InputManager> {
     [Header("UI game events")]
     [SerializeField] private GameEventSO _PausedButtonPressedEvent;
 
+    [SerializeField] private UserInputChannelSO _userInputChannel;
 
     [NonSerialized] public UnityEvent PlayerInteractPressedEvent = new();
     [NonSerialized] public UnityEvent PlayerInteractHeldReleasedEvent = new();
@@ -43,12 +45,19 @@ public class InputManager : PersistentSignleton<InputManager> {
     private InputAction _dashAction;
     private InputAction _slapAction;
 
-    // ui
-    private InputAction _pauseAction;
 
     [Header("debug")]
     [SerializeField] private Logger _logger;
     [SerializeField] private bool _showDebugLogs = true;
+
+
+
+    protected override void Awake(){
+        base.Awake();
+
+        // _playerFreezeInput = new SerializableReactiveProperty<bool>(false).AddTo(this);
+
+    } 
 
     private void Start() {
         // separating into its smaller chunks first
@@ -60,10 +69,31 @@ public class InputManager : PersistentSignleton<InputManager> {
         _dashAction = _playerActions.Player.Dash;
         _slapAction = _playerActions.Player.Slap;
 
-        // ui
-        _pauseAction = _playerActions.UI.Pause;
 
-        
+        HandleUIEvent();
+
+        Observable.EveryValueChanged(this, x => {
+            return (int)x._playerActions.Player.Freeze.ReadValue<float>() > 0 ? true : false;
+        }).Subscribe(x => {
+           _userInputChannel.freezeInput.GetReactiveValue.Value = x;
+        }).AddTo(this);
+
+        Observable.EveryValueChanged(this, x => {
+            return (int)x._playerActions.Player.Interact.ReadValue<float>() > 0 ? true : false;
+        }).Subscribe(x => {
+           _userInputChannel.InteractInput.GetReactiveValue.Value = x;
+        }).AddTo(this);
+
+        Observable.EveryValueChanged(this, x => {
+            return x._playerActions.Player.Move.ReadValue<Vector2>();
+        }).Subscribe(val => {
+            // change player dir
+            if (val != Vector2.zero && val.normalized != _userInputChannel.lastMoveDir.GetReactiveValue.Value) {
+                _userInputChannel.lastMoveDir.GetReactiveValue.Value = val.normalized;
+            }
+
+            _userInputChannel.moveInput.SetReactiveValue(val.normalized);
+        }).AddTo(this);
     }
 
     private void Update() {
@@ -79,13 +109,16 @@ public class InputManager : PersistentSignleton<InputManager> {
         PlayerSlaptWasReleased = _slapAction.WasReleasedThisFrame();
         PlayerSlapWasPressed = _slapAction.WasPressedThisFrame();
 
-        HandleUIEvent();
-
         HandleInteractEvents();
     }
 
     private void HandleUIEvent(){
-        if (_pauseAction.WasPressedThisFrame()) _PausedButtonPressedEvent.RaiseEvent();
+        Observable.EveryValueChanged(this, x => {
+            return (int)x._playerActions.UI.Pause.ReadValue<float>() > 0 ? true : false;
+        }).Subscribe(x => {
+            if (x == false) return;
+            _PausedButtonPressedEvent.RaiseEvent();
+        }).AddTo(this);
     }
 
     /// <summary>
@@ -93,6 +126,8 @@ public class InputManager : PersistentSignleton<InputManager> {
     /// </summary>
     /// <returns></returns>
     public Vector2 GetPlayerMovement() {
+
+
         Vector2 input;
 
         // get initial value
@@ -134,7 +169,5 @@ public class InputManager : PersistentSignleton<InputManager> {
             _interactHeldDuration = 0f;
             PlayerInteractHeldReleasedEvent.Invoke();
         }
-
     }
-
 }

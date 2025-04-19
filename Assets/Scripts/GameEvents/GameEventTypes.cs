@@ -12,6 +12,8 @@ public class FloatGameEventSO : GameEventSO<float> { }
 [CreateAssetMenu(menuName = "GameEvents/IntGameEvent")]
 public class IntGameEventSO : GameEventSO<int> { }
 
+[CreateAssetMenu(menuName = "GameEvents/BoolGameEvent")]
+public class BoolGameEventSO : GameEventSO<bool> { }
 
 [CreateAssetMenu(menuName = "GameEvents/AudioClipGameEvent")]
 public class AudioClipGameEventSO : GameEventSO<AudioClip> { }

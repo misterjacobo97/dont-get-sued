@@ -42,10 +42,7 @@ public class ListReference<T1, T2> {
         return false;
     }
     public virtual T2 GetRandomFromList() {
-        int idx = UnityEngine.Random.Range(0, GetList().Count - 1);
-
-
-        return GetList()[idx];
+        return GetList()[UnityEngine.Random.Range(0, GetList().Count - 1)];
     }
 
 
