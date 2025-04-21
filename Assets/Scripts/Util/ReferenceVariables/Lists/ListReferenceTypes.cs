@@ -24,7 +24,7 @@ public class ListReference<T1, T2> {
     }
 
     public virtual List<T2> GetList() {
-        if (useGenericList && genericList == null) {
+        if (useGenericList && genericList != null) {
             genericList = new();
         }
 
@@ -57,3 +57,6 @@ public class Vector2ListReference : ListReference<Vector2ListVariable, Vector2> 
 
 [Serializable]
 public class ScriptableObjectListReference : ListReference<ScriptableObjectListVariable, ScriptableObject> { }
+
+[Serializable]
+public class AudioClipListReference : ListReference<AudioClipListVariable, AudioClip> { }

@@ -94,6 +94,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 9026873235000782582}
+  _musicMixer: {fileID: 1093170545838545909, guid: ed7f5cb8b21fcb140a5103b291be2da0, type: 2}
+  _effectMixer: {fileID: 6430558431649767610, guid: ed7f5cb8b21fcb140a5103b291be2da0, type: 2}
   maxEffectSources: 10
 --- !u!82 &9026873235000782582
 AudioSource:
@@ -256,6 +258,8 @@ GameObject:
   - component: {fileID: 1418915565821623673}
   - component: {fileID: 1042480342959750854}
   - component: {fileID: 6992968496134402209}
+  - component: {fileID: 4217106639647512405}
+  - component: {fileID: 6342441307108226349}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -292,6 +296,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameState: {fileID: 11400000, guid: 88a5f3f35fd37544cbab58d9f04cde20, type: 2}
   _gameEventChannel: {fileID: 11400000, guid: 02795b41fdfc54443b2b470238ea21ac, type: 2}
+  _announcementClipsList:
+    list: {fileID: 11400000, guid: b73e140bb3f803d44af42d7e4cbc751a, type: 2}
+    useGenericList: 0
+    genericList: []
+  _annoucementMixer: {fileID: -8564929505516002927, guid: ed7f5cb8b21fcb140a5103b291be2da0, type: 2}
   _logger: {fileID: 5672422042019910710}
   _showDebugLogs: 1
   _cheats_SO: {fileID: 11400000, guid: 3e0681ec70503a640aabe2b5e8b49c73, type: 2}
@@ -314,6 +323,62 @@ MonoBehaviour:
       - m_Target: {fileID: 11400000, guid: 40bf06c611268a24191f0f6722b166b2, type: 2}
         m_TargetAssemblyTypeName: BoolVariable, Assembly-CSharp
         m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4217106639647512405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100148716130823109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd613e0fa64f32e44a9354b9ac6b6cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameEvent: {fileID: 11400000, guid: 3a0eda6d6f6603e4ba35f64ae6334531, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1042480342959750854}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: GameStartActions
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6342441307108226349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100148716130823109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd613e0fa64f32e44a9354b9ac6b6cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameEvent: {fileID: 11400000, guid: eb780fab52e8e844284cafbcb750afc8, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1042480342959750854}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: LoadStartScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

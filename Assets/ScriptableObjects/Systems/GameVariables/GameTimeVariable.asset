@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: GameTimeVariable
   m_EditorClassIdentifier: 
   resetType: 2
-  Value: 180
+  clampMaxValue: 1
   maxValue: 180
+  clampMinValue: 1
   minValue: 0
-  testValue:
-    value: 0
+  reactiveValue:
+    value: 180

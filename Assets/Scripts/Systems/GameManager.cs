@@ -1,6 +1,7 @@
 using System;
 using R3;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 
 public class GameManager : PersistentSignleton<GameManager> {
@@ -21,7 +22,8 @@ public class GameManager : PersistentSignleton<GameManager> {
     [Header("refs")]
     [SerializeField] private GameStatsSO _gameState;
     [SerializeField] private GameStateEventChannel _gameEventChannel;
-
+    [SerializeField] private AudioClipListReference _announcementClipsList;
+    [SerializeField] private AudioMixerGroup _annoucementMixer;
 
     [Header("debug")]
     [SerializeField] private Logger _logger;
@@ -31,7 +33,7 @@ public class GameManager : PersistentSignleton<GameManager> {
 
     private void Start() {
         _gameState.suedStatus.GetReactiveValue.AsObservable().Subscribe(status => {
-            ChangeGameState(GAME_STATE.END_GAME);
+            EndGameActions();
         }).AddTo(this);
 
         _gameState.managementSatisfaction.GetReactiveValue?.AsObservable().Subscribe(num =>{
@@ -44,7 +46,7 @@ public class GameManager : PersistentSignleton<GameManager> {
 
         _gameState.gameTimeLeft.GetReactiveValue?.AsObservable().Subscribe(time => {
             if (time <= 0){
-                ChangeGameState(GAME_STATE.END_GAME);
+                EndGameActions();
             }
         }).AddTo(this);
 
@@ -75,14 +77,6 @@ public class GameManager : PersistentSignleton<GameManager> {
         if (GetGameState.CurrentValue == GAME_STATE.MAIN_GAME){
             ControlTimer();
         }
-
-        if (GetGameState.CurrentValue != GAME_STATE.END_GAME && _gameState.gameTimeLeft.GetReactiveValue.Value <= 0) {
-            EndGameActions();
-        }
-
-
-        
-
     }
 
     private void ControlTimer() {
@@ -105,6 +99,8 @@ public class GameManager : PersistentSignleton<GameManager> {
     }
 
     public async void LoadStartScreen() {
+        if (_currentGameState.Value == GAME_STATE.MAIN_GAME && _gameState.pauseStatus.GetReactiveValue.Value == true) _gameEventChannel.gameUnpaused.RaiseEvent();
+
         await LevelManager.Instance.LoadLevel("StartScreen");
 
         ChangeGameState(GAME_STATE.START_SCREEN);
@@ -117,7 +113,15 @@ public class GameManager : PersistentSignleton<GameManager> {
     }
 
     public async void GameStartActions() {
-        if (_currentGameState.Value != GAME_STATE.START_SCREEN) return;
+        if (GetGameState.CurrentValue == (GAME_STATE.LOADING | GAME_STATE.PRE_GAME)) return;
+
+        if (_currentGameState.Value == GAME_STATE.MAIN_GAME && _gameState.pauseStatus.GetReactiveValue.Value == true) _gameEventChannel.gameUnpaused.RaiseEvent();
+
+        _gameState.gameTimeLeft.Reset();
+        _gameState.customerSatisfaction.Reset();
+        _gameState.managementSatisfaction.Reset();
+        _gameState.levelScore.Reset();
+        _gameState.suedStatus.SetReactiveValue(false);
 
         await LevelManager.Instance.LoadLevel("TestLevel");
 

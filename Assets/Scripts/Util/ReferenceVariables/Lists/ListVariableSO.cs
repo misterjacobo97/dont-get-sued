@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ListVariable<T> : ScriptableObject {
-    [TypeMismatchFix]
+    // [TypeMismatchFix]
     [SerializeReference] public List<T> Value = new List<T>();
 
     [SerializeField] private bool clearOnSceneChange = false;

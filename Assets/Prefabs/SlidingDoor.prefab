@@ -50,6 +50,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _door1: {fileID: 8009141846476430155}
   _door2: {fileID: 2254268581866271339}
+  _walkInSound:
+    _soundClip: {fileID: 8300000, guid: 07c1233df4d55e949a5efc4829b0d336, type: 3}
+    _volume: 0.04
+    _startClipAt: 0
   _triggerCollisionLayerName: NPC
   _openDuration: 2
   _movementDuration: 0.8

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7687686cebd37a4e9dddd5785635e4c, type: 3}
+  m_Name: AnnouncementClipsList
+  m_EditorClassIdentifier: 
+  Value:
+  - {fileID: 8300000, guid: ca49c33efbbea694381c9d63a25e9f48, type: 3}
+  - {fileID: 8300000, guid: d148c4fc55de7b04486da54222287872, type: 3}
+  - {fileID: 8300000, guid: 7c4cf02d305f13d4a9e6e8cc69a4df48, type: 3}
+  - {fileID: 8300000, guid: 090e5ba6ffd4d954d96332eaeb10b680, type: 3}
+  - {fileID: 8300000, guid: 6f49e16057aeab7408c87c90710f82fe, type: 3}
+  - {fileID: 8300000, guid: 5f8f6afe00b0e334fa930aa0672a1cb4, type: 3}
+  - {fileID: 8300000, guid: 493893dd23ef8894a8e4f99f3628932f, type: 3}
+  - {fileID: 8300000, guid: 1de875200208fd341b80f4f8facf9788, type: 3}
+  clearOnSceneChange: 0

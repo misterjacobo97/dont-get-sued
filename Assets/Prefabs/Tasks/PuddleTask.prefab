@@ -50,7 +50,12 @@ MonoBehaviour:
   _taskDatabase: {fileID: 11400000, guid: 85c50a5fe17bff741820f5589549a521, type: 2}
   _taskScore: 0
   _hazardNullifyer: {fileID: 11400000, guid: 20742cdef89b8fb45b65f4d4ec744424, type: 2}
+  _spawnSound:
+    _soundClip: {fileID: 8300000, guid: 3be398f565185204cb0d21e479b848c8, type: 3}
+    _volume: 0.5
+    _startClipAt: 0
   _NPCLayerName: NPC
+  _timeToDisappear: 20
   _customerSatisfactionScore:
     useConstant: 0
     constantValue: 0
@@ -199,7 +204,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7408410852981568521, guid: 2d0c056f1dde3ee41aa1f64b45154d5a, type: 3}
+  m_Sprite: {fileID: -4894572370545012374, guid: 09e38a166c238e64ea22c5263b6867fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

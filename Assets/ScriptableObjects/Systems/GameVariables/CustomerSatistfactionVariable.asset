@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: CustomerSatistfactionVariable
   m_EditorClassIdentifier: 
   resetType: 2
-  Value: 0
+  clampMaxValue: 1
   maxValue: 100
+  clampMinValue: 1
   minValue: 0
-  testValue:
-    value: 0
+  reactiveValue:
+    value: 100

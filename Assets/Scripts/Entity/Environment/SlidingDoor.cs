@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using R3;
 using R3.Triggers;
@@ -16,20 +17,35 @@ public class SlidingDoor : MonoBehaviour {
     [Header("refs")]
     [SerializeField] private Transform _door1;
     [SerializeField] private Transform _door2;
-
+    [SerializeField] private SoundClipReference _walkInSound;
+    
     [Header("params")]
     [SerializeField] private string _triggerCollisionLayerName;
     [SerializeField] private float _openDuration = 3;
     [SerializeField] private float _movementDuration = 1;
+    
 
     private Sequence _tweener;
     [SerializeField] private SerializableReactiveProperty<float> _openTimeLeft;
+    private List<Transform> _activeNPCs = new();
 
     private void Awake() {
         this.OnTriggerEnter2DAsObservable().Subscribe(collider => {
             if (collider.gameObject.layer == LayerMask.NameToLayer(_triggerCollisionLayerName)){
+                if (!_activeNPCs.Contains(collider.transform)){
+                    _activeNPCs.Add(collider.transform);
+                    _walkInSound?.Play();
+                    // SoundManager.Instance.PlaySound(_walkInSound, 0.2f);
+                }
+
                 OpenDoors();
             }
+        }).AddTo(this);
+
+        this.OnTriggerExit2DAsObservable().Subscribe(collider => {
+            if (_activeNPCs.Contains(collider.transform)){
+                    _activeNPCs.Remove(collider.transform);
+                }
         }).AddTo(this);
 
         _openTimeLeft = new SerializableReactiveProperty<float>(0).AddTo(this);
@@ -49,6 +65,8 @@ public class SlidingDoor : MonoBehaviour {
     }
 
     private void OpenDoors(){
+
+
         if (_state == (STATE.OPEN | STATE.OPENING)) {
             _openTimeLeft.Value = _openDuration;
             return;

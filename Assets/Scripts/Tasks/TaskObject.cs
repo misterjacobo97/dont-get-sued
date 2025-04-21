@@ -22,7 +22,7 @@ public class TaskObject : MonoBehaviour {
 
     [SerializeField] protected int _taskScore;
 
-    protected void Start() {
+    protected virtual void Start() {
         _taskDatabase.AddToTaskItemList(this);
 
         ChangedParentHolder.AddListener(newParent => {

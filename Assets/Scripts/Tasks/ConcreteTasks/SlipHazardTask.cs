@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using R3;
 using UnityEngine;
 
 public class SlipHazardTask : TaskObject {
@@ -6,9 +8,13 @@ public class SlipHazardTask : TaskObject {
     [Header("Hazard refs")]
     [SerializeField] private HoldableItem_SO _hazardNullifyer;
     private List<Collider2D> _nullifyers = new();
+    [SerializeField] private SoundClipReference _spawnSound;
+
 
     [Header("hazard params")]
     [SerializeField] private string _NPCLayerName;
+    [SerializeField] private float _timeToDisappear;
+
 
     protected bool _hazardSafeState = false;
 
@@ -18,6 +24,15 @@ public class SlipHazardTask : TaskObject {
     [SerializeField] private FloatReference _customerSatisfactionScore;
     [SerializeField] private FloatReference _managementSatisfactionScore;
 
+    protected override void Start() {
+        base.Start();
+        _spawnSound?.Play();
+
+        Observable.Timer(TimeSpan.FromSeconds(_timeToDisappear)).Subscribe(x => {
+            CompleteTask();
+            Destroy(gameObject);
+        }).AddTo(this);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.layer == LayerMask.NameToLayer(_NPCLayerName)) {

@@ -14,6 +14,7 @@ public class PlayerInteract : MonoBehaviour {
     [Header("refs")]
     [SerializeField] private InteractContextSO _playerInteractContext;
     [SerializeField] private Image _throwIndicator;
+    [SerializeField] private SoundClipReference _throwingSound;
 
 
     [Header("params")]
@@ -150,6 +151,7 @@ public class PlayerInteract : MonoBehaviour {
 
                 else {
                     GetItemHolder().GetHeldItem()?.ThrowItem(_userInputChannel.lastMoveDir.GetReactiveValue.Value, Mathf.Clamp(_currentThrowForce, 0, _throwForceMax));
+                    _throwingSound?.Play();
 
                     _throwIndicator.fillAmount = 0;
                     _throwIndicator.enabled = false;

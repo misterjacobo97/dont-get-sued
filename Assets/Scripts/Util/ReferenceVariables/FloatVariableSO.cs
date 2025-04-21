@@ -11,10 +11,26 @@ public class FloatVariable : ScriptableObject {
     }
     public RESET_TYPE resetType = RESET_TYPE.NONE;
 
+    public bool clampMaxValue = false;
     public float maxValue;
+    public bool clampMinValue = false;
     public float minValue;
 
     public SerializableReactiveProperty<float> reactiveValue;
+    public float Value {
+        get {
+            return reactiveValue.Value;
+        }
+        set {
+            if (clampMaxValue && (reactiveValue.Value + value) > maxValue) {
+                reactiveValue.Value = value;
+            }
+            else if ( clampMinValue && reactiveValue.Value + value < minValue){
+                reactiveValue.Value = minValue;
+            }
+            else reactiveValue.Value = value;
+        }
+    } 
 
     private void OnEnable () {
         reactiveValue = new SerializableReactiveProperty<float>();

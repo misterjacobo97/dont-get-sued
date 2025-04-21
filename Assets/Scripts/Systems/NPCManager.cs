@@ -32,7 +32,6 @@ public class NPCManager : PersistentSignleton<NPCManager> {
         });
     }
 
-
     private async void SpawnNewNPC() {
         await Awaitable.WaitForSecondsAsync(_npcSpawnInterval);
 

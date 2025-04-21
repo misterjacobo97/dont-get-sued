@@ -22,7 +22,7 @@ public class PlayerSlapArea : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.layer != _npcLayer) return;
+        if (collision.gameObject.layer != LayerMask.NameToLayer("NPC")) return;
         // find direction of npc
         Vector2 slapDir = (collision.transform.position - transform.position).normalized;
 

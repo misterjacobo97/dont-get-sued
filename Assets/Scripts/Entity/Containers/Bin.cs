@@ -9,7 +9,7 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Transform _itemTarget;
     [SerializeField] private ScriptableObjectListReference _acceptedItems;
-    [SerializeField] private AudioClip _trashSound;
+    [SerializeField] private SoundClipReference _trashSound;
     private ItemDetectionArea _itemDetect;
     private I_Interactable interactableRef;
 
@@ -89,14 +89,14 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
         // complete if the item is a task
         if (_heldItem.transform.TryGetComponent(out TaskObject task)) {
             if (task is SpoiledFoodTask && (task as SpoiledFoodTask).GetTaskState == TaskObject.TASK_STATE.ACTIVE){
-                _scoreToChange.variable.reactiveValue.Value += 10;
+                _scoreToChange.AddToReactiveValue(10);
             }
             else {
-                _scoreToChange.variable.reactiveValue.Value -= 10;
+                _scoreToChange.AddToReactiveValue(-10);
             }
             task.CompleteTask();
         }
-        else _scoreToChange.variable.reactiveValue.Value -= 10;
+        else _scoreToChange.AddToReactiveValue(-10);
 
 
         // then remove and destroy the item
@@ -105,7 +105,7 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
         RemoveItem();
 
         HandleAnimation();
-        SoundManager.Instance.PlaySound(_trashSound);
+        _trashSound.Play();
 
         Destroy(item.gameObject);
     }

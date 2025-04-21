@@ -12,26 +12,23 @@ public class FloatReference {
     public void Reset() {
         switch (variable.resetType) {
             case FloatVariable.RESET_TYPE.MIN:
-                variable.reactiveValue.Value = variable.minValue;
+                variable.Value = variable.minValue;
                 return;
             case FloatVariable.RESET_TYPE.MAX:
-                variable.reactiveValue.Value = variable.maxValue;
+                variable.Value = variable.maxValue;
                 return;
+            case FloatVariable.RESET_TYPE.MID:
+                    variable.Value = variable.maxValue / 2;
+                    return;
         }
     }
 
     public ReactiveProperty<float> GetReactiveValue => variable.reactiveValue;
     public void AddToReactiveValue(float newVal){
-        if (newVal > 0 && variable.maxValue != -1 && variable.reactiveValue.Value + newVal > variable.maxValue && variable.reactiveValue.Value != variable.maxValue ) {
-            variable.reactiveValue.Value = variable.maxValue;
-        }
-        else if (newVal < 0 && variable.reactiveValue.Value + newVal < variable.minValue && variable.reactiveValue.Value != variable.minValue) {
-            variable.reactiveValue.Value = variable.minValue;
-        }
-        else variable.reactiveValue.Value += newVal;
+        variable.Value += newVal;
     }
     public void SetReactiveValue(float newVal){
-        variable.reactiveValue.Value = newVal;
+        variable.Value = newVal;
     }
 }
 

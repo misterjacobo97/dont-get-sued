@@ -507,6 +507,10 @@ MonoBehaviour:
     m_Bits: 256
   _sideSprite: {fileID: 3056186126888679272, guid: f3618529d1d033d429d5ec43e7200673, type: 3}
   _backSprite: {fileID: -7902658530649608355, guid: 344957bef4b1bf04b8067958f06ebc44, type: 3}
+  _walkingSound:
+    _soundClip: {fileID: 8300000, guid: 4620a2da59450bb49bb785bf5bc377d6, type: 3}
+    _volume: 0.25
+    _startClipAt: 0.25
   _movementAccel: 700
   _maxMovementSpeed: 6
   _linearDamping: 20
@@ -836,6 +840,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerInteractContext: {fileID: 11400000, guid: 979454e8e673b2449898049a9de1494a, type: 2}
   _throwIndicator: {fileID: 3185423054802987317}
+  _throwingSound:
+    _soundClip: {fileID: 8300000, guid: 6d371a9ff7cb8074cb5fd37297eb7a2e, type: 3}
+    _volume: 1
+    _startClipAt: 0
   _interactMask:
     serializedVersion: 2
     m_Bits: 64

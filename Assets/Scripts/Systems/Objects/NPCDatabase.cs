@@ -79,7 +79,7 @@ public class NPCDatabase : ScriptableObject {
 
 
     public Transform GetRandomExit() {
-        return _listOfLevelExits.GetRandomFromList();
+        return _listOfLevelExits.GetList()[UnityEngine.Random.Range(0, _listOfLevelExits.GetList().Count - 1)];
     }
     #endregion
 

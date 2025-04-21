@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Sprite _backSprite;
 
     [Header("Params")]
+    [SerializeField] private SoundClipReference _walkingSound;
+
     // movement
     [SerializeField] private float _movementAccel = 100f;
     [SerializeField] private float _maxMovementSpeed = 20f;
@@ -99,7 +101,7 @@ public class PlayerController : MonoBehaviour {
 
     private void ControlSprite(Vector2 dir) {
         if (dir.y > 0) _sprite.sprite = _backSprite;
-        else if (dir.y < 0) _sprite.sprite = _sideSprite;
+        else if (dir.y <= 0) _sprite.sprite = _sideSprite;
 
         if (dir.x < 0 && _sprite.flipX == false) {
             _sprite.flipX = true;
@@ -112,6 +114,8 @@ public class PlayerController : MonoBehaviour {
 
     private async void ControlAnimations() {
         if (_walkingAnimActive == true) return;
+
+        _walkingSound?.Play();
 
         _walkingAnimActive = true;
 
