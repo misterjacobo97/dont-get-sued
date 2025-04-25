@@ -31,7 +31,7 @@ public class SlidingDoor : MonoBehaviour {
 
     private void Awake() {
         this.OnTriggerEnter2DAsObservable().Subscribe(collider => {
-            if (collider.gameObject.layer == LayerMask.NameToLayer(_triggerCollisionLayerName)){
+            if (collider.gameObject.layer == LayerMask.NameToLayer(_triggerCollisionLayerName) || collider.gameObject.layer == LayerMask.NameToLayer("Player") ){
                 if (!_activeNPCs.Contains(collider.transform)){
                     _activeNPCs.Add(collider.transform);
                     _walkInSound?.Play();
