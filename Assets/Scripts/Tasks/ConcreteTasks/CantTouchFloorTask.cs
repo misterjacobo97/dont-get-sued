@@ -9,6 +9,8 @@ public class CantTouchFloorTask : MonoBehaviour {
     [SerializeField] private int _score = -1;
     [SerializeField] private GameStatsSO _gamestate;
 
+    Awaitable awaiter;
+
     private void Awake() {
         Observable.EveryValueChanged(this, x => this._isOnFloor).Subscribe(state =>  {
             if (state != false){
@@ -27,12 +29,16 @@ public class CantTouchFloorTask : MonoBehaviour {
         _gamestate.managementSatisfaction.AddToReactiveValue(_score);
         GameObject.Instantiate(_scoreObject, null).Init(_score, transform.position);
 
-        await Awaitable.WaitForSecondsAsync(_intervalDuration);
-        
-        if (transform != null) React();
+        awaiter = Awaitable.WaitForSecondsAsync(_intervalDuration);
 
+        awaiter.GetAwaiter().OnCompleted(() => {
+            React();
+        });
     }
 
+    private void OnDestroy() {
+        if (awaiter != null) awaiter.Cancel();
+    }
 
 
 }
