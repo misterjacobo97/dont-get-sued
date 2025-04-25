@@ -255,6 +255,7 @@ MonoBehaviour:
   exitCollider: {fileID: 4814455962765761790}
   _slapDetect: {fileID: 5851773576414744009}
   _hazardsEncountered: []
+  itemExistsTarget: {fileID: 0}
   npcDatabase: {fileID: 11400000, guid: d2f9c1822c323de4792bc41b65742287, type: 2}
   _listOfActiveNPCs:
     list: {fileID: 11400000, guid: c297754e9d8b16c48969b4cf26c36d2c, type: 2}
@@ -283,7 +284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backSprite: {fileID: -3769637235254915402, guid: 5468873ddc2cae644950dfcd7e03e4f6, type: 3}
   _sideSprite: {fileID: -6657706449667552507, guid: 82d9a412357698f45903d985e76de621, type: 3}
-  _slappedSprite: {fileID: 846968171481624359, guid: e31b7ad6b77a4f54594d946f304cefcf, type: 3}
+  _slappedSprite: {fileID: -8889155887130893532, guid: e31b7ad6b77a4f54594d946f304cefcf, type: 3}
 --- !u!50 &2467457343696304539
 Rigidbody2D:
   serializedVersion: 5
@@ -408,6 +409,7 @@ MonoBehaviour:
   stateKey: {fileID: 11400000, guid: a72d83fccfda7b042b480e7a0acc1471, type: 2}
   actions:
   - {fileID: 11400000, guid: a56e9ff4493c0dc41ba9f5d139bebe60, type: 2}
+  - {fileID: 11400000, guid: dfbde4c82ca07374aa7324a53eb38c08, type: 2}
   transitions:
   - comment: into grabbing item state
     nextState: {fileID: 11400000, guid: 989121030217e4d45abfee772b4fda6c, type: 2}
@@ -415,6 +417,9 @@ MonoBehaviour:
   - comment: into exit state
     nextState: {fileID: 11400000, guid: 73caa8a2470315f478ac8cc2bac384e7, type: 2}
     decision: {fileID: 11400000, guid: f4df119106d8eb7498ae55b7779d7fef, type: 2}
+  - comment: into idle state
+    nextState: {fileID: 11400000, guid: 604de4080caeb7641bcb19c0c8b79b73, type: 2}
+    decision: {fileID: 11400000, guid: 5ea8dd0c1c9a12148aaa609a47706854, type: 2}
   sceneGizmosColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &3338355116118622889
 GameObject:

@@ -6,7 +6,7 @@ public class PlayerSlapArea : MonoBehaviour {
     [Header("refs")]
     [SerializeField] private LayerMask _npcLayer;
     [SerializeField] private Collider2D _slapCollider;
-    [SerializeField] private AudioClip _slapSound;
+    [SerializeField] private SoundClipReference _slapSound;
     [SerializeField] private Animator _animator;
 
 
@@ -36,11 +36,13 @@ public class PlayerSlapArea : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.layer != LayerMask.NameToLayer("NPC")) return;
+        
+        _slapSound.Play();
         // find direction of npc
         Vector2 slapDir = (collision.transform.position - transform.position).normalized;
 
         collision.transform.parent.GetComponentInChildren<NPCStateController>().GetSlapped(slapDir, _npcStunTime);
-        SoundManager.Instance.PlaySound(_slapSound);
+        
     }
 
     public void ChangeAreaRotation(Vector2 moveDir) {

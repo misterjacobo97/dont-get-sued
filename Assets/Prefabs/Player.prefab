@@ -695,7 +695,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _slapCollider: {fileID: 2047756576946810920}
-  _slapSound: {fileID: 8300000, guid: 9f70b838d603c26458ea754e7bc6660a, type: 3}
+  _slapSound:
+    _soundClip: {fileID: 8300000, guid: 9f70b838d603c26458ea754e7bc6660a, type: 3}
+    _volume: 1
+    _startClipAt: 0.25
   _animator: {fileID: 5708019010072205261}
   _slapFrames: 3
   _slapReach: 1.2

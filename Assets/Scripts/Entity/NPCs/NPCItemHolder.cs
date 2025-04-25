@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using R3;
+using R3.Triggers;
 using UnityEngine;
 
 public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
@@ -12,6 +15,8 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
 
     private List<HoldableItem> _heldItems = new();
     public List<HoldableItem> HeldItems => _heldItems;
+    private Action<HoldableItem> RemoveFromHeldItemList => (item) => _heldItems.Remove(item); 
+
 
     [Header("context")]
     [SerializeField] private FloatReference _customerSatisfaction;
@@ -50,10 +55,20 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
     }
 
     public void SetItem(HoldableItem newItem) {
-        Debug.Log("holding new item");
-
         _heldItems.Add(newItem);
         SoundManager.Instance.PlaySound(_pickUpSound);
+
+        newItem.transform.OnDestroyAsObservable().Subscribe(item => {
+            if (_heldItems.Contains(newItem)) _heldItems.Remove(newItem);
+        }).AddTo(newItem);
+
+        // newItem.ChangedParentHolder.AddListener(newParent => {
+        //     if (newParent == null || newParent != this){
+        //         if (_heldItems.Contains(newItem)) {
+        //             RemoveFromHeldItemList(newItem);
+        //         }
+        //     }
+        // });
     }
 
     public bool HasItem() {
@@ -82,6 +97,9 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
     }
 
     public void RemoveItem() { }
+    public void RemoveItem(HoldableItem item) { 
+        _heldItems.Remove(item);
+    }
     public void RemoveItem(int idx) {
         _heldItems.RemoveAt(idx);
     }
@@ -92,7 +110,7 @@ public class NPCItemHolder : MonoBehaviour, I_ItemHolder {
 
     public void DropAllItems() {
         for (int i = _heldItems.Count - 1; i >= 0; i--) {
-            Vector2 dir = new Vector2(Random.Range(-1,1), Random.Range(-1, 1));
+            Vector2 dir = new Vector2(UnityEngine.Random.Range(-1,1), UnityEngine.Random.Range(-1, 1));
 
             _heldItems[i].ThrowItem(dir, 900); 
             RemoveItem(i);

@@ -60,15 +60,5 @@ public class HazardSpawningTask : MonoBehaviour {
 
         Destroy(gameObject);
     }
-    // public new void CompleteTask() {
-
-
-    //     base.CompleteTask();
-    // }
-
-    // public new void DeactivateTask() {
-    //     _timerIcon.enabled = false;
-    //     base.DeactivateTask();
-    // }
 
 }

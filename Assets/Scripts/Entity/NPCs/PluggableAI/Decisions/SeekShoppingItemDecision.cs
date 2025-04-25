@@ -11,8 +11,16 @@ public class SeekShoppingItemDecision : PluggableDecision {
     }
 
     private bool ShouldSeekItem(NPCStateController controller) {
-        if (controller.nextDestinationTarget == null && controller.shoppingList.Any(i => i.collected == false)) {
+        if (controller.nextDestinationTarget != null && controller.npcDatabase.IsNPCAssignedToShelf(controller)){
+            Transform target = controller.npcDatabase.TryGetNPCShelfTarget(controller);
 
+            if (target != null && target.GetComponent<BaseShelf>().GetHeldItem() == false) {
+                return true;
+            }
+        }
+
+        if (controller.nextDestinationTarget == null && controller.shoppingList.Any(i => i.collected == false)) {
+            
             return true;
         }
 

@@ -13,12 +13,14 @@ public class GrabShoppingItemAction : PluggableAction {
     private  void GrabItem(NPCStateController controller) {
         if (controller.nextDestinationTarget == null || !controller.npcDatabase.TryGetNPCShelfTarget(controller).GetComponent<BaseShelf>().HasItem()) return;
 
-        Debug.Log("grab item ");
         HoldableItem item = controller.npcDatabase.TryGetNPCShelfTarget(controller).GetComponent<BaseShelf>().GetHeldItem();
 
         item.ChangeParent(controller.itemHolder);
 
-        controller.shoppingList.First(i => i.item == item.holdableItem_SO && i.collected == false).collected = true;
+        ShoppingItem shopItem = controller.shoppingList.First(i => i.item == item.holdableItem_SO && i.collected == false);
+
+        shopItem.collected = true;
+        shopItem.sceneItem = item;
 
         controller.npcDatabase.UnassignNPCToShelf(controller);
 

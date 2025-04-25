@@ -256,6 +256,7 @@ MonoBehaviour:
   exitCollider: {fileID: 4814455962765761790}
   _slapDetect: {fileID: 732585867345444463}
   _hazardsEncountered: []
+  itemExistsTarget: {fileID: 0}
   npcDatabase: {fileID: 11400000, guid: d2f9c1822c323de4792bc41b65742287, type: 2}
   _listOfActiveNPCs:
     list: {fileID: 11400000, guid: c297754e9d8b16c48969b4cf26c36d2c, type: 2}
@@ -432,6 +433,9 @@ MonoBehaviour:
   - comment: into exit state
     nextState: {fileID: 11400000, guid: 73caa8a2470315f478ac8cc2bac384e7, type: 2}
     decision: {fileID: 11400000, guid: f4df119106d8eb7498ae55b7779d7fef, type: 2}
+  - comment: into idle state
+    nextState: {fileID: 11400000, guid: 604de4080caeb7641bcb19c0c8b79b73, type: 2}
+    decision: {fileID: 11400000, guid: 5ea8dd0c1c9a12148aaa609a47706854, type: 2}
   sceneGizmosColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &3338355116118622889
 GameObject:

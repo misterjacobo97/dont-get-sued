@@ -15,6 +15,7 @@ public class NPCStateController : PluggableAI.StateController {
     public Collider2D exitCollider;
     [SerializeField] private NPCSlapDetectionArea _slapDetect;
     [SerializeField] private List<Transform> _hazardsEncountered = new();
+    public Transform itemExistsTarget;
 
 
     [Header("context")]
@@ -80,6 +81,7 @@ public class NPCStateController : PluggableAI.StateController {
 
         foreach (ShoppingItem i in shoppingList) {
             i.collected = false;
+            i.sceneItem = null;
         }
 
         Awaitable.WaitForSecondsAsync(stunTime).GetAwaiter().OnCompleted(() => {
@@ -97,12 +99,13 @@ public class NPCStateController : PluggableAI.StateController {
 
         foreach (ShoppingItem i in shoppingList) {
             i.collected = false;
+            i.sceneItem = null;
         }
 
     }
 
     private void AddSlappedForce(Vector2 dir) {
-        rb.AddForce(dir * 900);
+        rb.AddForce(dir * 750);
     }
 
     public void UnaliveNPC(){

@@ -8,7 +8,7 @@ using UnityEngine.Events;
 /// HoldableItems are responsible for changing their own parent.
 /// </summary>
 public class HoldableItem : MonoBehaviour, I_Interactable {
-    [System.NonSerialized] public UnityEvent<I_ItemHolder> ChangedParentHolder = new();
+    [System.NonSerialized] public UnityEvent<Transform> ChangedParentHolder = new();
 
     [Header("holdable refs")]
     private Rigidbody2D _rb;
@@ -74,14 +74,17 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
         transform.parent = newParent.GetItemTargetTransform();
 
         SetHeldState(true);
-        ChangedParentHolder.Invoke(_parentHolder);
+        ChangedParentHolder.Invoke((_parentHolder as MonoBehaviour).transform);
     }
 
     public void DropItem() {
         transform.parent = null;
 
-        _parentHolder.RemoveItem();
+        if (_parentHolder is PlayerItemHolder) (_parentHolder as PlayerItemHolder).RemoveItem();
+        else (_parentHolder as NPCItemHolder).RemoveItem(this) ;
+        
         _parentHolder = null;
+
         SetHeldState(false);
     }
 
@@ -107,4 +110,6 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
             }
         }
     }
+
+
 }

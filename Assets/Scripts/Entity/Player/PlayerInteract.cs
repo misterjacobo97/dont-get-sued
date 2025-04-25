@@ -39,18 +39,12 @@ public class PlayerInteract : MonoBehaviour {
     [SerializeField] private UserInputChannelSO _userInputChannel;
     [SerializeField] private GameStatsSO _gameStatsDB;
 
-
     private Tween _indicatorTween;
 
     private void Start() {
-        // InputManager.Instance.PlayerInteractPressedEvent.AddListener(OnInteractInput);
-
-        // InputManager.Instance.PlayerInteractHeldReleasedEvent.AddListener(OnInteractHeldReleasedInput);
-
         HandleInteractInput();
 
         _throwIndicator.enabled = false;
-
     }
 
     void Update() {
@@ -61,7 +55,6 @@ public class PlayerInteract : MonoBehaviour {
         }
 
         HandleItemDrop();
-
 
         Vector2 _movement = _userInputChannel.moveInput.GetReactiveValue.Value;
 
@@ -125,17 +118,9 @@ public class PlayerInteract : MonoBehaviour {
                 // and if there is interactable
                 if (_playerInteractContext.selectedInteractableObject.Value != null) {
 
-                    // // if is a holdable item
-                    // if (!_canDropItem && _playerInteractContext.selectedInteractableObject.Value.TryGetComponent(out HoldableItem item)){
-                    //     item.Interact(this);
-                    //     return;
-                    // }
-
                     _playerInteractContext.selectedInteractableObject.Value.GetComponent<I_Interactable>().Interact(this);
                     _canDropItem = false;
                 }
-
-                
             }
 
             // if released
@@ -171,14 +156,11 @@ public class PlayerInteract : MonoBehaviour {
                 }
             }
         }).AddTo(this);
-
     }
 
-    private void OnInteractHeldReleasedInput() {
-        _itemHolderRef.GetComponent<PlayerItemHolder>().ThrowItem(_userInputChannel.lastMoveDir.GetReactiveValue.Value);
-    }
-
-
+    // private void OnInteractHeldReleasedInput() {
+    //     _itemHolderRef.GetComponent<PlayerItemHolder>().ThrowItem(_userInputChannel.lastMoveDir.GetReactiveValue.Value);
+    // }
 
     public bool HasItemHolder() {
         return _itemHolderRef != null;
