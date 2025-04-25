@@ -450,7 +450,7 @@ MonoBehaviour:
   _trashSound:
     _soundClip: {fileID: 8300000, guid: 59d9ba48d0a147b40ab5cde1806c88db, type: 3}
     _volume: 0.49
-    _startClipAt: 0.3
+    _startClipAt: 0.2
   _playerContext: {fileID: 11400000, guid: 979454e8e673b2449898049a9de1494a, type: 2}
   _scoreToChange:
     useConstant: 0

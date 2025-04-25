@@ -100,6 +100,7 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
         }
         
         if (caller is PlayerInteract) {
+            if ((caller as PlayerInteract).GetItemHolder().HasItem()) return;
 
             if (GetHeldState() == false) {
                 ChangeParent((caller as PlayerInteract).GetItemHolder());

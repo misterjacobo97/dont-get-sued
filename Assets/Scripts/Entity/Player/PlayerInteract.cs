@@ -1,5 +1,6 @@
 using DG.Tweening;
 using R3;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -121,11 +122,20 @@ public class PlayerInteract : MonoBehaviour {
         _userInputChannel.InteractInput.GetReactiveValue.AsObservable().Subscribe(state => {
             // if pressed
             if (state == true) {
-                // and if container
+                // and if there is interactable
                 if (_playerInteractContext.selectedInteractableObject.Value != null) {
+
+                    // // if is a holdable item
+                    // if (!_canDropItem && _playerInteractContext.selectedInteractableObject.Value.TryGetComponent(out HoldableItem item)){
+                    //     item.Interact(this);
+                    //     return;
+                    // }
+
                     _playerInteractContext.selectedInteractableObject.Value.GetComponent<I_Interactable>().Interact(this);
                     _canDropItem = false;
                 }
+
+                
             }
 
             // if released

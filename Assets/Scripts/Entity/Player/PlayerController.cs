@@ -127,17 +127,6 @@ public class PlayerController : MonoBehaviour {
         _walkingAnimActive = false;
     }
 
-    // private void PerformDashAction() {
-    //     if (Time.time >= _timeOfLastDash + _dashDuration) {
-    //         _currentlyDashing = false;
-    //         return;
-    //     }
-
-    //     Debug.Log("dashed");
-    //     _rb.linearDamping = 0.2f;
-
-    //     _rb.linearVelocity = _lastMovementDir * _dashMaxSpeed * Time.fixedDeltaTime;
-    // }
 
     #endregion
 
