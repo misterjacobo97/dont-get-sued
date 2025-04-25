@@ -7,6 +7,7 @@ public class TaskObject : MonoBehaviour {
     [NonSerialized] public UnityEvent<TASK_STATE> ChangedParentHolder = new();
 
     [SerializeField] private TaskDatabaseSO _taskDatabase;
+    [SerializeField] private ScoreObject _scoreObject;
 
     public enum TASK_STATE {
         INACTIVE,

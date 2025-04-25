@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using DG.Tweening;
 using R3;
 using Unity.Mathematics;
@@ -12,6 +11,7 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
     [SerializeField] private SoundClipReference _trashSound;
     private ItemDetectionArea _itemDetect;
     private I_Interactable interactableRef;
+    [SerializeField] private ScoreObject _scoreObject;
 
 
 
@@ -86,18 +86,25 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
     public void SetItem(HoldableItem newItem) {
         _heldItem = newItem;
 
+        ScoreObject score = GameObject.Instantiate(_scoreObject, null);
+
         // complete if the item is a task
         if (_heldItem.transform.TryGetComponent(out TaskObject task)) {
             if (task is SpoiledFoodTask && (task as SpoiledFoodTask).GetTaskState == TaskObject.TASK_STATE.ACTIVE){
+                score.Init(10, transform.position);
                 _scoreToChange.AddToReactiveValue(10);
             }
             else {
                 _scoreToChange.AddToReactiveValue(-10);
+                score.Init(-10, transform.position);
+
             }
             task.CompleteTask();
         }
-        else _scoreToChange.AddToReactiveValue(-10);
-
+        else {
+            score.Init(-10, transform.position);
+            _scoreToChange.AddToReactiveValue(-10);
+        }
 
         // then remove and destroy the item
         HoldableItem item = _heldItem;

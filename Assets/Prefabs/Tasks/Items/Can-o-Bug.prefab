@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 7802484458093726679}
   - component: {fileID: -2822086512947406633}
   - component: {fileID: 5634704403781833531}
+  - component: {fileID: 9194838098897953938}
   m_Layer: 6
   m_Name: Can-o-Bug
   m_TagString: Untagged
@@ -143,6 +144,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &9194838098897953938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3095142227967135969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f48ca7576c218b844bd97aa5ef8d7db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreObject: {fileID: 3251071904538172563, guid: aa21b07c9b53d704bbf490513cc2ea2c, type: 3}
+  _intervalDuration: 1.5
+  _score: -1
+  _gamestate: {fileID: 11400000, guid: 88a5f3f35fd37544cbab58d9f04cde20, type: 2}
 --- !u!1 &4574491639459907883
 GameObject:
   m_ObjectHideFlags: 0

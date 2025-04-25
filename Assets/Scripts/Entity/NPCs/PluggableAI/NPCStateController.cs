@@ -15,7 +15,7 @@ public class NPCStateController : PluggableAI.StateController {
     public Collider2D exitCollider;
     [SerializeField] private NPCSlapDetectionArea _slapDetect;
     [SerializeField] private List<Transform> _hazardsEncountered = new();
-    public Transform itemExistsTarget;
+    [SerializeField] private ScoreObject _scoreObject;
 
 
     [Header("context")]
@@ -69,7 +69,8 @@ public class NPCStateController : PluggableAI.StateController {
         if (_hazardsEncountered.Contains(hazard)) return;
 
         if (penalise) {
-            _customerSatisfactionScore.variable.reactiveValue.Value -= 10;
+            GameObject.Instantiate(_scoreObject).Init(-10, transform.position);
+            _customerSatisfactionScore.AddToReactiveValue(-10);
         }
 
         _hazardsEncountered.Add(hazard);

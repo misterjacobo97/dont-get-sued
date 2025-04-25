@@ -334,6 +334,7 @@ GameObject:
   - component: {fileID: 3264991729415957471}
   - component: {fileID: 6272065483486139110}
   - component: {fileID: 5634704403781833531}
+  - component: {fileID: 8627958420873365622}
   m_Layer: 6
   m_Name: Fish
   m_TagString: Untagged
@@ -386,6 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _taskDatabase: {fileID: 11400000, guid: 85c50a5fe17bff741820f5589549a521, type: 2}
+  _scoreObject: {fileID: 4500213727038092330, guid: aa21b07c9b53d704bbf490513cc2ea2c, type: 3}
   _taskScore: 100
   _timerRadial: {fileID: 2879661906899370997}
   _timerIcon: {fileID: 6529634083023389278}
@@ -438,6 +440,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8627958420873365622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3095142227967135969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f48ca7576c218b844bd97aa5ef8d7db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreObject: {fileID: 3251071904538172563, guid: aa21b07c9b53d704bbf490513cc2ea2c, type: 3}
+  _intervalDuration: 1.5
+  _score: -1
+  _gamestate: {fileID: 11400000, guid: 88a5f3f35fd37544cbab58d9f04cde20, type: 2}
 --- !u!1 &3607501205126650948
 GameObject:
   m_ObjectHideFlags: 0

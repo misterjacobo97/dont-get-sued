@@ -17,6 +17,7 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
     private SpriteRenderer _sprite;
     private I_Interactable interactableRef;
 
+
     private bool _heldState = false;
     protected I_ItemHolder _parentHolder = null;
 
