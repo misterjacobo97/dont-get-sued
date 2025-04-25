@@ -1,3 +1,5 @@
+using R3;
+using Unity.Collections;
 using UnityEngine;
 
 public class PlayerSlapArea : MonoBehaviour {
@@ -5,6 +7,7 @@ public class PlayerSlapArea : MonoBehaviour {
     [SerializeField] private LayerMask _npcLayer;
     [SerializeField] private Collider2D _slapCollider;
     [SerializeField] private AudioClip _slapSound;
+    [SerializeField] private Animator _animator;
 
 
     [Header("params")]
@@ -12,6 +15,16 @@ public class PlayerSlapArea : MonoBehaviour {
     private int _currentSlapFrames = 0;
     [SerializeField] private float _slapReach = 0.5f;
     [SerializeField] private float _npcStunTime = 2f;
+    private bool _isSlapping = false;
+
+    private void Awake() {
+
+        Observable.EveryValueChanged(this, x => x._isSlapping).Subscribe(state => {
+            if (state == true) {
+                _animator.SetTrigger("slapTrigger");
+            }
+        }).AddTo(this);
+    }
 
     private void Start() {
         InputManager.Instance.MovementInputEvent.AddListener(ChangeAreaRotation);
@@ -59,12 +72,14 @@ public class PlayerSlapArea : MonoBehaviour {
         }
         
         if (_currentSlapFrames >= _slapFrames && _slapCollider.enabled == true) {
+            _isSlapping = false;
             _slapCollider.enabled = false;
             _currentSlapFrames = 0;
             return;
         }
 
         if (InputManager.Instance.PlayerSlapWasPressed && _currentSlapFrames == 0 & _slapCollider.enabled == false) {
+            _isSlapping = true;
             _slapCollider.enabled = true;
             
         }

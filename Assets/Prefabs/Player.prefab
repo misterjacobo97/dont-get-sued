@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 4040794579703079455}
   - component: {fileID: 7496421096236955562}
   - component: {fileID: 8543157856349383611}
+  - component: {fileID: 5708019010072205261}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -222,6 +223,28 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!95 &5708019010072205261
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2212799905638464651}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8df9fa95320e9ef4aa0b737426ef3450, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2543662110208133746
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,8 +528,7 @@ MonoBehaviour:
   _hitboxLayer:
     serializedVersion: 2
     m_Bits: 256
-  _sideSprite: {fileID: 3056186126888679272, guid: f3618529d1d033d429d5ec43e7200673, type: 3}
-  _backSprite: {fileID: -7902658530649608355, guid: 344957bef4b1bf04b8067958f06ebc44, type: 3}
+  _animator: {fileID: 5708019010072205261}
   _walkingSound:
     _soundClip: {fileID: 8300000, guid: 4620a2da59450bb49bb785bf5bc377d6, type: 3}
     _volume: 0.25
@@ -674,6 +696,7 @@ MonoBehaviour:
     m_Bits: 256
   _slapCollider: {fileID: 2047756576946810920}
   _slapSound: {fileID: 8300000, guid: 9f70b838d603c26458ea754e7bc6660a, type: 3}
+  _animator: {fileID: 5708019010072205261}
   _slapFrames: 3
   _slapReach: 1.2
   _npcStunTime: 2

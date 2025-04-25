@@ -283,7 +283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backSprite: {fileID: -3769637235254915402, guid: 5468873ddc2cae644950dfcd7e03e4f6, type: 3}
   _sideSprite: {fileID: -6657706449667552507, guid: 82d9a412357698f45903d985e76de621, type: 3}
-  _slappedSprite: {fileID: 0}
+  _slappedSprite: {fileID: 846968171481624359, guid: e31b7ad6b77a4f54594d946f304cefcf, type: 3}
 --- !u!50 &2467457343696304539
 Rigidbody2D:
   serializedVersion: 5

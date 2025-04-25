@@ -9,10 +9,12 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Collider2D _slapCollider;
     [SerializeField] private LayerMask _hitboxLayer;
+    [SerializeField] private Animator _animator;
 
-    [Header("Sprites")]
-    [SerializeField] private Sprite _sideSprite;
-    [SerializeField] private Sprite _backSprite;
+
+    // [Header("Sprites")]
+    // [SerializeField] private Sprite _sideSprite;
+    // [SerializeField] private Sprite _backSprite;
 
     [Header("Params")]
     [SerializeField] private SoundClipReference _walkingSound;
@@ -100,8 +102,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void ControlSprite(Vector2 dir) {
-        if (dir.y > 0) _sprite.sprite = _backSprite;
-        else if (dir.y <= 0) _sprite.sprite = _sideSprite;
+        if (dir.y > 0) _animator.SetBool("facingFront", true);
+        else if (dir.y <= 0) _animator.SetBool("facingFront", false);
 
         if (dir.x < 0 && _sprite.flipX == false) {
             _sprite.flipX = true;
