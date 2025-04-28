@@ -6,9 +6,14 @@ using UnityEngine.InputSystem;
 
 public class InputManager : PersistentSignleton<InputManager> {
 
-    [Header("UI game events")]
+    [Header("UI")]
     [SerializeField] private GameEventSO _PausedButtonPressedEvent;
+    [SerializeField] private Vector2Reference _currentMousePos;
+    [SerializeField] private Vector2Reference _lastMouseDir;
+    [SerializeField] private Vector2Reference _currentMouseVelocity;
 
+
+    [Header("Player")]
     [SerializeField] private UserInputChannelSO _userInputChannel;
 
     [NonSerialized] public UnityEvent PlayerInteractPressedEvent = new();
@@ -45,19 +50,9 @@ public class InputManager : PersistentSignleton<InputManager> {
     private InputAction _dashAction;
     private InputAction _slapAction;
 
-
     [Header("debug")]
     [SerializeField] private Logger _logger;
     [SerializeField] private bool _showDebugLogs = true;
-
-
-
-    protected override void Awake(){
-        base.Awake();
-
-        // _playerFreezeInput = new SerializableReactiveProperty<bool>(false).AddTo(this);
-
-    } 
 
     private void Start() {
         // separating into its smaller chunks first
@@ -69,21 +64,24 @@ public class InputManager : PersistentSignleton<InputManager> {
         _dashAction = _playerActions.Player.Dash;
         _slapAction = _playerActions.Player.Slap;
 
-
         HandleUIEvent();
+        HandleMouseInput();
 
+        // player freeze input
         Observable.EveryValueChanged(this, x => {
             return (int)x._playerActions.Player.Freeze.ReadValue<float>() > 0 ? true : false;
         }).Subscribe(x => {
            _userInputChannel.freezeInput.GetReactiveValue.Value = x;
         }).AddTo(this);
 
+        // player interact input
         Observable.EveryValueChanged(this, x => {
             return (int)x._playerActions.Player.Interact.ReadValue<float>() > 0 ? true : false;
         }).Subscribe(x => {
            _userInputChannel.InteractInput.GetReactiveValue.Value = x;
         }).AddTo(this);
 
+        // player move input
         Observable.EveryValueChanged(this, x => {
             return x._playerActions.Player.Move.ReadValue<Vector2>();
         }).Subscribe(val => {
@@ -94,6 +92,8 @@ public class InputManager : PersistentSignleton<InputManager> {
 
             _userInputChannel.moveInput.SetReactiveValue(val.normalized);
         }).AddTo(this);
+
+
     }
 
     private void Update() {
@@ -113,11 +113,36 @@ public class InputManager : PersistentSignleton<InputManager> {
     }
 
     private void HandleUIEvent(){
+        // pause input
         Observable.EveryValueChanged(this, x => {
             return (int)x._playerActions.UI.Pause.ReadValue<float>() > 0 ? true : false;
         }).Subscribe(x => {
             if (x == false) return;
             _PausedButtonPressedEvent.RaiseEvent();
+        }).AddTo(this);
+
+    }
+
+    private void HandleMouseInput(){
+        Observable.EveryUpdate().Subscribe(x => {
+            Vector2 newPos = (Vector2)_playerActions.UI.Point.ReadValue<Vector2>();
+
+            // calculate the change velocity prior to changing the pos
+            float distanceTravelled = Vector2.Distance(_currentMousePos.GetReactiveValue.Value, newPos);
+            float speed = distanceTravelled / Time.deltaTime;
+            _currentMouseVelocity.SetReactiveValue(speed * (newPos - _currentMousePos.GetReactiveValue.Value).normalized);
+
+            _currentMousePos.SetReactiveValue(newPos);
+
+            if (_currentMouseVelocity.GetReactiveValue.Value != Vector2.zero) {
+                // calculate the new dir before setting the new current pos
+                Vector2 calculatedNewDir = _currentMouseVelocity.GetReactiveValue.Value.normalized;
+
+                _lastMouseDir.SetReactiveValue(calculatedNewDir);
+            }
+
+            // Debug.Log($"last dir: ${_lastMouseDir.GetReactiveValue.Value} - current velocity ${_currentMouseVelocity.GetReactiveValue.Value} - current pos ${_currentMousePos.GetReactiveValue.Value} ");
+
         }).AddTo(this);
     }
 
@@ -126,8 +151,6 @@ public class InputManager : PersistentSignleton<InputManager> {
     /// </summary>
     /// <returns></returns>
     public Vector2 GetPlayerMovement() {
-
-
         Vector2 input;
 
         // get initial value
@@ -142,6 +165,7 @@ public class InputManager : PersistentSignleton<InputManager> {
         return input;
     }
 
+    
     public Vector2 GetLastPlayerMovment() {
         return _lastMovementInput;
     }
@@ -170,4 +194,13 @@ public class InputManager : PersistentSignleton<InputManager> {
             PlayerInteractHeldReleasedEvent.Invoke();
         }
     }
+
+    public Vector2 GetMousePosition(){
+        return _currentMousePos.GetReactiveValue.Value;
+    }
+
+    public Vector2 GetLastMouseDirection(){
+        return _lastMouseDir.GetReactiveValue.Value;
+    }
+
 }

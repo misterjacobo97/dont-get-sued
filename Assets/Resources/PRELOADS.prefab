@@ -45,6 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _PausedButtonPressedEvent: {fileID: 11400000, guid: 0780eab1dfbc31f41a58a9b6b3a9648e, type: 2}
+  _currentMousePos:
+    variable: {fileID: 11400000, guid: 6bf7a33551fe13044bf66a95d5a0e452, type: 2}
+  _lastMouseDir:
+    variable: {fileID: 11400000, guid: 291c1ec0b10b4c549b88fb65df3ea170, type: 2}
+  _currentMouseVelocity:
+    variable: {fileID: 11400000, guid: 4853fed5c2985e84a85e9b32d6896c05, type: 2}
   _userInputChannel: {fileID: 11400000, guid: f0bad2b87c65dc5468e0e96f8df88fd1, type: 2}
   _logger: {fileID: 5672422042019910710}
   _showDebugLogs: 0

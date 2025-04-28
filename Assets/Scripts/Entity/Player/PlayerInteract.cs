@@ -1,6 +1,5 @@
 using DG.Tweening;
 using R3;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +20,9 @@ public class PlayerInteract : MonoBehaviour {
     [Header("params")]
     [SerializeField] private LayerMask _interactMask;
 
+    [SerializeField] private float _circleCastRadius = 0.2f;
+    [SerializeField] private float _circleCastDistance = 0.5f;
+
     [SerializeField] private float _throwInputThreshold = 0.4f;
     [SerializeField] private float _throwForceMax = 900;
     [SerializeField] private float _throwForceBuildUpPerSec = 500;
@@ -38,16 +40,21 @@ public class PlayerInteract : MonoBehaviour {
     [Header("context")]
     [SerializeField] private UserInputChannelSO _userInputChannel;
     [SerializeField] private GameStatsSO _gameStatsDB;
+    private Camera _mainCamera;
 
     private Tween _indicatorTween;
 
     private void Start() {
+        _mainCamera = Camera.main;
+
         HandleInteractInput();
 
         _throwIndicator.enabled = false;
     }
 
     void Update() {
+        
+
         if (_gameStatsDB.pauseStatus.GetReactiveValue.Value == true) return;
 
         if (GameManager.Instance.GetGameState.CurrentValue != GameManager.GAME_STATE.MAIN_GAME) {
@@ -56,33 +63,47 @@ public class PlayerInteract : MonoBehaviour {
 
         HandleItemDrop();
 
-        Vector2 _movement = _userInputChannel.moveInput.GetReactiveValue.Value;
+        // Vector2 _movement = _userInputChannel.moveInput.GetReactiveValue.Value;
+        Vector2 screenMousePos = InputManager.Instance.GetMousePosition() - (Vector2)_mainCamera.WorldToScreenPoint(transform.position);
+        Vector2 relativeMouseDir = (screenMousePos - (Vector2)transform.position).normalized;
 
-        Vector2 RayPos = transform.TransformPoint(_userInputChannel.lastMoveDir.GetReactiveValue.Value);
+        // Vector2 RayPos = transform.TransformPoint(relativeMouseDir /*_userInputChannel.lastMoveDir.GetReactiveValue.Value*/);
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, _userInputChannel.lastMoveDir.GetReactiveValue.Value, 1f, _interactMask);
-        Debug.DrawLine(transform.position, RayPos, Color.white);
+        RaycastHit2D hit = Physics2D.CircleCast((Vector2)transform.position + relativeMouseDir, _circleCastRadius, relativeMouseDir, _circleCastDistance, _interactMask);
+        
 
-        if (_movement != Vector2.zero && hit.collider == null) {
-            ControlIndicator((Vector2)transform.position + _movement);
+        if (hit.collider == null) {
+            ControlIndicator((Vector2)transform.position + relativeMouseDir);
+        }
+
+        if (_playerInteractContext.selectedInteractableObject.Value != null){
+            ControlIndicator(_playerInteractContext.selectedInteractableObject.Value.position);
         }
 
         if (hit.collider != null && hit.transform.TryGetComponent(out I_Interactable item) && hit.transform != _playerInteractContext.selectedInteractableObject.Value) {
             _playerInteractContext.selectedInteractableObject.Value = hit.transform;
 
-            ControlIndicator(hit.collider.transform.position);
+            // ControlIndicator(hit.collider.transform.position);
         }
         else if (hit.collider == null && _playerInteractContext.selectedInteractableObject != null) {
             _playerInteractContext.selectedInteractableObject.Value = null;
         }
     }
 
-    private void ControlIndicator(Vector2 newPos) {
-        if (_indicatorTween != null && _indicatorTween.active) {
-            _indicatorTween.Kill();
-        }
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.green;
 
-        _indicatorTween = _indicator.DOMove(newPos, 0.1f);
+        Gizmos.DrawWireSphere(_indicator.position, _circleCastRadius);
+    }
+
+    private void ControlIndicator(Vector2 newPos) {
+        _indicator.position = newPos;
+        
+        // if (_indicatorTween != null && _indicatorTween.active) {
+        //     _indicatorTween.Kill();
+        // }
+
+        // _indicatorTween = _indicator.DOMove(newPos, 0.1f);
     }
 
     private void HandleItemDrop(){

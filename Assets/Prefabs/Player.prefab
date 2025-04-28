@@ -873,6 +873,8 @@ MonoBehaviour:
   _interactMask:
     serializedVersion: 2
     m_Bits: 64
+  _circleCastRadius: 0.2
+  _circleCastDistance: 0.5
   _throwInputThreshold: 0.3
   _throwForceMax: 900
   _throwForceBuildUpPerSec: 900

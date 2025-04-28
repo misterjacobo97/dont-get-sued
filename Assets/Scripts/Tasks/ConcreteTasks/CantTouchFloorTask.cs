@@ -23,7 +23,7 @@ public class CantTouchFloorTask : MonoBehaviour {
         _isOnFloor = transform.parent == null;
     }
 
-    private async void React(){
+    private void React(){
         if (!_isOnFloor) return;
 
         _gamestate.managementSatisfaction.AddToReactiveValue(_score);

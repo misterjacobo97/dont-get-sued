@@ -111,7 +111,7 @@ public class Vector2Reference {
     }
 
     public void SetReactiveValue(Vector2 newVal){
-                Vector2 newVec = Vector2.zero;
+        Vector2 newVec = variable.reactiveValue.Value;
 
         // check for max X axis
         newVec.x = variable.maxXMagnitude != -1 

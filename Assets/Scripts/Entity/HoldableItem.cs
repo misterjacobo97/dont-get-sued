@@ -89,8 +89,13 @@ public class HoldableItem : MonoBehaviour, I_Interactable {
         SetHeldState(false);
     }
 
-    public void SetSelected() { }
-    public void SetUnselected() { }
+    public void SetSelected() {
+        _sprite.color = Color.gray;
+    }
+
+    public void SetUnselected() { 
+        _sprite.color = Color.white;
+    }
 
     public void ThrowItem(Vector2 dir, float force) {
         DropItem();

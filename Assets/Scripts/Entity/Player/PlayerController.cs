@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour {
 
             // calculate movement force
             Vector2 newForce = movement * (_movementAccel + directionSwitchMult) * Time.fixedDeltaTime;
-            _logger.Log(newForce, this, _showDebugLogs);
 
             // change so it doesnt feel sluggish when moving
             _rb.linearDamping = 0.2f;
