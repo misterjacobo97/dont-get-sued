@@ -202,4 +202,7 @@ public class InputManager : PersistentSignleton<InputManager> {
         return _lastMouseDir.GetReactiveValue.Value;
     }
 
+    private void OnDisable() {
+        _playerActions.Disable();
+    }
 }

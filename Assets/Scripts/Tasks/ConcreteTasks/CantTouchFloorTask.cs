@@ -1,4 +1,3 @@
-using R3;
 using UnityEngine;
 
 public class CantTouchFloorTask : MonoBehaviour {
@@ -9,36 +8,32 @@ public class CantTouchFloorTask : MonoBehaviour {
     [SerializeField] private int _score = -1;
     [SerializeField] private GameStatsSO _gamestate;
 
-    Awaitable awaiter;
+    private float _addScoreTimer = 0f;
+
 
     private void Awake() {
-        Observable.EveryValueChanged(this, x => this._isOnFloor).Subscribe(state =>  {
-            if (state != false){
-                React();
-            }
-        }).AddTo(this);
+        _addScoreTimer = _intervalDuration;
     }
 
     private void Update() {
         _isOnFloor = transform.parent == null;
+
+        if (_isOnFloor == false) {
+            _addScoreTimer = _intervalDuration;
+            return;
+        }
+
+        _addScoreTimer -= Time.deltaTime;
+
+        if (_addScoreTimer <= 0f){
+            _addScoreTimer = _intervalDuration;
+
+            _gamestate.managementSatisfaction.AddToReactiveValue(_score);
+            GameObject.Instantiate(_scoreObject, null).Init(_score, transform.position);
+        }
+
     }
 
-    private void React(){
-        if (!_isOnFloor) return;
-
-        _gamestate.managementSatisfaction.AddToReactiveValue(_score);
-        GameObject.Instantiate(_scoreObject, null).Init(_score, transform.position);
-
-        awaiter = Awaitable.WaitForSecondsAsync(_intervalDuration);
-
-        awaiter.GetAwaiter().OnCompleted(() => {
-            React();
-        });
-    }
-
-    private void OnDestroy() {
-        if (awaiter != null) awaiter.Cancel();
-    }
 
 
 }
