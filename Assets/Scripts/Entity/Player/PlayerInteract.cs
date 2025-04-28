@@ -29,7 +29,6 @@ public class PlayerInteract : MonoBehaviour {
 
     private bool _canDropItem = false;
     private float _timeSinceInteractInput = 0f;
-    // private bool _isThrowing = false;
     private float _currentThrowForce = 0;
 
     
@@ -53,8 +52,6 @@ public class PlayerInteract : MonoBehaviour {
     }
 
     void Update() {
-        
-
         if (_gameStatsDB.pauseStatus.GetReactiveValue.Value == true) return;
 
         if (GameManager.Instance.GetGameState.CurrentValue != GameManager.GAME_STATE.MAIN_GAME) {
@@ -63,11 +60,8 @@ public class PlayerInteract : MonoBehaviour {
 
         HandleItemDrop();
 
-        // Vector2 _movement = _userInputChannel.moveInput.GetReactiveValue.Value;
         Vector2 screenMousePos = InputManager.Instance.GetMousePosition() - (Vector2)_mainCamera.WorldToScreenPoint(transform.position);
         Vector2 relativeMouseDir = (screenMousePos - (Vector2)transform.position).normalized;
-
-        // Vector2 RayPos = transform.TransformPoint(relativeMouseDir /*_userInputChannel.lastMoveDir.GetReactiveValue.Value*/);
 
         RaycastHit2D hit = Physics2D.CircleCast((Vector2)transform.position + relativeMouseDir, _circleCastRadius, relativeMouseDir, _circleCastDistance, _interactMask);
         
@@ -83,7 +77,6 @@ public class PlayerInteract : MonoBehaviour {
         if (hit.collider != null && hit.transform.TryGetComponent(out I_Interactable item) && hit.transform != _playerInteractContext.selectedInteractableObject.Value) {
             _playerInteractContext.selectedInteractableObject.Value = hit.transform;
 
-            // ControlIndicator(hit.collider.transform.position);
         }
         else if (hit.collider == null && _playerInteractContext.selectedInteractableObject != null) {
             _playerInteractContext.selectedInteractableObject.Value = null;
@@ -98,12 +91,6 @@ public class PlayerInteract : MonoBehaviour {
 
     private void ControlIndicator(Vector2 newPos) {
         _indicator.position = newPos;
-        
-        // if (_indicatorTween != null && _indicatorTween.active) {
-        //     _indicatorTween.Kill();
-        // }
-
-        // _indicatorTween = _indicator.DOMove(newPos, 0.1f);
     }
 
     private void HandleItemDrop(){
@@ -166,7 +153,7 @@ public class PlayerInteract : MonoBehaviour {
                 }
 
                 else {
-                    GetItemHolder().GetHeldItem()?.ThrowItem(_userInputChannel.lastMoveDir.GetReactiveValue.Value, Mathf.Clamp(_currentThrowForce, 0, _throwForceMax));
+                    GetItemHolder().GetHeldItem()?.ThrowItem((_indicator.position - transform.position).normalized, Mathf.Clamp(_currentThrowForce, 0, _throwForceMax));
                     _throwingSound?.Play();
 
                     _throwIndicator.fillAmount = 0;
@@ -178,10 +165,6 @@ public class PlayerInteract : MonoBehaviour {
             }
         }).AddTo(this);
     }
-
-    // private void OnInteractHeldReleasedInput() {
-    //     _itemHolderRef.GetComponent<PlayerItemHolder>().ThrowItem(_userInputChannel.lastMoveDir.GetReactiveValue.Value);
-    // }
 
     public bool HasItemHolder() {
         return _itemHolderRef != null;

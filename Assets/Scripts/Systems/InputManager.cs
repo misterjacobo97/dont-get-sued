@@ -141,7 +141,6 @@ public class InputManager : PersistentSignleton<InputManager> {
                 _lastMouseDir.SetReactiveValue(calculatedNewDir);
             }
 
-            // Debug.Log($"last dir: ${_lastMouseDir.GetReactiveValue.Value} - current velocity ${_currentMouseVelocity.GetReactiveValue.Value} - current pos ${_currentMousePos.GetReactiveValue.Value} ");
 
         }).AddTo(this);
     }
