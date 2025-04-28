@@ -5,6 +5,7 @@ using R3;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : PersistentSignleton<GameManager> {
 
@@ -35,6 +36,7 @@ public class GameManager : PersistentSignleton<GameManager> {
 
 
     [Header("debug")]
+    [SerializeField] private bool _LoadToStartScreen = false;
     [SerializeField] private Logger _logger;
     [SerializeField] private bool _showDebugLogs = true;
     [SerializeField] private Cheats_SO _cheats_SO;
@@ -72,14 +74,18 @@ public class GameManager : PersistentSignleton<GameManager> {
             }
         }).AddTo(this);
 
+        if (_LoadToStartScreen == true){
+            LevelManager.Instance.LevelLoadingStarted.AddListener(() => ChangeGameState(GAME_STATE.LOADING));
 
-        LevelManager.Instance.LevelLoadingStarted.AddListener(() => ChangeGameState(GAME_STATE.LOADING));
+            PreGameActions();
 
-        PreGameActions();
-
-        LoadStartScreen();
-
-
+            LoadStartScreen();
+        }
+        else {
+            ChangeGameState(GAME_STATE.MAIN_GAME);
+            GameStartActions();
+            LevelManager.instance.LevelLoaded.Invoke(SceneManager.GetActiveScene().name);
+        }
     }
 
     private void Update() {
@@ -143,7 +149,7 @@ public class GameManager : PersistentSignleton<GameManager> {
         _gameEventChannel.gameFinished.RaiseEvent();
     }
 
-    public async void GameStartActions() {
+    public void GameStartActions() {
         if (GetGameState.CurrentValue == (GAME_STATE.LOADING | GAME_STATE.PRE_GAME)) return;
 
         if (_currentGameState.Value == GAME_STATE.MAIN_GAME && _gameState.pauseStatus.GetReactiveValue.Value == true) _gameEventChannel.gameUnpaused.RaiseEvent();
@@ -154,7 +160,7 @@ public class GameManager : PersistentSignleton<GameManager> {
         _gameState.levelScore.Reset();
         _gameState.suedStatus.SetReactiveValue(false);
 
-        await LevelManager.Instance.LoadLevel("TestLevel");
+        // await LevelManager.Instance.LoadLevel("TestLevel");
 
         ChangeGameState(GAME_STATE.MAIN_GAME);
         _gameEventChannel.gameStarted.RaiseEvent();

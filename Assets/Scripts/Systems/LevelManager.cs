@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using R3;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -30,6 +31,14 @@ public class LevelManager : PersistentSignleton<LevelManager> {
         _loadingScreen.alpha = 1;
 
         LevelTitle = SceneManager.GetActiveScene().name;
+
+        LevelLoadingStarted.AddListener(() => {
+            DOTween.To(() => _loadingScreen.alpha, x => _loadingScreen.alpha = x, 1, 1);
+        });
+
+        LevelLoaded.AddListener(x => {
+            DOTween.To(() => _loadingScreen.alpha, x => _loadingScreen.alpha = x, 0, 1);
+        });
     }
 
     /// <summary>

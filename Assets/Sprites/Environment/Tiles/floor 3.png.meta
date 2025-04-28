@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3be40f84560e9b043af8a86a8d2b6309
+guid: 421f24c93364720428a1ff29074949ca
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1461149993224910671
-    second: cement_0
+      213: -68764328351435611
+    second: floor 3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,11 +96,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cement_0
+      name: floor 3_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f473cb56d2c074410800000000000000
-      internalID: 1461149993224910671
+      spriteID: 5a4f46b2533bb0ff0800000000000000
+      internalID: -68764328351435611
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      cement_0: 1461149993224910671
+      floor 3_0: -68764328351435611
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
