@@ -38,7 +38,6 @@ public class SignContainer : MonoBehaviour, I_Interactable {
 
         _playerContext.selectedInteractableObject.AsObservable().Subscribe((item) => {
             if (item != null && item.GetComponent<I_Interactable>() == interactableRef) {
-                Debug.Log("its me");
                 SetSelected();
             }
             else SetUnselected();

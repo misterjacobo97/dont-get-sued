@@ -307,6 +307,12 @@ MonoBehaviour:
     useGenericList: 0
     genericList: []
   _annoucementMixer: {fileID: -8564929505516002927, guid: ed7f5cb8b21fcb140a5103b291be2da0, type: 2}
+  _annoucementInterval: 30
+  _currentAnnouncement:
+    _soundClip: {fileID: 0}
+    _volume: 0.72
+    _startClipAt: 0
+    audioMixerGroup: {fileID: -8564929505516002927, guid: ed7f5cb8b21fcb140a5103b291be2da0, type: 2}
   _logger: {fileID: 5672422042019910710}
   _showDebugLogs: 1
   _cheats_SO: {fileID: 11400000, guid: 3e0681ec70503a640aabe2b5e8b49c73, type: 2}

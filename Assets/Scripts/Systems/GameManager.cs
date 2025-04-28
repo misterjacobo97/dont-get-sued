@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using R3;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -24,6 +26,13 @@ public class GameManager : PersistentSignleton<GameManager> {
     [SerializeField] private GameStateEventChannel _gameEventChannel;
     [SerializeField] private AudioClipListReference _announcementClipsList;
     [SerializeField] private AudioMixerGroup _annoucementMixer;
+
+
+    [Header("params")]
+    private List<AudioClip> _usedAnnouncements = new();
+    [SerializeField] private float _annoucementInterval = 30f;
+    [SerializeField] private SoundClipReference _currentAnnouncement = new();
+
 
     [Header("debug")]
     [SerializeField] private Logger _logger;
@@ -84,7 +93,29 @@ public class GameManager : PersistentSignleton<GameManager> {
             _gameState?.gameTimeLeft?.AddToReactiveValue(-Time.deltaTime);
     }
 
+    # region game special events
 
+    private void PlayAnnoucement(){
+        if (_usedAnnouncements.Count >= _announcementClipsList.GetList().Count) return;
+
+        Awaitable.WaitForSecondsAsync(_annoucementInterval).GetAwaiter().OnCompleted(() => {
+            
+
+            List<AudioClip> unplayedClips = _announcementClipsList.GetList()
+            .Where(clip => !_usedAnnouncements.Contains(clip)).ToList();
+
+            AudioClip selected = unplayedClips[UnityEngine.Random.Range(0, unplayedClips.Count - 1)];
+
+            _currentAnnouncement._soundClip = selected;
+            _usedAnnouncements.Add(selected);
+
+            _currentAnnouncement.Play();
+
+            PlayAnnoucement();
+        });
+    }
+
+    #endregion
 
     #region Game State Actions
     public void ChangeGameState(GAME_STATE newState) {
@@ -127,6 +158,8 @@ public class GameManager : PersistentSignleton<GameManager> {
 
         ChangeGameState(GAME_STATE.MAIN_GAME);
         _gameEventChannel.gameStarted.RaiseEvent();
+        
+        PlayAnnoucement();
     }
 
     public void OnGamePauseActions(){

@@ -34,7 +34,7 @@ public class SoundManager : PersistentSignleton<SoundManager> {
         musicSource.Play();
     }
 
-    public void PlaySound(AudioClip clip, float volume = 1, float startClipAt = 0) {
+    public void PlaySound(AudioClip clip, float volume = 1, float startClipAt = 0, AudioMixerGroup mixerGroup = null) {
         // check if max amount of sources has been reached
         if (_fxSourceList.Any(s => s.isPlaying == false)){
             // create new source
@@ -42,7 +42,7 @@ public class SoundManager : PersistentSignleton<SoundManager> {
 
             newSource.clip = clip;
             newSource.time = startClipAt;
-            newSource.outputAudioMixerGroup = _effectMixer;
+            newSource.outputAudioMixerGroup = mixerGroup ? mixerGroup : _effectMixer;
             newSource.loop = false;
             newSource.volume = volume;
             newSource.Play();
