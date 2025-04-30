@@ -1,0 +1,780 @@
+fileFormatVersion: 2
+guid: 6dbe05c839442274e8eb6eec539cf15d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8298289208952623326
+    second: control thinggy_0
+  - first:
+      213: -8343945339265754668
+    second: control thinggy_1
+  - first:
+      213: 7245930184124769698
+    second: control thinggy_2
+  - first:
+      213: 6628765509165624734
+    second: control thinggy_3
+  - first:
+      213: 5022239492248644364
+    second: control thinggy_4
+  - first:
+      213: 8336284135456399870
+    second: control thinggy_5
+  - first:
+      213: 9017368960134839451
+    second: control thinggy_6
+  - first:
+      213: 7765542252618778568
+    second: control thinggy_7
+  - first:
+      213: -8575693659992783075
+    second: control thinggy_8
+  - first:
+      213: -6934530477888778317
+    second: control thinggy_9
+  - first:
+      213: 9221678461853067705
+    second: control thinggy_10
+  - first:
+      213: 1758526139512224764
+    second: control thinggy_11
+  - first:
+      213: -2413399441629894257
+    second: control thinggy_12
+  - first:
+      213: 8969801602202727574
+    second: control thinggy_13
+  - first:
+      213: 7885777603672747083
+    second: control thinggy_14
+  - first:
+      213: 3438650777720596213
+    second: control thinggy_15
+  - first:
+      213: 2363866413873631624
+    second: control thinggy_16
+  - first:
+      213: -6668495131262526394
+    second: control thinggy_17
+  - first:
+      213: -4832326898513527998
+    second: control thinggy_18
+  - first:
+      213: 3190582923106841726
+    second: control thinggy_19
+  - first:
+      213: 4883401657486894921
+    second: control thinggy_20
+  - first:
+      213: -4037427742947298881
+    second: control thinggy_21
+  - first:
+      213: -4316659953725854730
+    second: control thinggy_22
+  - first:
+      213: -2064183230168529840
+    second: control thinggy_23
+  - first:
+      213: 8089610266579184483
+    second: control thinggy_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: control thinggy_0
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 324
+        width: 990
+        height: 854
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed0141fb112792370800000000000000
+      internalID: 8298289208952623326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_1
+      rect:
+        serializedVersion: 2
+        x: 1123
+        y: 1170
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d9d9cb0ce9543c80800000000000000
+      internalID: -8343945339265754668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_2
+      rect:
+        serializedVersion: 2
+        x: 1162
+        y: 1170
+        width: 29
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a5a904ac17be8460800000000000000
+      internalID: 7245930184124769698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_3
+      rect:
+        serializedVersion: 2
+        x: 1192
+        y: 1170
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9dad212c1b1efb50800000000000000
+      internalID: 6628765509165624734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_4
+      rect:
+        serializedVersion: 2
+        x: 1227
+        y: 1166
+        width: 33
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0b2b60953492b540800000000000000
+      internalID: 5022239492248644364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_5
+      rect:
+        serializedVersion: 2
+        x: 1998
+        y: 1168
+        width: 29
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef16a90f04e60b370800000000000000
+      internalID: 8336284135456399870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_6
+      rect:
+        serializedVersion: 2
+        x: 2028
+        y: 1168
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9c787d0b41242d70800000000000000
+      internalID: 9017368960134839451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_7
+      rect:
+        serializedVersion: 2
+        x: 2063
+        y: 1168
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c701aff88fb4cb60800000000000000
+      internalID: 7765542252618778568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_8
+      rect:
+        serializedVersion: 2
+        x: 2097
+        y: 1168
+        width: 34
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d178f8d5d040df880800000000000000
+      internalID: -8575693659992783075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_9
+      rect:
+        serializedVersion: 2
+        x: 1655
+        y: 1028
+        width: 29
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bfc155654993cf90800000000000000
+      internalID: -6934530477888778317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_10
+      rect:
+        serializedVersion: 2
+        x: 1686
+        y: 1028
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b96f97d3bbf9ff70800000000000000
+      internalID: 9221678461853067705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_11
+      rect:
+        serializedVersion: 2
+        x: 1725
+        y: 1028
+        width: 29
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfb7dd1f43a876810800000000000000
+      internalID: 1758526139512224764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_12
+      rect:
+        serializedVersion: 2
+        x: 1751
+        y: 243
+        width: 359
+        height: 922
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f89268c9ef1e18ed0800000000000000
+      internalID: -2413399441629894257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_13
+      rect:
+        serializedVersion: 2
+        x: 1738
+        y: 980
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 694f50d78032b7c70800000000000000
+      internalID: 8969801602202727574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_14
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 898
+        width: 198
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4c25ac23f8ef6d60800000000000000
+      internalID: 7885777603672747083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_15
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 754
+        width: 198
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f628a0e9aa88bf20800000000000000
+      internalID: 3438650777720596213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_16
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 560
+        width: 197
+        height: 328
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8811a67aaf32ec020800000000000000
+      internalID: 2363866413873631624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_17
+      rect:
+        serializedVersion: 2
+        x: 1596
+        y: 561
+        width: 67
+        height: 327
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64cdca2620fb473a0800000000000000
+      internalID: -6668495131262526394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_18
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 560
+        width: 198
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24b398fd94020fcb0800000000000000
+      internalID: -4832326898513527998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_19
+      rect:
+        serializedVersion: 2
+        x: 1075
+        y: 291
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e74f53e934a374c20800000000000000
+      internalID: 3190582923106841726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_20
+      rect:
+        serializedVersion: 2
+        x: 1114
+        y: 291
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9476f022fe355c340800000000000000
+      internalID: 4883401657486894921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_21
+      rect:
+        serializedVersion: 2
+        x: 1144
+        y: 291
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb1b157ebdc28f7c0800000000000000
+      internalID: -4037427742947298881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_22
+      rect:
+        serializedVersion: 2
+        x: 1179
+        y: 291
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fb240a84a42814c0800000000000000
+      internalID: -4316659953725854730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_23
+      rect:
+        serializedVersion: 2
+        x: 1214
+        y: 291
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0548c76e94c8a53e0800000000000000
+      internalID: -2064183230168529840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: control thinggy_24
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 291
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36b2ec64da1144070800000000000000
+      internalID: 8089610266579184483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      control thinggy_0: 8298289208952623326
+      control thinggy_1: -8343945339265754668
+      control thinggy_10: 9221678461853067705
+      control thinggy_11: 1758526139512224764
+      control thinggy_12: -2413399441629894257
+      control thinggy_13: 8969801602202727574
+      control thinggy_14: 7885777603672747083
+      control thinggy_15: 3438650777720596213
+      control thinggy_16: 2363866413873631624
+      control thinggy_17: -6668495131262526394
+      control thinggy_18: -4832326898513527998
+      control thinggy_19: 3190582923106841726
+      control thinggy_2: 7245930184124769698
+      control thinggy_20: 4883401657486894921
+      control thinggy_21: -4037427742947298881
+      control thinggy_22: -4316659953725854730
+      control thinggy_23: -2064183230168529840
+      control thinggy_24: 8089610266579184483
+      control thinggy_3: 6628765509165624734
+      control thinggy_4: 5022239492248644364
+      control thinggy_5: 8336284135456399870
+      control thinggy_6: 9017368960134839451
+      control thinggy_7: 7765542252618778568
+      control thinggy_8: -8575693659992783075
+      control thinggy_9: -6934530477888778317
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

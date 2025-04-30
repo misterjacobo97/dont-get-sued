@@ -1,5 +1,4 @@
 using R3;
-using Unity.Collections;
 using UnityEngine;
 
 public class PlayerSlapArea : MonoBehaviour {

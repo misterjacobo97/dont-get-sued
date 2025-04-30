@@ -30,10 +30,9 @@ public class GameManager : PersistentSignleton<GameManager> {
 
 
     [Header("params")]
-    private List<AudioClip> _usedAnnouncements = new();
     [SerializeField] private float _annoucementInterval = 30f;
     [SerializeField] private SoundClipReference _currentAnnouncement = new();
-
+    private List<AudioClip> _usedAnnouncements = new();
 
     [Header("debug")]
     [SerializeField] private bool _LoadToStartScreen = false;
@@ -74,6 +73,7 @@ public class GameManager : PersistentSignleton<GameManager> {
             }
         }).AddTo(this);
 
+
         if (_LoadToStartScreen == true){
             LevelManager.Instance.LevelLoadingStarted.AddListener(() => ChangeGameState(GAME_STATE.LOADING));
 
@@ -83,7 +83,7 @@ public class GameManager : PersistentSignleton<GameManager> {
         }
         else {
             ChangeGameState(GAME_STATE.MAIN_GAME);
-            GameStartActions();
+            GameStartActions("TestLevel");
             LevelManager.instance.LevelLoaded.Invoke(SceneManager.GetActiveScene().name);
         }
     }
@@ -102,6 +102,8 @@ public class GameManager : PersistentSignleton<GameManager> {
     # region game special events
 
     private void PlayAnnoucement(){
+        if (GetGameState.CurrentValue != GAME_STATE.MAIN_GAME) return;
+
         if (_usedAnnouncements.Count >= _announcementClipsList.GetList().Count) return;
 
         Awaitable.WaitForSecondsAsync(_annoucementInterval).GetAwaiter().OnCompleted(() => {
@@ -149,7 +151,7 @@ public class GameManager : PersistentSignleton<GameManager> {
         _gameEventChannel.gameFinished.RaiseEvent();
     }
 
-    public void GameStartActions() {
+    public async void GameStartActions(string levelName) {
         if (GetGameState.CurrentValue == (GAME_STATE.LOADING | GAME_STATE.PRE_GAME)) return;
 
         if (_currentGameState.Value == GAME_STATE.MAIN_GAME && _gameState.pauseStatus.GetReactiveValue.Value == true) _gameEventChannel.gameUnpaused.RaiseEvent();
@@ -160,7 +162,7 @@ public class GameManager : PersistentSignleton<GameManager> {
         _gameState.levelScore.Reset();
         _gameState.suedStatus.SetReactiveValue(false);
 
-        // await LevelManager.Instance.LoadLevel("TestLevel");
+        await LevelManager.Instance.LoadLevel(levelName);
 
         ChangeGameState(GAME_STATE.MAIN_GAME);
         _gameEventChannel.gameStarted.RaiseEvent();

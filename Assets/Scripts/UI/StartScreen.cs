@@ -10,7 +10,7 @@ public class StartMenu : MonoBehaviour
     private void Start() {
         //GameManager.Instance.ChangeGameState(GameManager.GAME_STATE.START_SCREEN);
 
-        _startGameButtom.onClick.AddListener(GameManager.Instance.GameStartActions);
+        _startGameButtom.onClick.AddListener(() => GameManager.Instance.GameStartActions("TestLevel"));
         _quitGameButtom.onClick.AddListener(GameManager.Instance.QuitGame);
     }
 }
