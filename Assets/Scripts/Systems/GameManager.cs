@@ -85,7 +85,7 @@ public class GameManager : PersistentSignleton<GameManager> {
         else {
             ChangeGameState(GAME_STATE.MAIN_GAME);
             GameStartActions("TestLevel");
-            LevelManager.instance.LevelLoaded.Invoke(SceneManager.GetActiveScene().name);
+            //LevelManager.instance.LevelLoaded.Invoke(SceneManager.GetActiveScene().name);
         }
     }
 
@@ -189,7 +189,7 @@ public class GameManager : PersistentSignleton<GameManager> {
     }
 
     public void OnGamePauseActions(){
-        if (_currentGameState.Value != GAME_STATE.MAIN_GAME) return;
+        if (_currentGameState.Value != GAME_STATE.MAIN_GAME && _currentGameState.Value != GAME_STATE.TUTORIAL) return;
 
         Time.timeScale = _gameState.pauseStatus?.GetReactiveValue.Value == true ? 0 : 1;
     }

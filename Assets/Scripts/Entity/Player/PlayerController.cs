@@ -44,15 +44,17 @@ public class PlayerController : MonoBehaviour {
     private void FixedUpdate() {
         if (_gameStatsDB?.pauseStatus.GetReactiveValue.Value == true) return;
 
+        if (GameManager.Instance.GetGameState.CurrentValue != (GameManager.GAME_STATE.MAIN_GAME) && GameManager.Instance.GetGameState.CurrentValue != (GameManager.GAME_STATE.TUTORIAL)) {
+            _rb.linearDamping = _linearDamping;
+            return;
+        }
+
         MovePlayer();
     }
 
     #region Movement
     private void MovePlayer() {
-        if (GameManager.Instance.GetGameState.CurrentValue != (GameManager.GAME_STATE.MAIN_GAME | GameManager.GAME_STATE.TUTORIAL)) {
-            _rb.linearDamping = _linearDamping;
-            return;
-        }
+
 
         Vector2 movement = _userInputChannel.moveInput.GetReactiveValue.Value;
 
