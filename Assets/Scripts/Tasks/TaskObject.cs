@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using UnityEngine;
 
 public class TaskObject : MonoBehaviour {
-    [NonSerialized] public UnityEvent<TASK_STATE> ChangedTaskState = new();
+    public UnityEvent<TASK_STATE> ChangedTaskState = new();
     [NonSerialized] public UnityEvent<TASK_STATE> ChangedParentHolder = new();
 
     [SerializeField] private TaskDatabaseSO _taskDatabase;

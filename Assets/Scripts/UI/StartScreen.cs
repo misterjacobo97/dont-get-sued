@@ -5,6 +5,7 @@ public class StartMenu : MonoBehaviour
 {
     [Header("refs")]
     [SerializeField] private Button _startGameButtom;
+    [SerializeField] private Button _startTutorialButtom;
     [SerializeField] private Button _quitGameButtom;
 
     private void Start() {
@@ -12,5 +13,6 @@ public class StartMenu : MonoBehaviour
 
         _startGameButtom.onClick.AddListener(() => GameManager.Instance.GameStartActions("TestLevel"));
         _quitGameButtom.onClick.AddListener(GameManager.Instance.QuitGame);
+        _startTutorialButtom.onClick.AddListener(() =>GameManager.Instance.Loadtutoriallevel());
     }
 }

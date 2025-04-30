@@ -54,7 +54,7 @@ public class PlayerInteract : MonoBehaviour {
     void Update() {
         if (_gameStatsDB.pauseStatus.GetReactiveValue.Value == true) return;
 
-        if (GameManager.Instance.GetGameState.CurrentValue != GameManager.GAME_STATE.MAIN_GAME) {
+        if (GameManager.Instance.GetGameState.CurrentValue != (GameManager.GAME_STATE.MAIN_GAME | GameManager.GAME_STATE.TUTORIAL)) {
             return;
         }
 

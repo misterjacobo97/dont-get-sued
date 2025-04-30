@@ -2,8 +2,12 @@ using DG.Tweening;
 using R3;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
+
+    public UnityEvent ItemTrashedEvent = new();
+
     [Header("Refs")]
     [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private Transform _itemTarget;
@@ -12,9 +16,6 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
     private ItemDetectionArea _itemDetect;
     private I_Interactable interactableRef;
     [SerializeField] private ScoreObject _scoreObject;
-
-
-
 
     [Header("context objects")]
     [SerializeField] private InteractContextSO _playerContext;
@@ -71,6 +72,8 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
 
                 // set holdable parent to this
                 (caller as PlayerInteract).GetItemHolder().GetHeldItem().ChangeParent(this);
+
+                
             }
         }
     }
@@ -115,6 +118,7 @@ public class Bin : MonoBehaviour, I_ItemHolder, I_Interactable {
         _trashSound.Play();
 
         Destroy(item.gameObject);
+        ItemTrashedEvent.Invoke();
     }
 
     public bool HasItem() {

@@ -13,6 +13,7 @@ public class GameManager : PersistentSignleton<GameManager> {
         PRE_GAME,
         START_SCREEN,
         MAIN_GAME,
+        TUTORIAL,
         LOADING,
         SUED,
         PAUSED,
@@ -149,6 +150,23 @@ public class GameManager : PersistentSignleton<GameManager> {
         ChangeGameState(GAME_STATE.END_GAME);
 
         _gameEventChannel.gameFinished.RaiseEvent();
+    }
+
+    public async void Loadtutoriallevel() {
+        if (GetGameState.CurrentValue == (GAME_STATE.LOADING | GAME_STATE.PRE_GAME)) return;
+
+        if (_currentGameState.Value == GAME_STATE.MAIN_GAME && _gameState.pauseStatus.GetReactiveValue.Value == true) _gameEventChannel.gameUnpaused.RaiseEvent();
+
+        _gameState.gameTimeLeft.Reset();
+        _gameState.customerSatisfaction.Reset();
+        _gameState.managementSatisfaction.Reset();
+        _gameState.levelScore.Reset();
+        _gameState.suedStatus.SetReactiveValue(false);
+
+        await LevelManager.Instance.LoadLevel("TutorialScene");
+
+        ChangeGameState(GAME_STATE.TUTORIAL);
+        //_gameEventChannel.gameStarted.RaiseEvent();
     }
 
     public async void GameStartActions(string levelName) {

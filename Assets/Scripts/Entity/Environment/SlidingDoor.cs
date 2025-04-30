@@ -23,7 +23,7 @@ public class SlidingDoor : MonoBehaviour {
     [SerializeField] private string _triggerCollisionLayerName;
     [SerializeField] private float _openDuration = 3;
     [SerializeField] private float _movementDuration = 1;
-    
+    [SerializeField] private bool _manualMode = false;
 
     private Sequence _tweener;
     [SerializeField] private SerializableReactiveProperty<float> _openTimeLeft;
@@ -31,6 +31,8 @@ public class SlidingDoor : MonoBehaviour {
 
     private void Awake() {
         this.OnTriggerEnter2DAsObservable().Subscribe(collider => {
+            if (_manualMode) return;
+
             if (collider.gameObject.layer == LayerMask.NameToLayer(_triggerCollisionLayerName) || collider.gameObject.layer == LayerMask.NameToLayer("Player") ){
                 if (!_activeNPCs.Contains(collider.transform)){
                     _activeNPCs.Add(collider.transform);
@@ -56,6 +58,8 @@ public class SlidingDoor : MonoBehaviour {
     }
 
     private void Update() {
+        if (_manualMode) return;
+
         if (_openTimeLeft.Value > 0){ 
             _openTimeLeft.Value -= Time.deltaTime;
         }
@@ -64,9 +68,7 @@ public class SlidingDoor : MonoBehaviour {
         } 
     }
 
-    private void OpenDoors(){
-
-
+    public void OpenDoors(){
         if (_state == (STATE.OPEN | STATE.OPENING)) {
             _openTimeLeft.Value = _openDuration;
             return;
@@ -87,7 +89,7 @@ public class SlidingDoor : MonoBehaviour {
             });
         
     }
-    private void CloseDoors(){
+    public void CloseDoors(){
         if (_state == (STATE.CLOSED | STATE.CLOSING)) return;
 
         if (_tweener != null && _tweener.active) {
@@ -102,7 +104,9 @@ public class SlidingDoor : MonoBehaviour {
             .OnComplete(() => {
                 _state = STATE.CLOSED;
             });
-
     }
 
+    public void ToggleManualMode(bool state) {
+        _manualMode = state;
+    }
 }

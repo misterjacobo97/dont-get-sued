@@ -2,8 +2,13 @@ using System;
 using System.Collections.Generic;
 using R3;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SlipHazardTask : TaskObject {
+
+    public UnityEvent HazardSafeEvent = new();
+    public UnityEvent HazardUnsafeEvent = new();
+
 
     [Header("Hazard refs")]
     [SerializeField] private HoldableItem_SO _hazardNullifyer;
@@ -12,11 +17,12 @@ public class SlipHazardTask : TaskObject {
 
 
     [Header("hazard params")]
+    [SerializeField] private bool _canDisappear = true;
     [SerializeField] private string _NPCLayerName;
     [SerializeField] private float _timeToDisappear;
 
 
-    protected bool _hazardSafeState = false;
+    protected  bool _hazardSafeState = false;
 
     public bool IsSafe => _hazardSafeState;
 
@@ -28,10 +34,24 @@ public class SlipHazardTask : TaskObject {
         base.Start();
         _spawnSound?.Play();
 
-        Observable.Timer(TimeSpan.FromSeconds(_timeToDisappear)).Subscribe(x => {
-            CompleteTask();
-            Destroy(gameObject);
+        Observable.EveryValueChanged(this, x => x._hazardSafeState).Subscribe(state => {
+            switch (state) {
+                case true:
+                    HazardSafeEvent.Invoke();
+                    break;
+                case false:
+                    HazardUnsafeEvent.Invoke();
+                    break;
+            }
         }).AddTo(this);
+
+        if (_canDisappear) {
+            Observable.Timer(TimeSpan.FromSeconds(_timeToDisappear)).Subscribe(x => {
+                CompleteTask();
+                Destroy(gameObject);
+            }).AddTo(this);
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
